@@ -16,6 +16,10 @@ body {
   .status {
     margin-bottom: 10px;
   }
+
+  .stepActive {
+    font-weight: bold;
+  }
   
   .square {
     background: #fff;

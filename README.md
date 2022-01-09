@@ -4,7 +4,11 @@ Source of code: https://reactjs.org/tutorial/tutorial.html
 
 If host error, add local variable: HOST=localhost
 
-Start using npm start
+Start using `npm start`
+
+# Syntax and Rules
+
+- To add state, add a constructor to a component class with this.state which is a dictionary holding changable variables
 
 -----------
 
