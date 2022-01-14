@@ -1,10 +1,38 @@
-Source of code: https://reactjs.org/tutorial/tutorial.html
 
 # Setup
+
+## react
+
+(Source of code: https://reactjs.org/tutorial/tutorial.html)
 
 If host error, add local variable: HOST=localhost
 
 Start using `npm start`
+
+## Express & NodeJS
+
+(Source: https://blog.logrocket.com/mern-stack-tutorial/)
+
+`npm i express mongoose body-parser bcryptjs validation`
+
+- bcryptjs is a password hashing function designed by Niels Provos and David Mazières
+- body-parser allows us to get the data throughout the request
+- express is our main framework
+- mongoose is used to connect/interact with MongoDB
+- validation (as its name implies) is used for validation
+
+`npm i -D nodemon`
+- nodemon is a utility that will monitor for any changes in your source and automatically restart your server.
+
+Modify package.json so nodemon will update server side stuff if some code changed.
+
+Add `app.js` File and set port and index route entry point.
+
+Execute express application: `npm run app`
+
+## MongoDB
+
+`docker run -d --name conscious_db -p 127.0.0.1:5012:27017 -v /home/phil/Desktop/stuff/projects_game/06_Game_Implementation/Game-Content-Tool/backend-project/conscious_db_data:/data/db -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=rootpw mongo:5.0.5`
 
 # Syntax and Rules
 
