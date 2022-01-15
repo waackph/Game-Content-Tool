@@ -7,7 +7,7 @@ const ItemSchema = new mongoose.Schema({
     },
     texture_path: {
         type: String,
-        required: true,
+        required: false,
     }
 });
 
