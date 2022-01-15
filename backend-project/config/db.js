@@ -8,6 +8,11 @@ const connectDB = async () => {
             db,
             {
                 useNewUrlParser: true,
+                authSource: "admin",
+                user: "root",
+                pass: "rootpw",
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
             }
         );
         console.log('MongoDB is connecting');

@@ -1,4 +1,4 @@
 {
     "mongoURI": 
-      "mongodb://root:rootpw@127.0.0.1:5012"
+      "mongodb://127.0.0.1:5012/conscious_db"
 }
