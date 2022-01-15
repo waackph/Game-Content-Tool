@@ -5,9 +5,18 @@
 
 (Source of code: https://reactjs.org/tutorial/tutorial.html)
 
+Start a new project with pre setup: `npx create-react-app game-content-tool`
+
+`npm install --save react-router-dom`
+
+`npm install --save axios`
+
+Axios is a lightweight HTTP client based similar to a Fetch API. Axios is a promise-based async/await library for readable asynchronous code. We can easily integrate with React, and it is effortless to use in any front-end framework.<br>
+-> We’ll call our APIs through Axios.
+
 If host error, add local variable: HOST=localhost
 
-Start using `npm start`
+Start using `npm start` Or: `yarn start`
 
 ## Express & NodeJS
 
@@ -27,6 +36,8 @@ Start using `npm start`
 Modify package.json so nodemon will update server side stuff if some code changed.
 
 Add `app.js` File and set port and index route entry point.
+
+To interact with react frontend and dont vandalate CORS policy `npm install cors` needs to be installed.
 
 Execute express application: `npm run app`
 
