@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from "axios";
-import '../App.css';
+import '../../App.css';
 
 // TODO: Convert Class Component to Function Component (so we can use hooks to access params object)
 
@@ -22,7 +22,7 @@ function UpdateItemInfo(props) {
           .catch(err => { 
             console.log('Error from UpdateItemInfo'); 
         });
-    }, [])
+    }, [id])
 
 
     const onChange = e => {

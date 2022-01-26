@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import '../App.css';
+import '../../App.css';
 
-const ItemCard = (props) => {
+const RoomCard = (props) => {
     const item = props.item;
 
     return (
         <div className='card-container'>
-            <img src="https://commapress.co.uk/books/the-book-of-cairo/cairo-provisional-v3/image%2Fspan3" alt="" />
+            <img src={`/static/${item.texture_path}`} alt="" />
             <div className='desc'>
                 <h2>
                     <Link to={`/show-item/${item._id}`}>
@@ -20,4 +20,4 @@ const ItemCard = (props) => {
     )
 };
 
-export default ItemCard;
+export default RoomCard;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import '../App.css';
+import '../../App.css';
 import axios from "axios";
 
 // TODO: Convert Class Component to Function Component

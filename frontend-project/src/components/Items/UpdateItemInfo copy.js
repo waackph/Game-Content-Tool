@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
-import '../App.css';
+import '../../App.css';
 
 // TODO: Convert Class Component to Function Component (so we can use hooks to access params object)
 

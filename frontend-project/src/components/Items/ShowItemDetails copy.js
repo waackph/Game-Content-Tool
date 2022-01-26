@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, useParams } from 'react-router-dom';
-import '../App.css';
+import '../../App.css';
 import axios from "axios";
 
 // TODO: Convert Class Component to Function Component
