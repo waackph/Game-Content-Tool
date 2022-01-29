@@ -3,18 +3,18 @@ import { Link } from "react-router-dom";
 import '../../App.css';
 
 const RoomCard = (props) => {
-    const item = props.item;
+    const room = props.room;
 
     return (
         <div className='card-container'>
-            <img src={`/static/${item.texture_path}`} alt="" />
+            <img src={`/static/${room.texture_path}`} alt="" className="img-texture" />
             <div className='desc'>
                 <h2>
-                    <Link to={`/show-item/${item._id}`}>
-                        {item.name}
+                    <Link to={`/item-list/${room._id}`}>
+                        {room.name}
                     </Link>
                 </h2>
-                <p>{item.texture_path}</p>
+                <p>{room.room_width}</p>
             </div>
         </div>
     )

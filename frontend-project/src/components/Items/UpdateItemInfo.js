@@ -9,20 +9,22 @@ function UpdateItemInfo(props) {
 
     const [name, setName] = useState('');
     const [texture_path, setTexture_path] = useState('');
-    let { id } = useParams();
+    const [_id, setId] = useState('');
+    let { room_id, item_id } = useParams();
     let navigate = useNavigate();
 
     useEffect(() => {
         axios
-          .get('http://localhost:8082/api/' + id)  //this.props.match.params.id)
+          .get('http://localhost:8082/api/items/' + room_id + '/' + item_id)  //this.props.match.params.room_id)
           .then(res => {
             setName(res.data.name);
             setTexture_path(res.data.texture_path);
+            setId(res.data._id);
           })
           .catch(err => { 
             console.log('Error from UpdateItemInfo'); 
         });
-    }, [id])
+    }, [room_id, item_id])
 
 
     const onChange = e => {
@@ -43,12 +45,13 @@ function UpdateItemInfo(props) {
         const data = {
             name: name,
             texture_path: texture_path,
+            _id: _id
         };
 
         axios
-          .put('http://localhost:8082/api/' + id, data)
+          .put('http://localhost:8082/api/items/' + room_id + '/' + item_id, data)
           .then(res => {
-            navigate('/show-item/' + id);
+            navigate('/show-item/' + room_id + '/' + item_id);
           })
           .catch(err => {
               console.log('Error in UpdateItemInfo');

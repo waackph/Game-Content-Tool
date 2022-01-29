@@ -9,30 +9,30 @@ import axios from "axios";
 function ShowItemDetails(props) {
 
     const [item, setItem] = useState({});
-    let { id } = useParams();
+    let { room_id, item_id } = useParams();
     let navigate = useNavigate();
     
     // Note: We can only do it like this as long as id is not an object, else it will fail the equality check and useEffect might be executed infinitly
     // https://betterprogramming.pub/stop-lying-to-react-about-missing-dependencies-10612e9aeeda
     useEffect(() => {
         axios
-          .get('http://localhost:8082/api/' + id)
+          .get('http://localhost:8082/api/items/' + room_id + '/' + item_id)
           .then(res => {
             setItem(res.data);
           })
           .catch(err => { 
             console.log('Error from ShowItemDetails'); 
         });
-    }, [id])
+    }, [room_id, item_id])
 
     const onDeleteClick = (id) => {
         axios
-          .delete('http://localhost:8082/api/' + id)
+          .delete('http://localhost:8082/api/items/' + id)
           .then(res => {
-            navigate('/');
+            navigate('/item-list/' + room_id);
           })
           .catch(err => {
-            console.log('Error from ShowItemDetails_deleteClick');
+            console.log('Error from ShowItemDetails_deleteClick', err);
           });
     }
 
@@ -70,7 +70,7 @@ function ShowItemDetails(props) {
                     <div className='col-md-10 m-auto'>
                         <br />
                         <br />
-                        <Link to='/' className='btn btn-outline-warning float-left'>
+                        <Link to={`/item-list/${room_id}`} className='btn btn-outline-warning float-left'>
                             Show Item List
                         </Link>
                     </div>
@@ -98,7 +98,7 @@ function ShowItemDetails(props) {
                         <br />
                     </div>
                     <div className='col-md-6'>
-                        <Link to={`/edit-item/${item._id}`} className='btn btn-outline-info btn-lg btn-block'>
+                        <Link to={`/edit-item/${room_id}/${item._id}`} className='btn btn-outline-info btn-lg btn-block'>
                             Edit Item
                         </Link>
                         <br />

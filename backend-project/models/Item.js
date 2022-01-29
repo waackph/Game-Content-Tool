@@ -11,4 +11,24 @@ const ItemSchema = new mongoose.Schema({
     }
 });
 
-module.exports = Item = mongoose.model('item', ItemSchema);
+const RoomSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    room_width: {
+        type: Number,
+        required: true,
+    },
+    texture_path: {
+        type: String,
+        required: true,
+    },
+    items: {
+        type: [ItemSchema],
+        required: false,
+    }
+});
+
+module.exports = Room = mongoose.model('room', RoomSchema);
+// module.exports = Item = mongoose.model('item', ItemSchema);
