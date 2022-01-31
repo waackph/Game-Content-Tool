@@ -1,34 +1,74 @@
 const mongoose = require('mongoose');
+const ThoughtNodeSchema = require('./Thought')
 
 const ItemSchema = new mongoose.Schema({
-    name: {
+    // Required Fields for all items
+    Name: {
         type: String,
         required: true,
     },
     texture_path: {
         type: String,
         required: false,
-    }
-});
-
-const RoomSchema = new mongoose.Schema({
-    name: {
+    },
+    $type: {
         type: String,
         required: true,
     },
-    room_width: {
+    Rotation: {
         type: Number,
         required: true,
     },
-    texture_path: {
-        type: String,
+    PositionX: {
+        type: Number,
         required: true,
     },
-    items: {
-        type: [ItemSchema],
+    PositionY: {
+        type: Number,
+        required: true,
+    },
+
+    // Not required for all items
+    ExamineText: {
+        type: String,
         required: false,
-    }
+    },
+    IsInInventory: {
+        type: Boolean,
+        required: false,
+    },
+    UseAble: {
+        type: Boolean,
+        required: false,
+    },
+    PickUpAble: {
+        type: Boolean,
+        required: false,
+    },
+    CombineAble: {
+        type: Boolean,
+        required: false,
+    },
+    GiveAble: {
+        type: Boolean,
+        required: false,
+    },
+    UseWidth: {
+        type: Boolean,
+        required: false,
+    },
+    ItemDependency: { // is an Object ID
+        type: String,
+        required: false,
+    },
+    CombineItem: {
+        type: mongoose.Schema.Types.ObjectId,  // ItemSchema
+        ref: 'ItemSchema',
+    },
+    Thought: {
+        type: ThoughtNodeSchema,
+        required: false,
+    },
 });
 
-module.exports = Room = mongoose.model('room', RoomSchema);
-// module.exports = Item = mongoose.model('item', ItemSchema);
+module.exports = ItemSchema;

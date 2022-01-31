@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Load data model
-const Room = require('../../models/Item');
+const Room = require('../../models/Room');
 // const Item = require('../../models/Item');
 
 // @route GET api/test
