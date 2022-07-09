@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index_tictacto.css';
 
 function Square(props) {
   return (
@@ -195,8 +195,8 @@ function Square(props) {
   
   // ========================================
   
-  ReactDOM.render(
-    <Game />,
-    document.getElementById('root')
-  );
+  // ReactDOM.render(
+  //   <Game />,
+  //   document.getElementById('root')
+  // );
   

@@ -1,0 +1,33 @@
+const mongoose = require('mongoose');
+const ItemSchema = require('./Item')
+const CharacterSchema = require('./Character')
+const SequenceSchema = require('./Sequence')
+
+const RoomSchema = new mongoose.Schema({
+    Name: {
+        type: String,
+        required: true,
+    },
+    RoomWidth: {
+        type: Number,
+        required: true,
+    },
+    texturePath: {
+        type: String,
+        required: true,
+    },
+    EntrySequence: {
+        type: SequenceSchema,
+        required: false,
+    },
+    Items: {
+        type: [ItemSchema],
+        required: false,
+    },
+    Characters: {
+        type: [CharacterSchema],
+        required: false,
+    },
+});
+
+module.exports = Room = mongoose.model('room', RoomSchema);

@@ -1,0 +1,106 @@
+{
+    "1": {
+      "RoomWidth": 1920,
+      "EntrySequence": {
+        "_commands": [
+          {
+            "$type": "conscious.WalkCommand, conscious",
+            "_destinationX": 1000.0,
+            "_destinationY": 786.0,
+            "CommandFinished": false
+          }
+        ],
+        "_currentIndex": 1,
+        "SequenceFinished": false
+      },
+      "Things": [
+        {
+          "$type": "conscious.DataHolderThing, conscious",
+          "Id": 0,
+          "Thought": null,
+          "IsInInventory": false,
+          "texturePath": "Backgrounds/debug/background",
+          "Rotation": 0.0,
+          "PositionX": 960.0,
+          "PositionY": 540.0,
+          "Name": "Background"
+        },
+        {
+          "$type": "conscious.DataHolderDoor, conscious",
+          "ItemDependency": 4,
+          "IsUnlocked": false,
+          "RoomId": 2,
+          "DoorId": 30,
+          "InitPlayerPosX": 1058.0,
+          "InitPlayerPosY": 793.0,
+          "CloseTexturePath": "Objects/debug/door_closed",
+          "PickUpAble": false,
+          "UseAble": true,
+          "CombineAble": false,
+          "GiveAble": false,
+          "UseWith": true,
+          "ExamineText": "It's a door",
+          "Id": 1,
+          "Thought": {
+            "_id": 25,
+            "_linkageId": 0,
+            "Links": [
+              {
+                "_validMoods": [
+                  0
+                ],
+                "Id": 26,
+                "Option": "First link",
+                "NextNode": {
+                  "_id": 22,
+                  "_linkageId": 0,
+                  "Links": [
+                    {
+                      "$type": "conscious.FinalThoughtLink, conscious",
+                      "_validMoods": [
+                        0
+                      ],
+                      "MoodChange": 1,
+                      "Verb": 5,
+                      "Animation": null,
+                      "UnlockId": 0,
+                      "Id": 23,
+                      "Option": "Its locked. Maybe I can open it somehow? [use]",
+                      "NextNode": null,
+                      "IsLocked": false
+                    },
+                    {
+                      "$type": "conscious.FinalThoughtLink, conscious",
+                      "_validMoods": [
+                        0
+                      ],
+                      "MoodChange": 0,
+                      "Verb": 0,
+                      "Animation": null,
+                      "UnlockId": 0,
+                      "Id": 24,
+                      "Option": "I'll rather feel alone then [leave it]",
+                      "NextNode": null,
+                      "IsLocked": false
+                    }
+                  ],
+                  "Thought": "First node",
+                  "IsRoot": false,
+                  "ThingId": 0
+                },
+                "IsLocked": false
+              }
+            ],
+            "Thought": "The door to the outside world",
+            "IsRoot": true,
+            "ThingId": 1
+          },
+          "IsInInventory": false,
+          "texturePath": "Objects/debug/door_opened",
+          "Rotation": 0.0,
+          "PositionX": 1058.0,
+          "PositionY": 570.0,
+          "Name": "Door"
+        }]
+    }
+}

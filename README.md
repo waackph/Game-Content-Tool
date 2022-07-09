@@ -1,10 +1,49 @@
-Source of code: https://reactjs.org/tutorial/tutorial.html
 
 # Setup
 
+## react
+
+(Source of code: https://reactjs.org/tutorial/tutorial.html)
+
+Start a new project with pre setup: `npx create-react-app game-content-tool`
+
+`npm install --save react-router-dom`
+
+`npm install --save axios`
+
+Axios is a lightweight HTTP client based similar to a Fetch API. Axios is a promise-based async/await library for readable asynchronous code. We can easily integrate with React, and it is effortless to use in any front-end framework.<br>
+-> We’ll call our APIs through Axios.
+
 If host error, add local variable: HOST=localhost
 
-Start using `npm start`
+Start using `npm start` Or: `yarn start`
+
+## Express & NodeJS
+
+(Source: https://blog.logrocket.com/mern-stack-tutorial/)
+
+`npm i express mongoose body-parser bcryptjs validation`
+
+- bcryptjs is a password hashing function designed by Niels Provos and David Mazières
+- body-parser allows us to get the data throughout the request
+- express is our main framework
+- mongoose is used to connect/interact with MongoDB
+- validation (as its name implies) is used for validation
+
+`npm i -D nodemon`
+- nodemon is a utility that will monitor for any changes in your source and automatically restart your server.
+
+Modify package.json so nodemon will update server side stuff if some code changed.
+
+Add `app.js` File and set port and index route entry point.
+
+To interact with react frontend and dont vandalate CORS policy `npm install cors` needs to be installed.
+
+Execute express application: `npm run app`
+
+## MongoDB
+
+`docker run -d --name conscious_db -p 127.0.0.1:5012:27017 -v /home/phil/Desktop/stuff/projects_game/06_Game_Implementation/Game-Content-Tool/backend-project/conscious_db_data:/data/db -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=rootpw mongo:5.0.5`
 
 # Syntax and Rules
 
