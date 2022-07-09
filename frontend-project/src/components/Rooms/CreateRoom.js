@@ -5,20 +5,21 @@ import axios from 'axios';
 
 function CreateRoom (props) {
 
-  const [name, setName] = useState('');
-  const [room_width, setRoom_width] = useState('');
-  const [texture_path, setTexture_path] = useState('');
+  const [Name, setName] = useState('');
+  const [RoomWidth, setRoomWidth] = useState('');
+  const [texturePath, setTexturePath] = useState('');
+  // TODO: Add EntrySequence
   let navigate = useNavigate();
 
   const onChange = e => {
-    if(e.target.name === 'name') {
+    if(e.target.name === 'Name') {
       setName(e.target.value);
     }
-    else if(e.target.name === 'room_width') {
-      setRoom_width(e.target.value);
+    else if(e.target.name === 'RoomWidth') {
+      setRoomWidth(e.target.value);
     }
-    else if(e.target.name === 'texture_path') {
-      setTexture_path(e.target.value);
+    else if(e.target.name === 'texturePath') {
+      setTexturePath(e.target.value);
     }
     else {
       console.log('No matching variable to fieldname')
@@ -29,23 +30,21 @@ function CreateRoom (props) {
     e.preventDefault();
 
     const data = {
-      name: name,
-      room_width: room_width,
-      texture_path: texture_path,
+      Name: Name,
+      RoomWidth: RoomWidth,
+      texturePath: texturePath,
     };
 
     axios
       .post('http://localhost:8082/api', data)
       .then(res => {
         setName('');
-        setRoom_width('');
-        setTexture_path('');
-        console.log(res);
+        setRoomWidth('');
+        setTexturePath('');
         navigate(`/item-list/${res.data._id}`); //"/item-list/" + res._id);
       })
       .catch(err => {
         console.log("Error in CreateRoom!");
-        console.log(err);
       })
   };
 
@@ -70,9 +69,9 @@ function CreateRoom (props) {
                 <input
                   type='text'
                   placeholder='Name of the Room'
-                  name='name'
+                  name='Name'
                   className='form-control'
-                  value={name}
+                  value={Name}
                   onChange={onChange}
                 />
               </div>
@@ -82,9 +81,9 @@ function CreateRoom (props) {
                 <input
                   type='text'
                   placeholder='Room Width'
-                  name='room_width'
+                  name='RoomWidth'
                   className='form-control'
-                  value={room_width}
+                  value={RoomWidth}
                   onChange={onChange}
                 />
               </div>
@@ -93,9 +92,9 @@ function CreateRoom (props) {
                 <input
                   type='text'
                   placeholder='Texture Path'
-                  name='texture_path'
+                  name='texturePath'
                   className='form-control'
-                  value={texture_path}
+                  value={texturePath}
                   onChange={onChange}
                 />
               </div>

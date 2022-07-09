@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import '../../App.css';
 
-// TODO: Convert Class Component to Function Component (so we can use hooks to access params object)
+// TODO: Add fields to update (see CreateItem)
 
 function UpdateItemInfo(props) {
 

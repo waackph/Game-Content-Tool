@@ -1,10 +1,9 @@
+// Class Component to Function Component: https://nimblewebdeveloper.com/blog/convert-react-class-to-function-component/
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import '../../App.css';
 import axios from "axios";
 
-// TODO: Convert Class Component to Function Component
-// See: https://nimblewebdeveloper.com/blog/convert-react-class-to-function-component/
 
 function ShowItemDetails(props) {
 

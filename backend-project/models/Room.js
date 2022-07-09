@@ -4,15 +4,15 @@ const CharacterSchema = require('./Character')
 const SequenceSchema = require('./Sequence')
 
 const RoomSchema = new mongoose.Schema({
-    name: {
+    Name: {
         type: String,
         required: true,
     },
-    room_width: {
+    RoomWidth: {
         type: Number,
         required: true,
     },
-    texture_path: {
+    texturePath: {
         type: String,
         required: true,
     },

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ThoughtNodeSchema = require('./Thought')
+const ThoughtNodeSchema = require('./Thought');
 
 const ItemSchema = new mongoose.Schema({
     // Required Fields for all items
@@ -7,7 +7,7 @@ const ItemSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    texture_path: {
+    texturePath: {
         type: String,
         required: false,
     },
@@ -53,7 +53,7 @@ const ItemSchema = new mongoose.Schema({
         type: Boolean,
         required: false,
     },
-    UseWidth: {
+    UseWith: {
         type: Boolean,
         required: false,
     },
