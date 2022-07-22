@@ -11,7 +11,7 @@ const ItemSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    $type: {
+    ItemType: { // is actually "$type"
         type: String,
         required: true,
     },
@@ -64,6 +64,7 @@ const ItemSchema = new mongoose.Schema({
     CombineItem: {
         type: mongoose.Schema.Types.ObjectId,  // ItemSchema
         ref: 'ItemSchema',
+        required: false,
     },
     Thought: {
         type: ThoughtNodeSchema,

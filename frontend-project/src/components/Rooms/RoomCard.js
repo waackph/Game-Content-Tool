@@ -7,14 +7,14 @@ const RoomCard = (props) => {
 
     return (
         <div className='card-container'>
-            <img src={`/static/${room.texture_path}`} alt="" className="img-texture" />
+            <img src={`/static/${room.texturePath}`} alt="" className="img-texture" />
             <div className='desc'>
                 <h2>
                     <Link to={`/item-list/${room._id}`}>
-                        {room.name}
+                        {room.Name}
                     </Link>
                 </h2>
-                <p>{room.room_width}</p>
+                <p>{room.RoomWidth}</p>
             </div>
         </div>
     )

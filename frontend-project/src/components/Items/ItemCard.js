@@ -8,14 +8,14 @@ const ItemCard = (props) => {
 
     return (
         <div className='card-container'>
-            <img src={`/static/${item.texture_path}`} alt="" className="img-texture" />
+            <img src={`/static/${item.texturePath}`} alt="" className="img-texture" />
             <div className='desc'>
                 <h2>
                     <Link to={`/show-item/${room_id}/${item._id}`}>
-                        {item.name}
+                        {item.Name}
                     </Link>
                 </h2>
-                <p>{item.texture_path}</p>
+                <p>{item.texturePath}</p>
             </div>
         </div>
     )

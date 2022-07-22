@@ -1,3 +1,12 @@
+# Quickstart
+
+After running setup.
+
+Start backend (folder backend-project): `npm run app`
+
+Start frontend (folder frontend-project): `npm start`
+
+Access mongodb (in python): `python3 check_mongodb_collection.py <collection_name>`
 
 # Setup
 

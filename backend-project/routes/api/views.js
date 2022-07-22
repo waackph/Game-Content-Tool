@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
 });
 
 // @route POST api/
-// @description add/save item
+// @description add room
 // @access Public
 router.post('/', (req, res) => {
   Room.create(req.body)
@@ -38,7 +38,7 @@ router.post('/', (req, res) => {
 });
 
 // @route POST api/
-// @description add/save item
+// @description update room
 // @access Public
 router.put('/:room_id', (req, res) => {
   // Room.updateOne(
@@ -51,8 +51,8 @@ router.put('/:room_id', (req, res) => {
     .catch(err => res.status(400).json({ error: 'Unable to add room' }));
 });
 
-// @route GET api/books/:id
-// @description Delete book by id
+// @route GET api/rooms/:id
+// @description Delete room by id
 // @access Public
 router.delete('/:room_id', (req, res) => {
   // Room.findByIdAndRemove(req.params.item_id, req.body)
@@ -78,7 +78,7 @@ router.get('/items/:room_id/:item_id', (req, res) => {
       .then(room => {
         // get the correct Item by ID
         let item;
-        room.items.forEach(it => {
+        room.Items.forEach(it => {
           if(String(it._id) === req.params.item_id) {
             item = it;
             return;
@@ -90,13 +90,14 @@ router.get('/items/:room_id/:item_id', (req, res) => {
 });
 
 // @route POST api/items
-// @description add/save item to given room
+// @description add item to given room
 // @access Public
 router.post('/items/:room_id', (req, res) => {
-    console.log(req.body);
-    Room.updateOne({ _id: req.params.room_id }, { $push: { items: req.body } })
-      .then(item => res.json(item))
-      .catch(err => res.status(400).json({ error: 'Unable to add item' }));
+  console.log(req.params.room_id);
+  console.log(req.body);
+  Room.updateOne({ _id: req.params.room_id }, { $push: { Items: req.body } })
+    .then(item => res.json(item))
+    .catch(err => res.status(400).json({ error: 'Unable to add item' }));
 });
 
 // @route PUT api/items/:id
@@ -104,10 +105,10 @@ router.post('/items/:room_id', (req, res) => {
 // @access Public
 router.put('/items/:room_id/:item_id', (req, res) => {
     Room.findOneAndUpdate(
-      {'_id': req.params.room_id, 'items._id': req.params.item_id},
+      {'_id': req.params.room_id, 'Items._id': req.params.item_id},
       {
         '$set': {
-          'items.$': req.body
+          'Items.$': req.body
         }
       }
     )
@@ -122,10 +123,10 @@ router.delete('/items/:item_id', (req, res) => {
     // Room.findByIdAndRemove(req.params.item_id, req.body)
     Room.updateOne(
       {
-        'items._id': req.params.item_id
+        'Items._id': req.params.item_id
       },
       {
-        $pull: { items: { _id: req.params.item_id } }
+        $pull: { Items: { _id: req.params.item_id } }
       }
     )
       .then(item => res.json({ msg: 'Item removed' }))

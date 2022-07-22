@@ -132,7 +132,7 @@ function CreateItem (props) {
 
   // Decide what extended fields should be added
   let extendedInputs = (<></>)
-  if(ItemType!=='thing') {
+  if(ItemType !== 'thing') {
     // append different sets of components using inputs = [input1, input2]
     extendedInputs = (
       <>
