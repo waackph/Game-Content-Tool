@@ -8,9 +8,9 @@ import ItemCard from './ItemCard'
 function ShowItemList(props) {
 
     const [room, setRoom] = useState([]);
-    const [name, setName] = useState([]);
-    const [texture_path, setTexture_path] = useState([]);
-    const [room_width, setRoom_width] = useState([]);
+    const [Name, setName] = useState([]);
+    const [texturePath, setTexturePath] = useState([]);
+    const [RoomWidth, setRoomWidth] = useState([]);
     let { room_id } = useParams();
     let navigate = useNavigate();
 
@@ -18,10 +18,11 @@ function ShowItemList(props) {
         axios
           .get('http://localhost:8082/api/items/' + room_id)
           .then(res => {
+            console.log(res);
             setRoom(res.data);
-            setName(res.data.name);
-            setTexture_path(res.data.texture_path);
-            setRoom_width(res.data.room_width);
+            setName(res.data.Name);
+            setTexturePath(res.data.texturePath);
+            setRoomWidth(res.data.RoomWidth);
           })
           .catch(err => { 
             console.log('Error from ShowItemList'); 
@@ -40,14 +41,14 @@ function ShowItemList(props) {
     }
 
     const onChange = e => {
-        if(e.target.name === 'name') {
+        if(e.target.name === 'Name') {
             setName(e.target.value);
         }
-        else if(e.target.name === 'texture_path') {
-            setTexture_path(e.target.value);
+        else if(e.target.name === 'texturePath') {
+            setTexturePath(e.target.value);
         }
-        else if(e.target.name === 'room_width') {
-            setRoom_width(e.target.value);
+        else if(e.target.name === 'RoomWidth') {
+            setRoomWidth(e.target.value);
         }
         else {
             console.log('No matching variable to fieldname')
@@ -58,9 +59,9 @@ function ShowItemList(props) {
         e.preventDefault();
 
         const data = {
-            name: name,
-            texture_path: texture_path,
-            room_width: room_width,
+            Name: Name,
+            RoomWidth: RoomWidth,
+            texturePath: texturePath,
         };
 
         axios
@@ -75,11 +76,11 @@ function ShowItemList(props) {
 
     let itemList;
 
-    if(!room.items) {
+    if(!room.Items) {
         itemList = 'There is no item record!';
     }
     else {
-        itemList = room.items.map((item, k) =>
+        itemList = room.Items.map((item, k) =>
             <ItemCard item={item} room_id={room_id} key={k} />
         );
     }
@@ -96,42 +97,42 @@ function ShowItemList(props) {
                     </div>
                     <div className='col-md-12'>
                         <br />
-                        <h2 className='display-4 text-center'>{name}</h2>
+                        <h2 className='display-4 text-center'>{Name}</h2>
                     </div>
                     <div className="col-md-8 m-auto">
                     <form noValidate onSubmit={onSubmit}>
                         <div className='form-group'>
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="Name">Name</label>
                             <input
                                 type='text'
                                 placeholder='Name of the Item'
-                                name='name'
+                                name='Name'
                                 className='form-control'
-                                value={name}
+                                value={Name}
                                 onChange={onChange}
                             />
                         </div>
 
                         <div className='form-group'>
-                            <label htmlFor="texture_path">Texture Path</label>
+                            <label htmlFor="texturePath">Texture Path</label>
                             <input
                                 type='text'
-                                placeholder='texture_path'
-                                name='texture_path'
+                                placeholder='texturePath'
+                                name='texturePath'
                                 className='form-control'
-                                value={texture_path}
+                                value={texturePath}
                                 onChange={onChange}
                             />
                         </div>
 
                         <div className='form-group'>
-                            <label htmlFor="room_width">Room Width Path</label>
+                            <label htmlFor="RoomWidth">Room Width Path</label>
                             <input
                                 type='text'
-                                placeholder='room_width'
-                                name='room_width'
+                                placeholder='RoomWidth'
+                                name='RoomWidth'
                                 className='form-control'
-                                value={room_width}
+                                value={RoomWidth}
                                 onChange={onChange}
                             />
                         </div>
