@@ -160,90 +160,116 @@ function CreateItem (props) {
   if(ItemType !== 'conscious.DataHolderThing') {
     // append different sets of components using inputs = [input1, input2]
     extendedInputs = (
-      <>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Examine Text'
-            name='ExamineText'
-            className='form-control'
-            value={ExamineText}
-            onChange={onChange}
+    <>
+      <div className="row">
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <input
+                type='text'
+                placeholder='Examine Text'
+                name='ExamineText'
+                className='form-control'
+                value={ExamineText}
+                onChange={onChange}
+            />
+          </div>
+        </div>
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <div className="selectWrapper">
+              <select className="form-select" name='ItemDependency' 
+                    onChange={onChange} value={ItemDependency}
+                    aria-label="Select item type">
+                <option value="-1">No dependency</option>
+                { selectItemOptions }
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="row">
+        <div className="col-md-4 m-auto">
+          <CheckboxField
+          checkLabel='Is in inventory'
+          value={IsInInventory}
+          name='IsInInventory'
+          onChange={onChange} 
           />
         </div>
-        <CheckboxField
-        checkLabel='Is in inventory'
-        value={IsInInventory}
-        name='IsInInventory'
-        onChange={onChange} 
-        />
 
-        <CheckboxField
+        <div className="col-md-4 m-auto">
+          <CheckboxField
           checkLabel='Is useable'
           value={UseAble}
           name='UseAble'
           onChange={onChange} 
-        />
+          />
+        </div>
 
-        <CheckboxField
+        <div className="col-md-4 m-auto">
+          <CheckboxField
           checkLabel='Pickupable'
           value={PickUpAble}
           name='PickUpAble'
           onChange={onChange} 
-        />
+          />
+        </div>
+      </div>
 
-        <CheckboxField
+      <div className="row">
+        <div className="col-md-4 m-auto">
+          <CheckboxField
           checkLabel='Combineable'
           value={CombineAble}
           name='CombineAble'
           onChange={onChange} 
-        />
+          />
+        </div>
 
-        <CheckboxField
+        <div className="col-md-4 m-auto">
+          <CheckboxField
           checkLabel='Giveable'
           value={GiveAble}
           name='GiveAble'
           onChange={onChange} 
-        />
+          />
+        </div>
 
-        <CheckboxField
+        <div className="col-md-4 m-auto">
+          <CheckboxField
           checkLabel='Use with'
           value={UseWith}
           name='UseWith'
           onChange={onChange} 
-        />
-
-        <select className="form-select" name='ItemDependency' 
-              onChange={onChange} defaultValue="-1"
-              aria-label="Select item type">
-          <option value="-1">No dependency</option>
-          { selectItemOptions }
-        </select>
+          />
+        </div>
+      </div>
 
         {/* 
-          <div className='form-group'>
+        <div className='form-group'>
             <input
-              type='text'
-              placeholder='Combine Item'
-              name='CombineItem'
-              className='form-control'
-              value={CombineItem}
-              onChange={onChange}
+            type='text'
+            placeholder='Combine Item'
+            name='CombineItem'
+            className='form-control'
+            value={CombineItem}
+            onChange={onChange}
             />
-          </div>
+        </div>
 
-          <div className='form-group'>
+        <div className='form-group'>
             <input
-              type='text'
-              placeholder='Thought'
-              name='Thought'
-              className='form-control'
-              value={Thought}
-              onChange={onChange}
+            type='text'
+            placeholder='Thought'
+            name='Thought'
+            className='form-control'
+            value={Thought}
+            onChange={onChange}
             />
-          </div>
+        </div>
         */}
-      </>
+    </>
     )
   }
 
@@ -262,72 +288,93 @@ function CreateItem (props) {
             <p className="lead text-center">
                 Create new item
             </p>
+          </div>
+        </div>
 
             <form noValidate onSubmit={onSubmit}>
-              <div className='form-group'>
-                <input
-                  type='text'
-                  placeholder='Name of the Item'
-                  name='Name'
-                  className='form-control'
-                  value={Name}
-                  onChange={onChange}
-                />
+              <div className="row">
+                  <div className="col-md-6 m-auto">
+                    <div className='form-group'>
+                        <input
+                        type='text'
+                        placeholder='Name of the Item'
+                        name='Name'
+                        className='form-control'
+                        value={Name}
+                        onChange={onChange}
+                        />
+                    </div>
+                  </div>
+
+                  <div className="col-md-6 m-auto">
+                    <div className='form-group'>
+                        <input
+                        type='text'
+                        placeholder='Texture Path'
+                        name='texturePath'
+                        className='form-control'
+                        value={texturePath}
+                        onChange={onChange}
+                        />
+                    </div>
+                  </div>
+                </div>
+              <div className='row'>
+                <div className="col-md-6 m-auto">
+                  <div className='form-group'>
+                    <div className="selectWrapper">
+                      <select className="form-select" name='ItemType' 
+                              onChange={onChange} defaultValue="conscious.DataHolderItem"
+                              aria-label="Select item type">
+                        <option value="conscious.DataHolderThing">Thing</option>
+                        <option value="conscious.DataHolderItem">Item</option>
+                        <option value="conscious.DataHolderCombineItem">CombineItem</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-md-6 m-auto">
+                  <div className='form-group'>
+                    <input
+                    type='number'
+                    placeholder='Rotation'
+                    name='Rotation'
+                    className='form-control'
+                    value={Rotation}
+                    onChange={onChange}
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className='form-group'>
-                <input
-                  type='text'
-                  placeholder='Texture Path'
-                  name='texturePath'
-                  className='form-control'
-                  value={texturePath}
-                  onChange={onChange}
-                />
-              </div>
+                <div className="row">
+                  <div className="col-md-6 m-auto">
+                    <div className='form-group'>
+                        <input
+                        type='number'
+                        placeholder='X Position'
+                        name='PositionX'
+                        className='form-control'
+                        value={PositionX}
+                        onChange={onChange}
+                        />
+                    </div>
+                  </div>
 
-              <div className='form-group'>
-                <select className="form-select" name='ItemType' 
-                        onChange={onChange} defaultValue="conscious.DataHolderItem"
-                        aria-label="Select item type">
-                  <option value="conscious.DataHolderThing">Thing</option>
-                  <option value="conscious.DataHolderItem">Item</option>
-                  <option value="conscious.DataHolderCombineItem">CombineItem</option>
-                </select>
-              </div>
-
-              <div className='form-group'>
-                <input
-                  type='number'
-                  placeholder='Rotation'
-                  name='Rotation'
-                  className='form-control'
-                  value={Rotation}
-                  onChange={onChange}
-                />
-              </div>
-
-              <div className='form-group'>
-                <input
-                  type='number'
-                  placeholder='X Position'
-                  name='PositionX'
-                  className='form-control'
-                  value={PositionX}
-                  onChange={onChange}
-                />
-              </div>
-
-              <div className='form-group'>
-                <input
-                  type='number'
-                  placeholder='Y Position'
-                  name='PositionY'
-                  className='form-control'
-                  value={PositionY}
-                  onChange={onChange}
-                />
-              </div>
+                  <div className="col-md-6 m-auto">
+                    <div className='form-group'>
+                      <input
+                      type='number'
+                      placeholder='Y Position'
+                      name='PositionY'
+                      className='form-control'
+                      value={PositionY}
+                      onChange={onChange}
+                      />
+                    </div>
+                  </div>
+                </div>
 
               { extendedInputs }
 
@@ -336,8 +383,6 @@ function CreateItem (props) {
                   className="btn btn-outline-warning btn-block mt-4"
               />
             </form>
-        </div>
-        </div>
       </div>
     </div>
   );
