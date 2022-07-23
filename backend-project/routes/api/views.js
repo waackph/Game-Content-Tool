@@ -10,6 +10,21 @@ const Room = require('../../models/Room');
 // @access Public
 router.get('/test', (req, res) => res.send('book route testing!'));
 
+// @route GET api/items
+// @description Get all items
+// @access Public
+router.get('/items', (req, res) => {
+  Room.find({}, { projection: { _id: 0 } })
+    .then(rooms => {
+      // select Items-Array of each room (since the projection didn't work...) 
+      roomItems = rooms.map((room, idx) => {return room.Items})
+      // flatten the array to have all item dictionaries in the same array
+      items = [].concat(...roomItems);
+      res.json(items);
+    })
+    .catch(err => res.status(404).json({ noroomsanditemsfound: 'No Items found' }));
+});
+
 // @route GET api/
 // @description Get all rooms
 // @access Public
@@ -104,16 +119,17 @@ router.post('/items/:room_id', (req, res) => {
 // @description Update item
 // @access Public
 router.put('/items/:room_id/:item_id', (req, res) => {
-    Room.findOneAndUpdate(
-      {'_id': req.params.room_id, 'Items._id': req.params.item_id},
-      {
-        '$set': {
-          'Items.$': req.body
-        }
+  req.body['_id'] = req.params.item_id;
+  Room.findOneAndUpdate(
+    {'_id': req.params.room_id, 'Items._id': req.params.item_id},
+    {
+      '$set': {
+        'Items.$': req.body
       }
-    )
-      .then(item => res.json({ msg: 'Item updated' }))
-      .catch(err => res.status(400).json({ error: 'Unable to update item' }));
+    }
+  )
+    .then(item => res.json({ msg: 'Item updated' }))
+    .catch(err => res.status(400).json({ error: 'Unable to update item' }));
 });
 
 // @route GET api/books/:id

@@ -3,6 +3,10 @@ const ThoughtNodeSchema = require('./Thought');
 
 const ItemSchema = new mongoose.Schema({
     // Required Fields for all items
+    Id: {
+        type: Number,
+        required: true,
+    },
     Name: {
         type: String,
         required: true,
