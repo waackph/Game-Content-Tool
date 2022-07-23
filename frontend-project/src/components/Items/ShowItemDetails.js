@@ -37,6 +37,9 @@ function ShowItemDetails(props) {
     }
 
     // const item = this.state.item;
+    const itemTypes = {'conscious.DataHolderThing': 'Thing', 
+                       'conscious.DataHolderItem': 'Item', 
+                       'conscious.DataHolderCombineItem': 'CombineItem'}
 
     let ItemShow = <div>
                         <table className="table table-hover table-dark">
@@ -59,7 +62,7 @@ function ShowItemDetails(props) {
                                 </tr>
                                 <tr>
                                     <td>Type</td>
-                                    <td>{ item.ItemType }</td>
+                                    <td>{ itemTypes[item.ItemType] }</td>
                                 </tr>
                                 <tr>
                                     <td>Rotation</td>

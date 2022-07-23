@@ -161,7 +161,7 @@ function UpdateItemInfo(props) {
 
     // Decide what extended fields should be added
     let extendedInputs = (<></>)
-    if(ItemType !== 'thing') {
+    if(ItemType !== 'conscious.DataHolderThing') {
         // append different sets of components using inputs = [input1, input2]
         extendedInputs = (
         <>
@@ -299,14 +299,21 @@ function UpdateItemInfo(props) {
                         </div>
 
                         <div className='form-group'>
-                            <input
-                            type='text'
-                            placeholder='Thing Type'
-                            name='ItemType'
-                            className='form-control'
-                            value={ItemType}
-                            onChange={onChange}
-                            />
+                          {/* <input
+                          type='text'
+                          placeholder='Thing Type'
+                          name='ItemType'
+                          className='form-control'
+                          value={ItemType}
+                          onChange={onChange}
+                          /> */}
+                          <select className="form-select" name='ItemType' 
+                                  value={ItemType} onChange={onChange} 
+                                  aria-label="Select item type">
+                            <option value="conscious.DataHolderThing">Thing</option>
+                            <option value="conscious.DataHolderItem">Item</option>
+                            <option value="conscious.DataHolderCombineItem">CombineItem</option>
+                          </select>
                         </div>
 
                         <div className='form-group'>

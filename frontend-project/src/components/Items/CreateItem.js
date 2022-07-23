@@ -27,6 +27,8 @@ function CreateItem (props) {
   let { room_id } = useParams();
   let navigate = useNavigate();
 
+  const itemTypes = ['Thing', 'Item', 'CombineItem']
+
   const onChange = e => {
     if(e.target.name === 'Name') {
       setName(e.target.value);
@@ -132,7 +134,7 @@ function CreateItem (props) {
 
   // Decide what extended fields should be added
   let extendedInputs = (<></>)
-  if(ItemType !== 'thing') {
+  if(ItemType !== 'conscious.DataHolderThing') {
     // append different sets of components using inputs = [input1, input2]
     extendedInputs = (
       <>
@@ -266,14 +268,19 @@ function CreateItem (props) {
               </div>
 
               <div className='form-group'>
-                <input
+                {/* <input
                   type='text'
                   placeholder='Thing Type'
                   name='ItemType'
                   className='form-control'
                   value={ItemType}
                   onChange={onChange}
-                />
+                /> */}
+                <select className="form-select" name='ItemType' onChange={onChange} aria-label="Select item type">
+                  <option value="conscious.DataHolderThing">Thing</option>
+                  <option value="conscious.DataHolderItem" selected>Item</option>
+                  <option value="conscious.DataHolderCombineItem">CombineItem</option>
+                </select>
               </div>
 
               <div className='form-group'>
