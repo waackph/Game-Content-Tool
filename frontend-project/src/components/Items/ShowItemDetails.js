@@ -18,7 +18,6 @@ function ShowItemDetails(props) {
           .get('http://localhost:8082/api/items/' + room_id + '/' + item_id)
           .then(res => {
             setItem(res.data);
-            console.log(item);
           })
           .catch(err => { 
             console.log('Error from ShowItemDetails'); 
@@ -41,7 +40,61 @@ function ShowItemDetails(props) {
                        'conscious.DataHolderItem': 'Item', 
                        'conscious.DataHolderCombineItem': 'CombineItem'}
 
-    let ItemShow = <div>
+    let optionalInfo = (<></>)
+    if(itemTypes[item.ItemType] !== 'Thing') {
+        optionalInfo = (
+                    <>
+                        <tr>
+                            <td>Rotation</td>
+                            <td>{ item.Rotation }</td>
+                        </tr>
+                        <tr>
+                            <td>Position X</td>
+                            <td>{ item.PositionX }</td>
+                        </tr>
+                        <tr>
+                            <td>Position Y</td>
+                            <td>{ item.PositionY }</td>
+                        </tr>
+                        <tr>
+                            <td>Examine Text</td>
+                            <td>{ item.ExamineText }</td>
+                        </tr>
+                        <tr>
+                            <td>Is in inventory</td>
+                            <td>{ String(item.IsInInventory) }</td>
+                        </tr>
+                        <tr>
+                            <td>Useable</td>
+                            <td>{ String(item.UseAble) }</td>
+                        </tr>
+                        <tr>
+                            <td>Pickupable</td>
+                            <td>{ String(item.PickUpAble) }</td>
+                        </tr>
+                        <tr>
+                            <td>Combineable</td>
+                            <td>{ String(item.CombineAble) }</td>
+                        </tr>
+                        <tr>
+                            <td>Giveable</td>
+                            <td>{ String(item.GiveAble) }</td>
+                        </tr>
+                        <tr>
+                            <td>Use with</td>
+                            <td>{ String(item.UseWith) }</td>
+                        </tr>
+                        <tr>
+                            <td>Item Dependency</td>
+                            <td>{ item.ItemDependency }</td>
+                        </tr>
+                    </>
+                    )
+        }
+
+    let ItemShow = (
+        <>
+                    <div>
                         <table className="table table-hover table-dark">
                             {/* <thead>
                             <tr>
@@ -52,6 +105,10 @@ function ShowItemDetails(props) {
                             </tr>
                             </thead> */}
                             <tbody>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>{ item.Id }</td>
+                                </tr>
                                 <tr>
                                     <td>Name</td>
                                     <td>{ item.Name }</td>
@@ -64,49 +121,12 @@ function ShowItemDetails(props) {
                                     <td>Type</td>
                                     <td>{ itemTypes[item.ItemType] }</td>
                                 </tr>
-                                <tr>
-                                    <td>Rotation</td>
-                                    <td>{ item.Rotation }</td>
-                                </tr>
-                                <tr>
-                                    <td>Position X</td>
-                                    <td>{ item.PositionX }</td>
-                                </tr>
-                                <tr>
-                                    <td>Position Y</td>
-                                    <td>{ item.PositionY }</td>
-                                </tr>
-                                <tr>
-                                    <td>Examine Text</td>
-                                    <td>{ item.ExamineText }</td>
-                                </tr>
-                                <tr>
-                                    <td>Is in inventory</td>
-                                    <td>{ String(item.IsInInventory) }</td>
-                                </tr>
-                                <tr>
-                                    <td>Useable</td>
-                                    <td>{ String(item.UseAble) }</td>
-                                </tr>
-                                <tr>
-                                    <td>Pickupable</td>
-                                    <td>{ String(item.PickUpAble) }</td>
-                                </tr>
-                                <tr>
-                                    <td>Combineable</td>
-                                    <td>{ String(item.CombineAble) }</td>
-                                </tr>
-                                <tr>
-                                    <td>Giveable</td>
-                                    <td>{ String(item.GiveAble) }</td>
-                                </tr>
-                                <tr>
-                                    <td>Use with</td>
-                                    <td>{ String(item.UseWith) }</td>
-                                </tr>
+                                { optionalInfo }
                             </tbody>
                         </table>
                     </div>
+                    </>
+                    )
 
     return (
         <div className='ShowItemDetails'>

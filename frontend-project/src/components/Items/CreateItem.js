@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import CheckboxField from '../InputElements/CheckboxField';
 import '../../App.css';
@@ -9,7 +9,7 @@ function CreateItem (props) {
   // TODO: Add object type input fields (ItemDependency, CombineItem, Thought)
   const [Name, setName] = useState('');
   const [texturePath, setTexturePath] = useState('');
-  const [ItemType, setItemType] = useState('');
+  const [ItemType, setItemType] = useState('conscious.DataHolderItem');
   const [Rotation, setRotation] = useState(0);
   const [PositionX, setPositionX] = useState(0);
   const [PositionY, setPositionY] = useState(0);
@@ -20,14 +20,26 @@ function CreateItem (props) {
   const [CombineAble, setCombineAble] = useState(false);
   const [GiveAble, setGiveAble] = useState(false);
   const [UseWith, setUseWith] = useState(false);
-  // const [ItemDependency, setItemDependency] = useState('');
+  const [ItemDependency, setItemDependency] = useState(-1);
   // const [CombineItem, setCombineItem] = useState('');
   // const [Thought, setThought] = useState('');
-  
+  const [allItems, setAllItems] = useState([]);
+
   let { room_id } = useParams();
   let navigate = useNavigate();
 
-  const itemTypes = ['Thing', 'Item', 'CombineItem']
+  useEffect(() => {
+    // get all items for itemDependency select input
+    axios
+      .get('http://localhost:8082/api/items')
+      .then(res => {
+        setAllItems(res.data);
+      })
+      .catch(err => { 
+        console.log('Error from getAllItems'); 
+    });
+  }, [])
+
 
   const onChange = e => {
     if(e.target.name === 'Name') {
@@ -69,14 +81,14 @@ function CreateItem (props) {
     else if(e.target.name === 'UseWith') {
       setUseWith(!UseWith);
     }
-    // else if(e.target.name === 'ItemDependency') {
-    //   setItemDependency(e.target.value);
-    // }
+    else if(e.target.name === 'ItemDependency') {
+      setItemDependency(e.target.value);
+    }
     // else if(e.target.name === 'CombineItem') {
     //   setCombineItem(e.target.value);
     // }
     // else if(e.target.name === 'Thought') {
-    //   setTexturePath(e.target.value);
+    //   setThought(e.target.value);
     // }
     else {
         console.log('No matching variable to fieldname')
@@ -85,8 +97,11 @@ function CreateItem (props) {
 
   const onSubmit = e => {
     e.preventDefault();
-
+    // generate a random number between 1 and 10000 as Id of the Item
+    // Warning: Unique ID generation not ensured for now
+    const Id = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
     const data = {
+      Id: Id,
       Name: Name,
       texturePath: texturePath,
       ItemType: ItemType,
@@ -100,7 +115,7 @@ function CreateItem (props) {
       CombineAble: CombineAble,
       GiveAble: GiveAble,
       UseWith: UseWith,
-      // ItemDependency: ItemDependency,
+      ItemDependency: ItemDependency,
       // CombineItem: CombineItem,
       // Thought: Thought
     };
@@ -110,7 +125,7 @@ function CreateItem (props) {
       .then(res => {
         setName('');
         setTexturePath('');
-        setItemType('');
+        setItemType('conscious.DataHolderItem');
         setRotation(0);
         setPositionX(0);
         setPositionY(0);
@@ -121,7 +136,7 @@ function CreateItem (props) {
         setCombineAble(false);
         setGiveAble(false);
         setUseWith(false);
-        // setItemDependency('');
+        setItemDependency(-1);
         // setCombineItem('');
         // setThought('');
         navigate(`/item-list/${room_id}`);
@@ -131,6 +146,14 @@ function CreateItem (props) {
         console.log(err);
       })
   };
+
+  let selectItemOptions = allItems.map((item, idx) => {
+    let val;
+    if(item['ItemType'] !== 'conscious.DataHolderThing') {
+      val = <option key={idx} value={item['Id']}>{item['Name']}</option>;
+    }
+    return val;
+  });
 
   // Decide what extended fields should be added
   let extendedInputs = (<></>)
@@ -190,18 +213,14 @@ function CreateItem (props) {
           onChange={onChange} 
         />
 
-        {/* 
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='Item Dependency'
-              name='ItemDependency'
-              className='form-control'
-              value={ItemDependency}
-              onChange={onChange}
-            />
-          </div>
+        <select className="form-select" name='ItemDependency' 
+              onChange={onChange} defaultValue="-1"
+              aria-label="Select item type">
+          <option value="-1">No dependency</option>
+          { selectItemOptions }
+        </select>
 
+        {/* 
           <div className='form-group'>
             <input
               type='text'
@@ -268,17 +287,11 @@ function CreateItem (props) {
               </div>
 
               <div className='form-group'>
-                {/* <input
-                  type='text'
-                  placeholder='Thing Type'
-                  name='ItemType'
-                  className='form-control'
-                  value={ItemType}
-                  onChange={onChange}
-                /> */}
-                <select className="form-select" name='ItemType' onChange={onChange} aria-label="Select item type">
+                <select className="form-select" name='ItemType' 
+                        onChange={onChange} defaultValue="conscious.DataHolderItem"
+                        aria-label="Select item type">
                   <option value="conscious.DataHolderThing">Thing</option>
-                  <option value="conscious.DataHolderItem" selected>Item</option>
+                  <option value="conscious.DataHolderItem">Item</option>
                   <option value="conscious.DataHolderCombineItem">CombineItem</option>
                 </select>
               </div>
