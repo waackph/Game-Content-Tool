@@ -92,6 +92,36 @@ function ShowItemDetails(props) {
                     )
         }
 
+    let combineItemInfo = (<></>)
+    if(itemTypes[item.ItemType] === 'CombineItem') {
+        combineItemInfo = (
+            <>
+            Combine Item:
+                <table className="table table-hover table-dark">
+                    <tbody>
+                        <tr>
+                            <td>Id</td>
+                            <td>{ item.CombineItem.Id }</td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>{ item.CombineItem.Name }</td>
+                        </tr>
+                        <tr>
+                            <td>Texture Path</td>
+                            <td>{ item.CombineItem.texturePath }</td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>{ itemTypes[item.CombineItem.ItemType] }</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </>
+        )
+    }
+
+
     let ItemShow = (
         <>
                     <div>
@@ -124,6 +154,8 @@ function ShowItemDetails(props) {
                                 { optionalInfo }
                             </tbody>
                         </table>
+
+                        { combineItemInfo }
                     </div>
                     </>
                     )

@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-const CombineItemSchema = require('./CombineItem');
 const ThoughtNodeSchema = require('./Thought');
 
-const ItemSchema = new mongoose.Schema({
+const CombineItemSchema = new mongoose.Schema({
     // Required Fields for all items
     Id: {
         type: Number,
@@ -66,14 +65,10 @@ const ItemSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    CombineItem: {
-        type: CombineItemSchema,
-        required: false,
-    },
     Thought: {
         type: ThoughtNodeSchema,
         required: false,
     },
 });
 
-module.exports = ItemSchema;
+module.exports = CombineItemSchema;
