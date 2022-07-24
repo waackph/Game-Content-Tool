@@ -20,6 +20,11 @@ router.get('/items', (req, res) => {
       roomItems = rooms.map((room, idx) => {return room.Items})
       // flatten the array to have all item dictionaries in the same array
       items = [].concat(...roomItems);
+      // get and add all combine items
+      combineItems = items.map((item, idx) => {return item.CombineItem});
+      // remove nulls
+      combineItems = combineItems.filter(item => item);
+      items = items.concat(...combineItems);
       res.json(items);
     })
     .catch(err => res.status(404).json({ noroomsanditemsfound: 'No Items found' }));

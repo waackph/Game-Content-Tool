@@ -6,7 +6,7 @@ import axios from 'axios';
 
 function CreateItem (props) {
 
-  // TODO: Add object type input fields (ItemDependency, CombineItem, Thought)
+  // TODO: Add object type input field Thought
   const [Name, setName] = useState('');
   const [texturePath, setTexturePath] = useState('');
   const [ItemType, setItemType] = useState('conscious.DataHolderItem');
