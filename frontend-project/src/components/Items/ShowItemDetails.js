@@ -38,6 +38,8 @@ function ShowItemDetails(props) {
     // const item = this.state.item;
     const itemTypes = {'conscious.DataHolderThing': 'Thing', 
                        'conscious.DataHolderItem': 'Item', 
+                       'conscious.DataHolderKey': 'Key',
+                       'conscious.DataHolderDoor': 'Door',
                        'conscious.DataHolderCombineItem': 'CombineItem'}
 
     let optionalInfo = (<></>)
