@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import CheckboxField from '../InputElements/CheckboxField';
 import '../../App.css';
 import axios from 'axios';
+import ThoughtGraph from '../InputElements/ThoughtGraph';
 
 function CreateItem (props) {
 
@@ -27,7 +28,23 @@ function CreateItem (props) {
                               'ExamineText': '', 'IsInInventory': false, 'UseAble': false, 'PickUpAble': false, 
                               'CombineAble': false, 'GiveAble': false, 'UseWith': false, 'ItemDependency': -1}
   const [CombineItem, setCombineItem] = useState(defaultCombineItem);
-  // const [Thought, setThought] = useState('');
+  
+  const defaultThought = {
+    '_id': 1,
+    'Thought': 'Descriptive Thought',
+    'Links': [
+      {
+        'Id': 2,
+        'Option': 'First link',
+        'NextNode': {
+          '_id': 3,
+          'Thought': 'First node',
+          'Links': [],
+        }
+      },
+    ],
+  }
+  const [Thought, setThought] = useState(defaultThought);
   const [allItems, setAllItems] = useState([]);
 
   let { room_id } = useParams();
@@ -159,7 +176,7 @@ function CreateItem (props) {
         setUseWith(false);
         setItemDependency(-1);
         setCombineItem(defaultCombineItem);
-        // setThought('');
+        setThought(defaultThought);
         navigate(`/item-list/${room_id}`);
       })
       .catch(err => {
@@ -267,18 +284,13 @@ function CreateItem (props) {
         </div>
       </div>
 
-        {/* 
-        <div className='form-group'>
-            <input
-            type='text'
-            placeholder='Thought'
-            name='Thought'
-            className='form-control'
-            value={Thought}
-            onChange={onChange}
-            />
-        </div>
-        */}
+      <a className="btn btn-primary" data-toggle="collapse" href="#itemThoughtInputs" 
+           role="button" aria-expanded="false" aria-controls="collapseExample">
+          Thought
+      </a>
+      <div className="collapse mt-2" id="itemThoughtInputs">
+        <ThoughtGraph data={Thought} />
+      </div>
     </>
     )
   }
