@@ -4,6 +4,7 @@ import CheckboxField from '../InputElements/CheckboxField';
 import '../../App.css';
 import axios from 'axios';
 import ThoughtGraph from '../InputElements/ThoughtGraph';
+import * as d3 from "d3";
 
 function CreateItem (props) {
 
@@ -45,10 +46,10 @@ function CreateItem (props) {
           'y': 100,
           'Links': [
             {
-              'Id': 2,
+              'Id': 4,
               'Option': 'second frist link',
               'NextNode': {
-                '_id': 3,
+                '_id': 5,
                 'Thought': 'First node',
                 'x': 120,
                 'y': 140,
@@ -56,10 +57,10 @@ function CreateItem (props) {
                 },
               },
               {
-                'Id': 2,
+                'Id': 6,
                 'Option': 'second first link',
                 'NextNode': {
-                  '_id': 3,
+                  '_id': 7,
                   'Thought': 'First node',
                   'x': 120,
                   'y': 100,
@@ -67,10 +68,10 @@ function CreateItem (props) {
                   },
                 },
                 {
-                  'Id': 2,
+                  'Id': 8,
                   'Option': 'second first link',
                   'NextNode': {
-                    '_id': 3,
+                    '_id': 9,
                     'Thought': 'First node',
                     'x': 120,
                     'y': 60,
@@ -81,6 +82,8 @@ function CreateItem (props) {
   },
   }]}
   const [Thought, setThought] = useState(defaultThought);
+  let thoughtConnections = [];
+  let exportedThoughts = {};
   const [allItems, setAllItems] = useState([]);
 
   let { room_id } = useParams();
@@ -164,6 +167,94 @@ function CreateItem (props) {
       ...CombineItem,
       [name]: value,
     })  
+  }
+
+  const getGraphConnections = connections => {
+    thoughtConnections = connections;
+  }
+
+  function retrieveThoughtDataFromGraph() {
+    const svg = d3.select('svg');
+    let tempConnections = [...thoughtConnections];
+
+    // // get all nodes of max-depth
+    // let maxDepth = 0;
+    // tempConnections.forEach(elem => {
+    //   if(elem.depth > maxDepth) {
+    //     maxDepth = elem.depth;
+    //   }
+    // })
+
+    // // get max depth connections
+    // let maxDepthConnections = [];
+    // let connectionsToDelete = [];
+    // tempConnections.forEach((elem, index) => {
+    //   if(elem.depth === maxDepth) {
+    //     maxDepthConnections.push(elem);
+    //     connectionsToDelete.push(index);
+    //   }
+    // })
+
+    // // remove connections already stored
+    // connectionsToDelete.sort((a, b) => { return a-b; });
+    // for(var i = connectionsToDelete.length-1; i >= 0; i--){
+    //   tempConnections.splice(connectionsToDelete[i], 1);
+    // }
+
+    // // start recursion
+    // result = addNodeData(tempConnections, nodeId);
+
+    /////////
+
+    const rootConnection = thoughtConnections[0];
+    const rootNodeId = rootConnection.parentNode;
+    let root = svg.select('#n'+rootNodeId).data()[0];
+    root['Links'] = addLinksToThoughtData(svg, tempConnections, rootNodeId);
+    exportedThoughts = root;
+    console.log(root);
+    /////////
+
+    // const nextNodeId = rootConnection.childNode;
+    // const linkId = rootConnection.link;
+    // const rootNode = svg.select('#n'+rootNodeId);
+    // const nextNode = svg.select('#n'+nextNodeId);
+    // const link = svg.select('#e'+linkId);
+    // exportedThoughts = rootNode.data()[0];
+    // console.log(rootNode.data()[0]);
+    // console.log(thoughtConnections);
+  }
+
+  function addLinksToThoughtData(svg, connections, parentNodeId) {
+    let links = [];
+
+    // get connections TODO: and remove from array
+    let tmp = [];
+    let connectionsToDelete = [];
+    connections.forEach((elem, index) => {
+      if(elem.parentNode === parentNodeId) {
+        tmp.push(elem);
+        connectionsToDelete.push(index);
+      }
+    })
+    // remove connections retrieved
+    connectionsToDelete.sort((a, b) => { return a-b; });
+    for(var i = connectionsToDelete.length-1; i >= 0; i--){
+      connections.splice(connectionsToDelete[i], 1);
+    }
+
+    // if links are present add link and childNode (where for childNode we again call the addLinks... function)
+    if(tmp.length > 0) {
+      tmp.forEach(connection => {
+        const linkId = connection.link;
+        const nextNodeId = connection.childNode;
+        let linkData = svg.select('#e'+linkId).data()[0];
+        let nextNodeData = svg.select('#n'+nextNodeId).data()[0];
+        nextNodeData['Links'] = addLinksToThoughtData(svg, connections, nextNodeId);
+        linkData['NextNode'] = nextNodeData;
+        links.push(linkData);
+      })
+    }
+    return links;
   }
 
   const onSubmit = e => {
@@ -325,7 +416,7 @@ function CreateItem (props) {
           Thought
       </a>
       <div className="collapse mt-2" id="itemThoughtInputs">
-        <ThoughtGraph data={Thought} />
+        <ThoughtGraph data={Thought} getConnections={getGraphConnections} />
       </div>
     </>
     )
@@ -630,6 +721,7 @@ function CreateItem (props) {
                   className="btn btn-outline-warning btn-block mt-4"
               />
             </form>
+            <button onClick={retrieveThoughtDataFromGraph}>Export!</button>
       </div>
     </div>
   );

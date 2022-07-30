@@ -3,40 +3,38 @@ import * as d3 from "d3";
 // Using this post as a guideline: https://ncoughlin.com/posts/d3-react/
 // This post is better: https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
 
-function createGraphFromNestedObject(canvas, links, xPos, yPos) {
-  // recursive d3 function: https://stackoverflow.com/questions/14380520/how-do-i-write-recursive-d3-js-code-to-deal-with-nested-data-structures
-  // parentNode.text(function(d){return d.Thought});
-  const xSpace = 40;
-  const ySpace = 40;
-  let xPosNext = xPos + xSpace;
-  let i = Math.floor(links.length/2);
+function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections, depth) {
   Array.prototype.forEach.call(links, link => {
+    // Store connection
+    connections.push({'parentNode': id, 'childNode': link.NextNode._id, 'link': link.Id, 'depth': depth});
     // Add next node
-    let yPosNext = yPos + ySpace*i;
-    canvas.append('circle').attr("r", 15).attr("cx", xPosNext).attr('cy', yPosNext).data([link.NextNode]);
+    const nodeData = {...link.NextNode};
+    delete nodeData['Links'];
+    canvas.append('circle').attr("r", 15).attr("cx", link.NextNode.x).attr('cy', link.NextNode.y).data([nodeData]).attr("id", function(d) { return "n" + d._id; });
     // Add line between current and next node
+    const linkData = {...link};
+    delete nodeData['NextNode'];
     canvas.append('line')
       .style("stroke", "black")
       .style("stroke-width", 2)
       .attr("x1", xPos)
       .attr("y1", yPos)
-      .attr("x2", xPosNext)
-      .attr("y2", yPosNext); 
-    i = i-1;
-    createGraphFromNestedObject(canvas, link.NextNode.Links, xPosNext, yPosNext);
+      .attr("x2", link.NextNode.x)
+      .attr("y2", link.NextNode.y)
+      .data([linkData]).attr("id", function(d) { return "e" + d.Id; });
+    createGraphFromNestedObject(canvas, link.NextNode.Links, link.NextNode._id, link.NextNode.x, link.NextNode.y, connections, depth+1);
   });
 }
 
-const ThoughtGraph = ({ data }) => {
+const ThoughtGraph = ({ data, getConnections }) => {
   const svgRef = useRef(null);
 
-    // Chart dimensions
-    let dimensions = {
+  // Chart dimensions
+  let dimensions = {
       width: 1000,
       height: 200,
       margin: {left: 50, right: 50, top: 50, bottom: 50},
     };
-  
 
   const { width, height, margin } = dimensions;
   const svgWidth = width + margin.left + margin.right;
@@ -44,6 +42,8 @@ const ThoughtGraph = ({ data }) => {
 
   useEffect(() => {
     // D3 code
+
+    let graphConnections = [];
 
     // Create root container where we will append all other chart elements
     const svgEl = d3.select(svgRef.current);
@@ -59,11 +59,17 @@ const ThoughtGraph = ({ data }) => {
     // let rootNode = svg.selectAll('g').data([data])
     //   .enter()
     //     .append('g');
-    let nX = 40;
-    let nY = 100;
-    svg.append('circle').attr("r", 15).attr("cx", nX).attr('cy', nY).data([data]);
-    createGraphFromNestedObject(svg, data.Links, nX, nY);
-  }, [data, margin.left, margin.top]); // redraw chart if data changes (margins added because react is complaining otherwise...)
+    // Make a copy of data and remove links to have only data relevant for this node saved
+    const nodeData = {...data};
+    delete nodeData['Links'];
+    svg.append('circle').attr("r", 15).attr("cx", data.x).attr('cy', data.y).data([nodeData]).attr("id", function(d) { return "n" + d._id; });
+    createGraphFromNestedObject(svg, data.Links, data._id, data.x, data.y, graphConnections, 1);
+    // Check if data is present
+    // svg.selectAll('circle').each(function(d){console.log(d.Thought)});
+    // svg.selectAll('line').each(function(d){console.log(d.Option)});
+    // console.log(graphConnections);
+    getConnections(graphConnections);
+  }, [data, margin.left, margin.top, getConnections]); // redraw chart if data changes (margins added because react is complaining otherwise...)
 
   return <svg ref={svgRef} width={svgWidth} height={svgHeight} />;
 };
