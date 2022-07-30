@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
+import NodeInput from "./NodeInput";
 // Using this post as a guideline: https://ncoughlin.com/posts/d3-react/
 // This post is better: https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
 
@@ -27,6 +28,27 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
 }
 
 const ThoughtGraph = ({ data, getConnections }) => {
+  const [nodeInputData, setNodeInputData] = useState({});
+
+  const onChangeInputNodeData = e => {
+    e.preventDefault();
+    let { name, value } = e.target;
+    // In case of checkbox value, assign correct boolean
+    if(value === 'on') {
+      name = name.substring(4);
+      value = !nodeInputData[name];
+    }
+    setNodeInputData({
+      ...nodeInputData,
+      [name]: value,
+    })  
+  }
+
+  const assignDataToNode = e => {
+    e.preventDefault();
+    d3.select('svg').select('#n'+nodeInputData._id).data([nodeInputData]);
+  }
+
   const svgRef = useRef(null);
 
   // Chart dimensions
@@ -39,6 +61,7 @@ const ThoughtGraph = ({ data, getConnections }) => {
   const { width, height, margin } = dimensions;
   const svgWidth = width + margin.left + margin.right;
   const svgHeight = height + margin.top + margin.bottom;
+  let inputMaskActive = -1;
 
   useEffect(() => {
     // D3 code
@@ -62,8 +85,31 @@ const ThoughtGraph = ({ data, getConnections }) => {
     // Make a copy of data and remove links to have only data relevant for this node saved
     const nodeData = {...data};
     delete nodeData['Links'];
-    svg.append('circle').attr("r", 15).attr("cx", data.x).attr('cy', data.y).data([nodeData]).attr("id", function(d) { return "n" + d._id; });
+    svg.append('circle')
+      .data([nodeData])
+      .attr("r", 15)
+      .attr("cx", data.x).attr('cy', data.y)
+      .attr("id", function(d) { return "n" + d._id; });
     createGraphFromNestedObject(svg, data.Links, data._id, data.x, data.y, graphConnections, 1);
+
+    // set up events for all graph elements
+    svg.selectAll('circle')
+      .on('click', function(e, d) {
+        if(inputMaskActive === d._id) {
+          setNodeInputData({});
+          inputMaskActive = -1;
+        }
+        else {
+          setNodeInputData(d);
+          inputMaskActive = d._id;
+        }
+      });
+    
+    // set inputNodeData if present
+    // console.log(d3.select('#ThoughtText').attr('value'))
+    // console.log(d3.select('#ThoughtText').attr('id'))
+    // console.log(d3.select('#ThoughtText'))
+
     // Check if data is present
     // svg.selectAll('circle').each(function(d){console.log(d.Thought)});
     // svg.selectAll('line').each(function(d){console.log(d.Option)});
@@ -71,7 +117,12 @@ const ThoughtGraph = ({ data, getConnections }) => {
     getConnections(graphConnections);
   }, [data, margin.left, margin.top, getConnections]); // redraw chart if data changes (margins added because react is complaining otherwise...)
 
-  return <svg ref={svgRef} width={svgWidth} height={svgHeight} />;
+  return ( 
+    <div id="divTest">
+      <svg ref={svgRef} width={svgWidth} height={svgHeight} />
+      <NodeInput data={nodeInputData} onChange={onChangeInputNodeData} assignDataToNode={assignDataToNode} />
+    </div>
+    );
 };
 
 export default ThoughtGraph;

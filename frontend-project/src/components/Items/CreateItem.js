@@ -4,6 +4,8 @@ import CheckboxField from '../InputElements/CheckboxField';
 import '../../App.css';
 import axios from 'axios';
 import ThoughtGraph from '../InputElements/ThoughtGraph';
+import NodeInput from '../InputElements/NodeInput';
+
 import * as d3 from "d3";
 
 function CreateItem (props) {
@@ -82,9 +84,13 @@ function CreateItem (props) {
   },
   }]}
   const [Thought, setThought] = useState(defaultThought);
+  const [allItems, setAllItems] = useState([]);
+  const [nodeInputData, setNodeInputData] = useState({});
+
   let thoughtConnections = [];
   let exportedThoughts = {};
-  const [allItems, setAllItems] = useState([]);
+  let linkInputData = {};
+  let triggerNodeSubmit = false;
 
   let { room_id } = useParams();
   let navigate = useNavigate();
@@ -169,65 +175,52 @@ function CreateItem (props) {
     })  
   }
 
+  const onChangeInputNodeData = e => {
+    e.preventDefault();
+    let { name, value } = e.target;
+    // In case of checkbox value, assign correct boolean
+    if(value === 'on') {
+      name = name.substring(4);
+      value = !nodeInputData[name];
+    }
+    setNodeInputData({
+      ...nodeInputData,
+      [name]: value,
+    })  
+  }
+
   const getGraphConnections = connections => {
     thoughtConnections = connections;
   }
 
-  function retrieveThoughtDataFromGraph() {
+  const onNodeClick = (e, node) => {
+    e.preventDefault();
+    setNodeInputData(node);
+  }
+
+  const assignDataToNode = e => {
+    e.preventDefault();
+    triggerNodeSubmit = !triggerNodeSubmit;
+    d3.select('svg').select('#n'+nodeInputData._id).data([nodeInputData]);
+  }
+
+  function retrieveThoughtDataFromGraph(e) {
+    e.preventDefault();
     const svg = d3.select('svg');
     let tempConnections = [...thoughtConnections];
-
-    // // get all nodes of max-depth
-    // let maxDepth = 0;
-    // tempConnections.forEach(elem => {
-    //   if(elem.depth > maxDepth) {
-    //     maxDepth = elem.depth;
-    //   }
-    // })
-
-    // // get max depth connections
-    // let maxDepthConnections = [];
-    // let connectionsToDelete = [];
-    // tempConnections.forEach((elem, index) => {
-    //   if(elem.depth === maxDepth) {
-    //     maxDepthConnections.push(elem);
-    //     connectionsToDelete.push(index);
-    //   }
-    // })
-
-    // // remove connections already stored
-    // connectionsToDelete.sort((a, b) => { return a-b; });
-    // for(var i = connectionsToDelete.length-1; i >= 0; i--){
-    //   tempConnections.splice(connectionsToDelete[i], 1);
-    // }
-
-    // // start recursion
-    // result = addNodeData(tempConnections, nodeId);
-
-    /////////
 
     const rootConnection = thoughtConnections[0];
     const rootNodeId = rootConnection.parentNode;
     let root = svg.select('#n'+rootNodeId).data()[0];
     root['Links'] = addLinksToThoughtData(svg, tempConnections, rootNodeId);
     exportedThoughts = root;
-    console.log(root);
-    /////////
-
-    // const nextNodeId = rootConnection.childNode;
-    // const linkId = rootConnection.link;
-    // const rootNode = svg.select('#n'+rootNodeId);
-    // const nextNode = svg.select('#n'+nextNodeId);
-    // const link = svg.select('#e'+linkId);
-    // exportedThoughts = rootNode.data()[0];
-    // console.log(rootNode.data()[0]);
-    // console.log(thoughtConnections);
+    console.log(exportedThoughts);
   }
 
   function addLinksToThoughtData(svg, connections, parentNodeId) {
     let links = [];
 
-    // get connections TODO: and remove from array
+    // get connections
     let tmp = [];
     let connectionsToDelete = [];
     connections.forEach((elem, index) => {
@@ -417,6 +410,7 @@ function CreateItem (props) {
       </a>
       <div className="collapse mt-2" id="itemThoughtInputs">
         <ThoughtGraph data={Thought} getConnections={getGraphConnections} />
+        {/* <NodeInput data={nodeInputData} onChange={onChangeInputNodeData} assignDataToNode={assignDataToNode} /> */}
       </div>
     </>
     )
@@ -713,6 +707,8 @@ function CreateItem (props) {
 
               { extendedInputs }
 
+              <button onClick={retrieveThoughtDataFromGraph}>Export!</button>
+
               {/* Add combine Item fields */}
               { combineItemInputs }
 
@@ -721,7 +717,6 @@ function CreateItem (props) {
                   className="btn btn-outline-warning btn-block mt-4"
               />
             </form>
-            <button onClick={retrieveThoughtDataFromGraph}>Export!</button>
       </div>
     </div>
   );
