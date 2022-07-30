@@ -13,7 +13,7 @@ function NodeInput({data, onChange, assignDataToNode}) {
             name='Thought' />
 
             <div className="graphElemId" readOnly>{data._id}</div>
-            <button onClick={assignDataToNode}> Submit </button>
+            <button onClick={assignDataToNode}>Submit</button>
         </div>
         );
     }

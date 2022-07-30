@@ -4,7 +4,6 @@ import CheckboxField from '../InputElements/CheckboxField';
 import '../../App.css';
 import axios from 'axios';
 import ThoughtGraph from '../InputElements/ThoughtGraph';
-import NodeInput from '../InputElements/NodeInput';
 
 import * as d3 from "d3";
 
@@ -85,12 +84,9 @@ function CreateItem (props) {
   }]}
   const [Thought, setThought] = useState(defaultThought);
   const [allItems, setAllItems] = useState([]);
-  const [nodeInputData, setNodeInputData] = useState({});
 
   let thoughtConnections = [];
   let exportedThoughts = {};
-  let linkInputData = {};
-  let triggerNodeSubmit = false;
 
   let { room_id } = useParams();
   let navigate = useNavigate();
@@ -175,33 +171,8 @@ function CreateItem (props) {
     })  
   }
 
-  const onChangeInputNodeData = e => {
-    e.preventDefault();
-    let { name, value } = e.target;
-    // In case of checkbox value, assign correct boolean
-    if(value === 'on') {
-      name = name.substring(4);
-      value = !nodeInputData[name];
-    }
-    setNodeInputData({
-      ...nodeInputData,
-      [name]: value,
-    })  
-  }
-
   const getGraphConnections = connections => {
     thoughtConnections = connections;
-  }
-
-  const onNodeClick = (e, node) => {
-    e.preventDefault();
-    setNodeInputData(node);
-  }
-
-  const assignDataToNode = e => {
-    e.preventDefault();
-    triggerNodeSubmit = !triggerNodeSubmit;
-    d3.select('svg').select('#n'+nodeInputData._id).data([nodeInputData]);
   }
 
   function retrieveThoughtDataFromGraph(e) {
@@ -410,7 +381,6 @@ function CreateItem (props) {
       </a>
       <div className="collapse mt-2" id="itemThoughtInputs">
         <ThoughtGraph data={Thought} getConnections={getGraphConnections} />
-        {/* <NodeInput data={nodeInputData} onChange={onChangeInputNodeData} assignDataToNode={assignDataToNode} /> */}
       </div>
     </>
     )

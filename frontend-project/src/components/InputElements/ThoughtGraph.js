@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import NodeInput from "./NodeInput";
+import LinkInput from "./LinkInput";
 // Using this post as a guideline: https://ncoughlin.com/posts/d3-react/
 // This post is better: https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
 
@@ -17,7 +18,7 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
     delete nodeData['NextNode'];
     canvas.append('line')
       .style("stroke", "black")
-      .style("stroke-width", 2)
+      .style("stroke-width", 5)
       .attr("x1", xPos)
       .attr("y1", yPos)
       .attr("x2", link.NextNode.x)
@@ -29,6 +30,7 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
 
 const ThoughtGraph = ({ data, getConnections }) => {
   const [nodeInputData, setNodeInputData] = useState({});
+  const [linkInputData, setLinkInputData] = useState({});
 
   const onChangeInputNodeData = e => {
     e.preventDefault();
@@ -44,9 +46,28 @@ const ThoughtGraph = ({ data, getConnections }) => {
     })  
   }
 
+  const onChangeInputLinkData = e => {
+    e.preventDefault();
+    let { name, value } = e.target;
+    // In case of checkbox value, assign correct boolean
+    if(value === 'on') {
+      name = name.substring(4);
+      value = !linkInputData[name];
+    }
+    setLinkInputData({
+      ...linkInputData,
+      [name]: value,
+    })  
+  }
+
   const assignDataToNode = e => {
     e.preventDefault();
     d3.select('svg').select('#n'+nodeInputData._id).data([nodeInputData]);
+  }
+
+  const assignDataToLink = e => {
+    e.preventDefault();
+    d3.select('svg').select('#n'+linkInputData._id).data([linkInputData]);
   }
 
   const svgRef = useRef(null);
@@ -61,12 +82,11 @@ const ThoughtGraph = ({ data, getConnections }) => {
   const { width, height, margin } = dimensions;
   const svgWidth = width + margin.left + margin.right;
   const svgHeight = height + margin.top + margin.bottom;
-  let inputMaskActive = -1;
 
   useEffect(() => {
     // D3 code
-
     let graphConnections = [];
+    let inputMaskActive = -1;
 
     // Create root container where we will append all other chart elements
     const svgEl = d3.select(svgRef.current);
@@ -77,11 +97,7 @@ const ThoughtGraph = ({ data, getConnections }) => {
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Draw elements
-    // svg.append("circle").attr("r", 15);
-    // Only Enter, because of recursion update and exit are not working as usual
-    // let rootNode = svg.selectAll('g').data([data])
-    //   .enter()
-    //     .append('g');
+
     // Make a copy of data and remove links to have only data relevant for this node saved
     const nodeData = {...data};
     delete nodeData['Links'];
@@ -98,18 +114,30 @@ const ThoughtGraph = ({ data, getConnections }) => {
         if(inputMaskActive === d._id) {
           setNodeInputData({});
           inputMaskActive = -1;
+          d3.select(this).style('fill', 'black');
         }
         else {
+          setLinkInputData({});
           setNodeInputData(d);
           inputMaskActive = d._id;
+          d3.select(this).style('fill', 'blue');
         }
       });
-    
-    // set inputNodeData if present
-    // console.log(d3.select('#ThoughtText').attr('value'))
-    // console.log(d3.select('#ThoughtText').attr('id'))
-    // console.log(d3.select('#ThoughtText'))
-
+    svg.selectAll('line').lower();
+    svg.selectAll('line')
+      .on('click', function(e, d) {
+        if(inputMaskActive === d.Id) {
+          setLinkInputData({});
+          inputMaskActive = -1;
+          d3.select(this).style('stroke', 'black');
+        }
+        else {
+          setNodeInputData({});
+          setLinkInputData(d);
+          inputMaskActive = d.Id;
+          d3.select(this).style('stroke', 'blue');
+        }
+      });
     // Check if data is present
     // svg.selectAll('circle').each(function(d){console.log(d.Thought)});
     // svg.selectAll('line').each(function(d){console.log(d.Option)});
@@ -118,9 +146,10 @@ const ThoughtGraph = ({ data, getConnections }) => {
   }, [data, margin.left, margin.top, getConnections]); // redraw chart if data changes (margins added because react is complaining otherwise...)
 
   return ( 
-    <div id="divTest">
+    <div>
       <svg ref={svgRef} width={svgWidth} height={svgHeight} />
       <NodeInput data={nodeInputData} onChange={onChangeInputNodeData} assignDataToNode={assignDataToNode} />
+      <LinkInput data={linkInputData} onChange={onChangeInputLinkData} assignDataToNode={assignDataToLink} />
     </div>
     );
 };
