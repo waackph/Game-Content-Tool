@@ -32,6 +32,8 @@ function CreateItem (props) {
   const defaultThought = {
     '_id': 1,
     'Thought': 'Descriptive Thought',
+    'x': 40,
+    'y': 100,
     'Links': [
       {
         'Id': 2,
@@ -39,11 +41,45 @@ function CreateItem (props) {
         'NextNode': {
           '_id': 3,
           'Thought': 'First node',
-          'Links': [],
-        }
-      },
-    ],
-  }
+          'x': 80,
+          'y': 100,
+          'Links': [
+            {
+              'Id': 2,
+              'Option': 'second frist link',
+              'NextNode': {
+                '_id': 3,
+                'Thought': 'First node',
+                'x': 120,
+                'y': 140,
+                'Links': [],
+                },
+              },
+              {
+                'Id': 2,
+                'Option': 'second first link',
+                'NextNode': {
+                  '_id': 3,
+                  'Thought': 'First node',
+                  'x': 120,
+                  'y': 100,
+                  'Links': [],
+                  },
+                },
+                {
+                  'Id': 2,
+                  'Option': 'second first link',
+                  'NextNode': {
+                    '_id': 3,
+                    'Thought': 'First node',
+                    'x': 120,
+                    'y': 60,
+                    'Links': [],
+                    },
+                  },
+              ],
+  },
+  }]}
   const [Thought, setThought] = useState(defaultThought);
   const [allItems, setAllItems] = useState([]);
 
