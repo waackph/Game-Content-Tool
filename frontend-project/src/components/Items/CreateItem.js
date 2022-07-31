@@ -677,7 +677,7 @@ function CreateItem (props) {
 
               { extendedInputs }
 
-              <button onClick={retrieveThoughtDataFromGraph}>Export!</button>
+              <button onClick={retrieveThoughtDataFromGraph} className="m-2">Export!</button>
 
               {/* Add combine Item fields */}
               { combineItemInputs }
