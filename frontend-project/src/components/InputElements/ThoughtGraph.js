@@ -128,7 +128,8 @@ const ThoughtGraph = ({ data, getConnections }) => {
         .attr("y1", d.y)
         .attr("x2", d.x)
         .attr("y2", d.y)
-        .data([{'Id': Id}]).attr("id", function(d) { return "e" + Id; });
+        .data([{'Id': Id}]).attr("id", function(d) { return "e" + Id; })
+        .on('click', onLinkClick);
       newLineId = Id;
       startNode = d._id;
     }
@@ -146,7 +147,9 @@ const ThoughtGraph = ({ data, getConnections }) => {
       if(destNode !== startNode && destNode !== -1) {
         const tmpNode = d3.select('#n' + destNode);
         d3.select('#e' + newLineId).attr("x2", tmpNode.attr('cx')).attr("y2", tmpNode.attr('cy'));
+        console.log(graphConnections);
         graphConnections.push({'parentNode': startNode, 'childNode': destNode, 'link': newLineId, 'depth': 1});
+        console.log(graphConnections);
       }
       else {
         d3.select('#e' + newLineId).remove();
@@ -311,6 +314,18 @@ const ThoughtGraph = ({ data, getConnections }) => {
       .attr('id', 'chartGroup')
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
+    // Add zoom and pan
+    function handleZoom(e) {
+      d3.select('svg g')
+        .attr('transform', e.transform);
+    }
+    let zoom = d3.zoom()
+      .scaleExtent([1, 5])
+      // .translateExtent([[0, 0], [width, height]])  // constraints area to pan in
+      .on('zoom', handleZoom);
+    d3.select('svg')
+      .call(zoom);
+
     // Draw elements
 
     // Make a copy of data and remove links to have only data relevant for this node saved
@@ -343,7 +358,17 @@ const ThoughtGraph = ({ data, getConnections }) => {
     // svg.selectAll('line').each(function(d){console.log(d.Option)});
     // console.log(graphConnections);
     getConnections(graphConnections);
-  }, [data, margin.left, margin.top, getConnections]); // redraw chart if data changes (margins added because react is complaining otherwise...)
+  }, [data, getConnections,
+      margin.left, margin.top,
+      // graphConnections,
+      // dragstarted, dragging, dragended, 
+      // onLinkClick, onNodeClick, 
+      // onNodeEnter, onNodeOut,
+    ]); // redraw chart if data changes (margins added because react is complaining otherwise...)
+
+    // TODO: For dependency array look into:
+    // UseCallback: https://www.w3schools.com/react/react_usecallback.asp
+    // UseMemo: https://www.w3schools.com/react/react_usememo.asp
 
   return ( 
     <div>
