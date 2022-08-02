@@ -1,4 +1,4 @@
-function NodeInput({data, onChange, assignDataToNode}) {
+function NodeInput({data, onChange, assignDataToNode, deleteNode}) {
     if (Object.keys(data).length === 0) {
         return(<></>);
     }
@@ -14,6 +14,7 @@ function NodeInput({data, onChange, assignDataToNode}) {
 
             <div className="graphElemId" readOnly>{data._id}</div>
             <button onClick={assignDataToNode}>Submit</button>
+            <button onClick={deleteNode} value={data._id}>Delete</button>
         </div>
         );
     }

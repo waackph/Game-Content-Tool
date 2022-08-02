@@ -1,4 +1,4 @@
-function LinkInput({data, onChange, assignDataToLink}) {
+function LinkInput({data, onChange, assignDataToLink, deleteLink}) {
     if (Object.keys(data).length === 0) {
         return(<></>);
     }
@@ -14,6 +14,7 @@ function LinkInput({data, onChange, assignDataToLink}) {
 
             <div className="graphElemId" readOnly>{data.Id}</div>
             <button onClick={assignDataToLink}>Submit</button>
+            <button onClick={deleteLink} value={data.Id}>Delete</button>
         </div>
         );
     }

@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import NodeInput from "./NodeInput";
 import LinkInput from "./LinkInput";
+import '../../App.css';
 // Using this post as a guideline: https://ncoughlin.com/posts/d3-react/
 // This post is better: https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
 
@@ -51,6 +52,31 @@ const ThoughtGraph = ({ data, getConnections }) => {
   const { width, height, margin } = dimensions;
   const svgWidth = width + margin.left + margin.right;
   const svgHeight = height + margin.top + margin.bottom;
+
+  const deleteNode = e => {
+    e.preventDefault();
+    // Remove Node and all connecting edges
+    const currentNodeId = e.target.value;
+    let idxToRemove = [];
+    graphConnections.forEach((elem, idx) => {
+      if(currentNodeId === elem.parentNode || currentNodeId === elem.childNode) {
+        d3.select('#e' + elem.link).remove();
+        idxToRemove.push(idx);
+      }
+    });
+    idxToRemove.sort((a, b) => { return a-b; });
+    for(var i = idxToRemove.length-1; i >= 0; i--){
+      graphConnections.splice(idxToRemove[i], 1);
+    }
+    d3.select('#n' + currentNodeId).remove();
+  }
+
+  const deleteLink = e => {
+    e.preventDefault();
+    const currentLinkId = e.target.value;
+    d3.select('#e' + currentLinkId).remove();
+    graphConnections.filter(elem => { return elem.link === currentLinkId; });
+  }
 
   const onChangeInputNodeData = e => {
     e.preventDefault();
@@ -107,6 +133,7 @@ const ThoughtGraph = ({ data, getConnections }) => {
       startNode = d._id;
     }
     else {
+      console.log('active!');
       d3.select(this).raise().classed("active", true);
     }
   }
@@ -132,6 +159,7 @@ const ThoughtGraph = ({ data, getConnections }) => {
       inAddEdgeMode = false;
     }
     else {
+      console.log('inactive!');
       d3.select(this).classed("active", false);
     }
   }
@@ -246,7 +274,9 @@ const ThoughtGraph = ({ data, getConnections }) => {
       .attr("r", 15)
       .attr("cx", svgWidth/2).attr('cy', svgHeight/2)
       .style('fill', 'grey')
+      .attr('class', 'active')
       .attr("id", function(d) { return "n" + d._id; });
+    circle.classed("active", false);
     circle.on('click', onNodeClick)
       .on('mouseenter', onNodeEnter)
       .on('mouseout', onNodeOut);
@@ -318,8 +348,8 @@ const ThoughtGraph = ({ data, getConnections }) => {
   return ( 
     <div>
       <svg ref={svgRef} width={svgWidth} height={svgHeight} />
-      <NodeInput data={nodeInputData} onChange={onChangeInputNodeData} assignDataToNode={assignDataToNode} />
-      <LinkInput data={linkInputData} onChange={onChangeInputLinkData} assignDataToNode={assignDataToLink} />
+      <NodeInput data={nodeInputData} onChange={onChangeInputNodeData} assignDataToNode={assignDataToNode} deleteNode={deleteNode} />
+      <LinkInput data={linkInputData} onChange={onChangeInputLinkData} assignDataToLink={assignDataToLink} deleteLink={deleteLink} />
       <button className="m-2" onClick={onAddNode}>Add Node</button>
       <button onClick={onAddLink}>Add Edge</button>
     </div>
