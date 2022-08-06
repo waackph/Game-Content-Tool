@@ -2,13 +2,17 @@ const mongoose = require('mongoose');
 const AnimationSchema = require('./Animation');
 
 const ThoughtLinkSchema = new mongoose.Schema({
-    $type: {
-        type: String,
-        required: true,
+    // $type: {
+    //     type: String,
+    //     required: true,
+    // },
+    Id: {
+        type: Number,
+        required: false,
     },
     _validMoods: {
         type: [Number],
-        required: true,
+        required: false,
     },
     Option: {
         type: String,
@@ -16,11 +20,20 @@ const ThoughtLinkSchema = new mongoose.Schema({
     },
     IsLocked: {
         type: Boolean,
-        required: true,
+        required: false,
     },
     NextNode: {
-        type: mongoose.Schema.Types.ObjectId,  // ThoughtNodeSchema,
-        ref: 'ThoughtNodeSchema',
+        type: mongoose.Schema.Types.Mixed, // mongoose.Schema.Types.ObjectId,  // ThoughtNodeSchema,
+        // ref: 'ThoughtNodeSchema',
+        required: false,
+    },
+    x: {
+        type: Number,
+        required: false,
+    },
+    y: {
+        type: Number,
+        required: false,
     },
     
     // Only required for FinalThoughtLinks
@@ -30,11 +43,11 @@ const ThoughtLinkSchema = new mongoose.Schema({
     },
     MoodChange: {
         type: Number,
-        required: true,
+        required: false,
     },
     UnlockId: { // is an Object ID
         type: String,
-        required: true,
+        required: false,
     },
     Animation: {
         type: AnimationSchema,
@@ -43,26 +56,38 @@ const ThoughtLinkSchema = new mongoose.Schema({
 });
 
 const ThoughtNodeSchema = new mongoose.Schema({
+    _id: {
+        type: Number,
+        required: false,
+    },
     Thought: {
         type: String,
         required: true,
     },
     IsRoot: {
         type: Boolean,
-        required: true,
+        required: false,
     },
     ThingId: { // is an Object ID
         type: String,
-        required: true,
+        required: false,
     },
     _linkageId: { // is an Object ID
         type: String,
-        required: true,
+        required: false,
     },
     Links: {
         type: [ThoughtLinkSchema],
-        required: true,
-    }
+        required: false,
+    },
+    x: {
+        type: Number,
+        required: false,
+    },
+    y: {
+        type: Number,
+        required: false,
+    },
 });
 
 module.exports = ThoughtNodeSchema;

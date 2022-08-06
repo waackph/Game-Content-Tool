@@ -30,8 +30,8 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
 }
 
 const ThoughtGraph = ({ data, getConnections }) => {
-  const [nodeInputData, setNodeInputData] = useState({});
-  const [linkInputData, setLinkInputData] = useState({});
+  const [nodeInputData, setNodeInputData] = useState({'IsRoot': false});
+  const [linkInputData, setLinkInputData] = useState({'IsLocked': false, '_validMoods': [0]});
 
   let graphConnections = [];
   let inputMaskActive = -1;
@@ -83,9 +83,9 @@ const ThoughtGraph = ({ data, getConnections }) => {
     let { name, value } = e.target;
     // In case of checkbox value, assign correct boolean
     if(value === 'on') {
-      name = name.substring(4);
       value = !nodeInputData[name];
     }
+    // assignDataToNode(e);
     setNodeInputData({
       ...nodeInputData,
       [name]: value,
@@ -97,9 +97,9 @@ const ThoughtGraph = ({ data, getConnections }) => {
     let { name, value } = e.target;
     // In case of checkbox value, assign correct boolean
     if(value === 'on') {
-      name = name.substring(4);
       value = !linkInputData[name];
     }
+    // assignDataToLink(e);
     setLinkInputData({
       ...linkInputData,
       [name]: value,
@@ -142,14 +142,12 @@ const ThoughtGraph = ({ data, getConnections }) => {
   const dragended = d => {
     if(inAddEdgeMode) {
       console.log('drag end: remove new line');
-
-      // TODO: only add edge if connection does not exist
-      if(destNode !== startNode && destNode !== -1) {
+      const destNodeExists = graphConnections.some(elem => elem.childNode === destNode);
+      if(destNode !== startNode && destNode !== -1 && !destNodeExists) {
+        // only add edge if destination node has no edge yet (else it is not a valid connection)
         const tmpNode = d3.select('#n' + destNode);
-        d3.select('#e' + newLineId).attr("x2", tmpNode.attr('cx')).attr("y2", tmpNode.attr('cy'));
-        console.log(graphConnections);
-        graphConnections.push({'parentNode': startNode, 'childNode': destNode, 'link': newLineId, 'depth': 1});
-        console.log(graphConnections);
+        d3.select('#e' + newLineId).attr("x2", tmpNode.attr('cx')).attr("y2", tmpNode.attr('cy')).lower();
+        graphConnections.push({'parentNode': startNode, 'childNode': destNode, 'link': newLineId, 'depth': 1});  
       }
       else {
         d3.select('#e' + newLineId).remove();
@@ -194,14 +192,12 @@ const ThoughtGraph = ({ data, getConnections }) => {
   
   const onAddLink = e => {
     e.preventDefault();
-    // TODO:
-    // 1. add boolean to indicate AddLinkMode (or turning it of if clicked, and already in this mode)
-    console.log(inAddEdgeMode);
-    inAddEdgeMode = true;
-    console.log(inAddEdgeMode);
+    // Idea:
+    // 1. boolean to indicate AddLinkMode (or turning it of if clicked, and already in this mode)
     // 2. onclick: if on a node, select this node as starting point (start drawing line with node as starting point and mouse as end point)
     // 3. onmousedown: if on a node, select node as ending point, else remove line
     // 4. finish mode
+    inAddEdgeMode = true;
   }
 
   const setDefaultStyle = () => {

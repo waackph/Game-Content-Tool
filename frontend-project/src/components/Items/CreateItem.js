@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import CheckboxField from '../InputElements/CheckboxField';
-import '../../App.css';
 import axios from 'axios';
-import ThoughtGraph from '../InputElements/ThoughtGraph';
-
 import * as d3 from "d3";
+import '../../App.css';
+import CheckboxField from '../InputElements/CheckboxField';
+import ThoughtGraph from '../InputElements/ThoughtGraph';
+import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../helpers/ItemThoughtHelpers';
 
 function CreateItem (props) {
 
-  // TODO: Add object type input field Thought
+  // TODO: Add object type input field CombineItem.Thought
   const [Name, setName] = useState('');
   const [texturePath, setTexturePath] = useState('');
   const [ItemType, setItemType] = useState('conscious.DataHolderItem');
@@ -24,16 +24,11 @@ function CreateItem (props) {
   const [GiveAble, setGiveAble] = useState(false);
   const [UseWith, setUseWith] = useState(false);
   const [ItemDependency, setItemDependency] = useState(-1);
-
-  const defaultCombineItem = {'Name': '', 'texturePath': '', 'ItemType': 'conscious.DataHolderItem',
-                              'Rotation': 0, 'PositionX': 0, 'PositionY': 0, 
-                              'ExamineText': '', 'IsInInventory': false, 'UseAble': false, 'PickUpAble': false, 
-                              'CombineAble': false, 'GiveAble': false, 'UseWith': false, 'ItemDependency': -1}
-  const [CombineItem, setCombineItem] = useState(defaultCombineItem);
   
   const defaultThought = {
     '_id': 1,
     'Thought': 'Descriptive Thought',
+    'IsRoot': true,
     'x': 40,
     'y': 100,
     'Links': [
@@ -43,47 +38,22 @@ function CreateItem (props) {
         'NextNode': {
           '_id': 3,
           'Thought': 'First node',
+          'IsRoot': false,
           'x': 80,
           'y': 100,
-          'Links': [
-            {
-              'Id': 4,
-              'Option': 'second frist link',
-              'NextNode': {
-                '_id': 5,
-                'Thought': 'First node',
-                'x': 120,
-                'y': 140,
-                'Links': [],
-                },
-              },
-              {
-                'Id': 6,
-                'Option': 'second first link',
-                'NextNode': {
-                  '_id': 7,
-                  'Thought': 'First node',
-                  'x': 120,
-                  'y': 100,
-                  'Links': [],
-                  },
-                },
-                {
-                  'Id': 8,
-                  'Option': 'second first link',
-                  'NextNode': {
-                    '_id': 9,
-                    'Thought': 'First node',
-                    'x': 120,
-                    'y': 60,
-                    'Links': [],
-                    },
-                  },
-              ],
-  },
-  }]}
+          'Links': [],
+        },
+      }
+    ]}
   const [Thought, setThought] = useState(defaultThought);
   const [allItems, setAllItems] = useState([]);
+
+  const defaultCombineItem = {'Name': '', 'texturePath': '', 'ItemType': 'conscious.DataHolderItem',
+  'Rotation': 0, 'PositionX': 0, 'PositionY': 0, 
+  'ExamineText': '', 'IsInInventory': false, 'UseAble': false, 'PickUpAble': false, 
+  'CombineAble': false, 'GiveAble': false, 'UseWith': false, 'ItemDependency': -1,
+  'Thought': defaultThought}
+  const [CombineItem, setCombineItem] = useState(defaultCombineItem);
 
   let thoughtConnections = [];
   let exportedThoughts = {};
@@ -186,39 +156,7 @@ function CreateItem (props) {
     root['Links'] = addLinksToThoughtData(svg, tempConnections, rootNodeId);
     exportedThoughts = root;
     console.log(exportedThoughts);
-  }
-
-  function addLinksToThoughtData(svg, connections, parentNodeId) {
-    let links = [];
-
-    // get connections
-    let tmp = [];
-    let connectionsToDelete = [];
-    connections.forEach((elem, index) => {
-      if(elem.parentNode === parentNodeId) {
-        tmp.push(elem);
-        connectionsToDelete.push(index);
-      }
-    })
-    // remove connections retrieved
-    connectionsToDelete.sort((a, b) => { return a-b; });
-    for(var i = connectionsToDelete.length-1; i >= 0; i--){
-      connections.splice(connectionsToDelete[i], 1);
-    }
-
-    // if links are present add link and childNode (where for childNode we again call the addLinks... function)
-    if(tmp.length > 0) {
-      tmp.forEach(connection => {
-        const linkId = connection.link;
-        const nextNodeId = connection.childNode;
-        let linkData = svg.select('#e'+linkId).data()[0];
-        let nextNodeData = svg.select('#n'+nextNodeId).data()[0];
-        nextNodeData['Links'] = addLinksToThoughtData(svg, connections, nextNodeId);
-        linkData['NextNode'] = nextNodeData;
-        links.push(linkData);
-      })
-    }
-    return links;
+    setThought(exportedThoughts);
   }
 
   const onSubmit = e => {
@@ -226,6 +164,8 @@ function CreateItem (props) {
     // generate a random number between 1 and 10000 as Id of the Item
     // Warning: Unique ID generation not ensured for now
     const Id = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
+    // add item ID to all nodes of the Thought as field "ThingId"
+    setThought(addItemIdToThoughtNodes(Thought, Id));
     let data = {
       Id: Id,
       Name: Name,
@@ -242,10 +182,11 @@ function CreateItem (props) {
       GiveAble: GiveAble,
       UseWith: UseWith,
       ItemDependency: ItemDependency,
-      // Thought: Thought
+      Thought: Thought
     };
     if(ItemType === 'conscious.DataHolderCombineItem') {
       const IdCombine = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
+      CombineItem.Thought = addItemIdToThoughtNodes(CombineItem.Thought, IdCombine);
       data = {...data, CombineItem: {...CombineItem, Id: IdCombine}};
     }
 
