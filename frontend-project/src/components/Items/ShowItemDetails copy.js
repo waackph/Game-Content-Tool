@@ -3,9 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import '../../App.css';
 import axios from "axios";
 
-// TODO: Convert Class Component to Function Component
-// See: https://nimblewebdeveloper.com/blog/convert-react-class-to-function-component/
-
 class ShowItemDetails extends Component {
     constructor(props) {
         super(props);

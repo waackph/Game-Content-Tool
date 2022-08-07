@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import CheckboxField from '../InputElements/CheckboxField';
 import axios from "axios";
+import * as d3 from "d3";
 import '../../App.css';
+import ThoughtGraph from '../InputElements/ThoughtGraph';
+import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../helpers/ItemThoughtHelpers';
 
 function UpdateItemInfo(props) {
 
-    // TODO: Add object type input fields (CombineItem, Thought)
+    // TODO: Add object type input field CombineItem.Thought
     const [Id, setId] = useState(0);
     const [Name, setName] = useState('');
     const [texturePath, setTexturePath] = useState('');
@@ -23,13 +26,41 @@ function UpdateItemInfo(props) {
     const [UseWith, setUseWith] = useState(false);
     const [ItemDependency, setItemDependency] = useState(-1);
 
+    const defaultThought = {
+      '_id': 1,
+      'Thought': 'Descriptive Thought',
+      'IsRoot': true,
+      'x': 40,
+      'y': 100,
+      'Links': [
+        {
+          'Id': 2,
+          'Option': 'First link',
+          '_validMoods': [0],
+          'IsLocked': false,
+          'NextNode': {
+            '_id': 3,
+            'Thought': 'First node',
+            'IsRoot': false,
+            'x': 80,
+            'y': 100,
+            'Links': [],
+          },
+        }
+      ]}
+    const [Thought, setThought] = useState(defaultThought);  
+
     const defaultCombineItem = {'Name': '', 'texturePath': '', 'ItemType': 'conscious.DataHolderItem',
     'Rotation': 0, 'PositionX': 0, 'PositionY': 0, 
     'ExamineText': '', 'IsInInventory': false, 'UseAble': false, 'PickUpAble': false, 
-    'CombineAble': false, 'GiveAble': false, 'UseWith': false, 'ItemDependency': -1}
+    'CombineAble': false, 'GiveAble': false, 'UseWith': false, 'ItemDependency': -1,
+    'Thought': defaultThought}
     const [CombineItem, setCombineItem] = useState(defaultCombineItem);
     // const [Thought, setThought] = useState({});
     const [allItems, setAllItems] = useState([]);
+
+    let thoughtConnections = [];
+    let exportedThoughts = {};  
 
     let { room_id, item_id } = useParams();
     let navigate = useNavigate();
@@ -55,6 +86,7 @@ function UpdateItemInfo(props) {
             setUseWith(res.data.UseWith);
             setItemDependency(res.data.ItemDependency);
             setCombineItem(res.data.CombineItem);
+            setThought(res.data.Thought);
           })
           .catch(err => { 
             console.log('Error from UpdateItemInfo'); 
@@ -136,11 +168,31 @@ function UpdateItemInfo(props) {
         ...CombineItem,
         [name]: value,
       })  
-    }  
+    }
+
+    // Functions to manage Thought Graph
+    const getGraphConnections = connections => {
+      thoughtConnections = connections;
+    }
+  
+    function retrieveThoughtDataFromGraph(e) {
+      e.preventDefault();
+      const svg = d3.select('svg');
+      let tempConnections = [...thoughtConnections];
+  
+      const rootConnection = thoughtConnections[0];
+      const rootNodeId = rootConnection.parentNode;
+      let root = svg.select('#n'+rootNodeId).data()[0];
+      root['Links'] = addLinksToThoughtData(svg, tempConnections, rootNodeId);
+      exportedThoughts = root;
+      console.log(exportedThoughts);
+      setThought(exportedThoughts);
+    }
 
     const onSubmit = e => {
         e.preventDefault();
-
+        // add item ID to all nodes of the Thought as field "ThingId" (we do this for potentially new nodes)
+        setThought(addItemIdToThoughtNodes(Thought, Id));
         let data = {
             Id: Id,
             Name: Name,
@@ -157,14 +209,16 @@ function UpdateItemInfo(props) {
             GiveAble: GiveAble,
             UseWith: UseWith,
             ItemDependency: ItemDependency,
-            // Thought: Thought
+            Thought: Thought
         };
         if(ItemType === 'conscious.DataHolderCombineItem') {
           if(!CombineItem.hasOwnProperty('Id')) {
             const IdCombine = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
+            CombineItem.Thought = addItemIdToThoughtNodes(CombineItem.Thought, IdCombine);
             data = {...data, CombineItem: {...CombineItem, Id: IdCombine}};
           }
           else {
+            CombineItem.Thought = addItemIdToThoughtNodes(CombineItem.Thought, CombineItem.Id);
             data = {...data, CombineItem: CombineItem};
           }
         }
@@ -294,19 +348,13 @@ function UpdateItemInfo(props) {
             />
           </div>
         </div>
-
-          {/* 
-          <div className='form-group'>
-              <input
-              type='text'
-              placeholder='Thought'
-              name='Thought'
-              className='form-control'
-              value={Thought}
-              onChange={onChange}
-              />
-          </div>
-          */}
+        <a className="btn btn-primary" data-toggle="collapse" href="#itemThoughtInputs" 
+           role="button" aria-expanded="false" aria-controls="collapseExample">
+            Thought
+        </a>
+        <div className="collapse mt-2" id="itemThoughtInputs">
+          <ThoughtGraph data={Thought} getConnections={getGraphConnections} />
+        </div>
       </>
       )
     }
@@ -609,6 +657,8 @@ function UpdateItemInfo(props) {
                 </div>
 
                 { extendedInputs }
+
+                <button onClick={retrieveThoughtDataFromGraph} className="m-2">Export!</button>
 
                 {/* Add combine Item fields */}
                 { combineItemInputs }

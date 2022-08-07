@@ -115,3 +115,20 @@
     font-size: 1em;
     padding: 10px 0 10px 0;
   }
+
+#itemThoughtInputs {
+  border: solid 1px white;
+}
+
+.active {
+  stroke: #000;
+  stroke-width: 2px;
+}
+
+.graphInput {
+  background-color: darkslateblue;
+}
+
+.SelectContainer {
+  color: black;
+}

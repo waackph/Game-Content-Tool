@@ -1,0 +1,17 @@
+{
+    "Id": "",
+    "Links": [
+        {
+            "Id": "",
+            "NextNode": {
+                "Id": "",
+                "Links": [
+                    {
+                        "Id": "",
+                        "type": "FinalThoughtLink"
+                    }
+                ]
+            }
+        }
+    ]
+}
