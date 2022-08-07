@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const AnimationSchema = require('./Animation');
 
 const ThoughtLinkSchema = new mongoose.Schema({
-    // $type: {
-    //     type: String,
-    //     required: true,
-    // },
+    linkType: {
+        type: String,
+        required: false,
+    },
     Id: {
         type: Number,
         required: false,
@@ -33,6 +33,10 @@ const ThoughtLinkSchema = new mongoose.Schema({
     },
     y: {
         type: Number,
+        required: false,
+    },
+    IsFinal: {
+        type: Boolean,
         required: false,
     },
     

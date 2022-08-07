@@ -35,6 +35,8 @@ function CreateItem (props) {
       {
         'Id': 2,
         'Option': 'First link',
+        '_validMoods': [0],
+        'IsLocked': false,
         'NextNode': {
           '_id': 3,
           'Thought': 'First node',

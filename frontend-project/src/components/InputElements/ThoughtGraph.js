@@ -30,8 +30,11 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
 }
 
 const ThoughtGraph = ({ data, getConnections }) => {
-  const [nodeInputData, setNodeInputData] = useState({'IsRoot': false});
-  const [linkInputData, setLinkInputData] = useState({'IsLocked': false, '_validMoods': [0]});
+  const defaultNode = {'IsRoot': false};
+  const defaultLink = {'IsLocked': false, '_validMoods': [0]};
+
+  const [nodeInputData, setNodeInputData] = useState({});
+  const [linkInputData, setLinkInputData] = useState({});
 
   let graphConnections = [];
   let inputMaskActive = -1;
@@ -97,13 +100,35 @@ const ThoughtGraph = ({ data, getConnections }) => {
     let { name, value } = e.target;
     // In case of checkbox value, assign correct boolean
     if(value === 'on') {
-      value = !linkInputData[name];
+      if(linkInputData.hasOwnProperty(name)) {
+        value = !linkInputData[name];
+      }
+      else {
+        value = true;
+      }
     }
-    // assignDataToLink(e);
     setLinkInputData({
       ...linkInputData,
       [name]: value,
-    })  
+    });
+  }
+
+  const onChangeSelectLinkData = (e, action) => {
+    const name = action.name;
+    let value = null;
+    if(name === '_validMoods') {
+      value = [];
+      e.forEach(elem => {
+        value.push(elem['value']);
+      });
+    }
+    else {
+      value = e['value'];
+    }
+    setLinkInputData({
+      ...linkInputData,
+      [name]: value,
+    });
   }
 
   const assignDataToNode = e => {
@@ -113,13 +138,11 @@ const ThoughtGraph = ({ data, getConnections }) => {
 
   const assignDataToLink = e => {
     e.preventDefault();
-    d3.select('svg').select('#n'+linkInputData._id).data([linkInputData]);
+    d3.select('svg').select('#e'+linkInputData.Id).data([linkInputData]);
   }
 
   const dragstarted = (e, d) => {
     if(inAddEdgeMode) {
-      console.log('drag start: create new line');
-
       const Id = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
       d3.select('#chartGroup').append('line')
         .style("stroke", "grey")
@@ -128,23 +151,21 @@ const ThoughtGraph = ({ data, getConnections }) => {
         .attr("y1", d.y)
         .attr("x2", d.x)
         .attr("y2", d.y)
-        .data([{'Id': Id}]).attr("id", function(d) { return "e" + Id; })
+        .data([{...defaultLink, 'Id': Id}]).attr("id", function(d) { return "e" + Id; })
         .on('click', onLinkClick);
       newLineId = Id;
       startNode = d._id;
     }
     else {
-      console.log('active!');
       d3.select(this).raise().classed("active", true);
     }
   }
   
   const dragended = d => {
     if(inAddEdgeMode) {
-      console.log('drag end: remove new line');
       const destNodeExists = graphConnections.some(elem => elem.childNode === destNode);
+      // only add edge if destination node has no edge yet (else it is not a valid connection)
       if(destNode !== startNode && destNode !== -1 && !destNodeExists) {
-        // only add edge if destination node has no edge yet (else it is not a valid connection)
         const tmpNode = d3.select('#n' + destNode);
         d3.select('#e' + newLineId).attr("x2", tmpNode.attr('cx')).attr("y2", tmpNode.attr('cy')).lower();
         graphConnections.push({'parentNode': startNode, 'childNode': destNode, 'link': newLineId, 'depth': 1});  
@@ -160,15 +181,12 @@ const ThoughtGraph = ({ data, getConnections }) => {
       inAddEdgeMode = false;
     }
     else {
-      console.log('inactive!');
       d3.select(this).classed("active", false);
     }
   }
 
   function dragging(e, d) {
-    console.log(inAddEdgeMode);
     if(inAddEdgeMode) {
-      console.log('dragging: move new line');
       d3.select('#e' + newLineId).attr("x2", e.x).attr("y2", e.y);
     }
     else {
@@ -205,21 +223,6 @@ const ThoughtGraph = ({ data, getConnections }) => {
     d3.selectAll('line').style('stroke', 'grey');
   }
 
-  // function onMouseDownNode(e, d) {
-  //   console.log('mousedown on node');
-  //   if(inAddEdgeMode) {
-  //     const Id = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
-  //     newLine = d3.select('#chartGroup').append('line')
-  //       .style("stroke", "grey")
-  //       .style("stroke-width", 5)
-  //       .attr("x1", d3.select(this).attr('cx'))
-  //       .attr("y1", d3.select(this).attr('cy'))
-  //       .attr("x2", d3.select(this).attr('cx'))
-  //       .attr("y2", d3.select(this).attr('cy'))
-  //       .data([{'_id': Id}]).attr("id", function(d) { return "e" + d.Id; });
-  //   }
-  // }
-
   function onNodeEnter(e, d) {
     if(inAddEdgeMode) {
       destNode = d._id;
@@ -233,7 +236,6 @@ const ThoughtGraph = ({ data, getConnections }) => {
   }
 
   function onNodeClick(e, d) {
-    console.log('mouseclick on node');
     if(!inAddEdgeMode) {
       if(inputMaskActive === d._id) {
         setNodeInputData({});
@@ -269,7 +271,7 @@ const ThoughtGraph = ({ data, getConnections }) => {
     e.preventDefault();
     const Id = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
     const circle = d3.select('#chartGroup').append('circle')
-      .data([{'_id': Id}])
+      .data([{...defaultNode, '_id': Id}])
       .attr("r", 15)
       .attr("cx", svgWidth/2).attr('cy', svgHeight/2)
       .style('fill', 'grey')
@@ -291,19 +293,6 @@ const ThoughtGraph = ({ data, getConnections }) => {
     // Create root container where we will append all other chart elements
     const svgEl = d3.select(svgRef.current);
     svgEl.selectAll("*").remove(); // Clear svg content before adding new elements 
-    // svgEl.on('mousemove', e => {
-    //   console.log('mousemove svg')
-    //   if(inAddEdgeMode && newLine) {
-    //     // let mouse = d3.mouse(this);
-    //     newLine.attr("x2", e.pageX).attr("y2", e.pageY);
-    // }
-    // });
-    // svgEl.on('click', e => {
-    //   console.log('mouseclick svg')
-    //   if(inAddEdgeMode) {
-    //     inAddEdgeMode = false
-    //   }
-    // })
 
     const svg = svgEl
       .append("g")
@@ -370,7 +359,7 @@ const ThoughtGraph = ({ data, getConnections }) => {
     <div>
       <svg ref={svgRef} width={svgWidth} height={svgHeight} />
       <NodeInput data={nodeInputData} onChange={onChangeInputNodeData} assignDataToNode={assignDataToNode} deleteNode={deleteNode} />
-      <LinkInput data={linkInputData} onChange={onChangeInputLinkData} assignDataToLink={assignDataToLink} deleteLink={deleteLink} />
+      <LinkInput data={linkInputData} onChange={onChangeInputLinkData} onSelectChange={onChangeSelectLinkData} assignDataToLink={assignDataToLink} deleteLink={deleteLink} />
       <button className="m-2" onClick={onAddNode}>Add Node</button>
       <button onClick={onAddLink}>Add Edge</button>
     </div>

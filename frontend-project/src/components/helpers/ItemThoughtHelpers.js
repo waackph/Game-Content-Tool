@@ -23,7 +23,16 @@ export function addLinksToThoughtData(svg, connections, parentNodeId) {
       tmp.forEach(connection => {
         const linkId = connection.link;
         const nextNodeId = connection.childNode;
+        
         let linkData = svg.select('#e'+linkId).data()[0];
+        // add linkType if IsFinal is set to true, else remove it, if present
+        if(linkData.IsFinal && !linkData.hasOwnProperty('linkType')) {
+          linkData['linkType'] = 'conscious.FinalThoughtLink, conscious';
+        }
+        else if((!linkData.hasOwnProperty('IsFinal') || !linkData['IsFinal']) && linkData.hasOwnProperty('linkType')) {
+          delete linkData['linkType'];
+        }
+
         let nextNodeData = svg.select('#n'+nextNodeId).data()[0];
         nextNodeData['Links'] = addLinksToThoughtData(svg, connections, nextNodeId);
         linkData['NextNode'] = nextNodeData;
