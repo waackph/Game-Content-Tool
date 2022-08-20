@@ -147,8 +147,11 @@ function CreateItem (props) {
     thoughtConnections = connections;
   }
 
+  // Update the thought field from the graph to rerender the whole view correctly, if something else is changed
   function retrieveThoughtDataFromGraph(e) {
-    e.preventDefault();
+    if(e) {
+      e.preventDefault();
+    }
     const svg = d3.select('svg');
     let tempConnections = [...thoughtConnections];
 
@@ -323,7 +326,7 @@ function CreateItem (props) {
           Thought
       </a>
       <div className="collapse mt-2" id="itemThoughtInputs">
-        <ThoughtGraph data={Thought} getConnections={getGraphConnections} />
+        <ThoughtGraph data={Thought} getConnections={getGraphConnections} exportGraphToParent={retrieveThoughtDataFromGraph} />
       </div>
     </>
     )

@@ -29,7 +29,7 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
   });
 }
 
-const ThoughtGraph = ({ data, getConnections }) => {
+const ThoughtGraph = ({ data, getConnections, exportGraphToParent }) => {
   const defaultNode = {'IsRoot': false};
   const defaultLink = {'IsLocked': false, '_validMoods': [0]};
 
@@ -190,7 +190,7 @@ const ThoughtGraph = ({ data, getConnections }) => {
       d3.select('#e' + newLineId).attr("x2", e.x).attr("y2", e.y);
     }
     else {
-        // move circle
+      // move circle
       d3.select(this).attr("cx", d.x = e.x).attr("cy", d.y = e.y);
       // move lines, circle is attached to
       graphConnections.forEach(elem => {
@@ -236,11 +236,16 @@ const ThoughtGraph = ({ data, getConnections }) => {
   }
 
   function onNodeClick(e, d) {
+
     if(!inAddEdgeMode) {
       if(inputMaskActive === d._id) {
         setNodeInputData({});
         inputMaskActive = -1;
         d3.select(this).style('fill', 'grey');
+        // export graph data to thought field in parent view, 
+        // so that the view is re-rendered and state is correctly set 
+        // (this has been a problem with the inAddEdgeMode-boolean value)
+        exportGraphToParent(e);
       }
       else {
         setLinkInputData({});
@@ -257,6 +262,10 @@ const ThoughtGraph = ({ data, getConnections }) => {
       setLinkInputData({});
       inputMaskActive = -1;
       d3.select(this).style('stroke', 'grey');
+      // export graph data to thought field in parent view, 
+      // so that the view is re-rendered and state is correctly set 
+      // (this has been a problem with the inAddEdgeMode-boolean value)
+      exportGraphToParent(e);
     }
     else {
       setNodeInputData({});
@@ -351,9 +360,7 @@ const ThoughtGraph = ({ data, getConnections }) => {
       // onNodeEnter, onNodeOut,
     ]); // redraw chart if data changes (margins added because react is complaining otherwise...)
 
-    // TODO: For dependency array look into:
-    // UseCallback: https://www.w3schools.com/react/react_usecallback.asp
-    // UseMemo: https://www.w3schools.com/react/react_usememo.asp
+    // TODO: change useEffect to not have missing dependencies (actually only the data field should be relevant)
 
   return ( 
     <div>
