@@ -398,13 +398,15 @@ function UpdateItemInfo(props) {
             />
           </div>
         </div>
-        <a className="btn btn-primary" data-toggle="collapse" href="#itemThoughtInputs" 
-           role="button" aria-expanded="false" aria-controls="collapseExample">
-          Thought
-      </a>
-      <div className="collapse mt-2" id="itemThoughtInputs">
-        <ThoughtGraph svgId={'ThoughtGraphInput'} data={Thought} getConnections={getGraphConnections} exportGraphToParent={retrieveThoughtDataFromGraph} />
-      </div>
+        <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#itemThoughtInputs" 
+          role="button" aria-expanded="false" aria-controls="collapseExample">
+            Thought
+        </a>
+        <div className="collapse mt-2 mb-2" id="itemThoughtInputs">
+          <ThoughtGraph svgId={'ThoughtGraphInput'} data={Thought} getConnections={getGraphConnections} exportGraphToParent={retrieveThoughtDataFromGraph} />
+          <button onClick={retrieveThoughtDataFromGraph} className="m-2">Export!</button>
+        </div>
+        <br></br>
       </>
       )
     }
@@ -413,11 +415,11 @@ function UpdateItemInfo(props) {
     if(ItemType === 'conscious.DataHolderCombineItem') {
       combineItemInputs = (
         <>
-          <a className="btn btn-primary" data-toggle="collapse" href="#combineInputs" 
+          <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#combineInputs" 
             role="button" aria-expanded="false" aria-controls="collapseExample">
             Combine Item
           </a>
-          <div className="collapse mt-2" id="combineInputs">
+          <div className="collapse mt-2 mb-2" id="combineInputs">
             <div className="row">
                 <div className="col-md-6 m-auto">
                   <div className='form-group'>
@@ -589,12 +591,13 @@ function UpdateItemInfo(props) {
               </div>
             </div>
 
-            <a className="btn btn-primary" data-toggle="collapse" href="#combineItemThoughtInputs" 
+            <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#combineItemThoughtInputs" 
               role="button" aria-expanded="false" aria-controls="collapseExample">
                   Thought
             </a>
-            <div className="collapse mt-2" id="combineItemThoughtInputs">
+            <div className="collapse mt-2 mb-2" id="combineItemThoughtInputs">
               <ThoughtGraph svgId={'CombineItemThoughtGraphInput'} data={CombineItem.Thought} getConnections={getCombineGraphConnections} exportGraphToParent={retrieveCombineThoughtDataFromGraph} />
+              <button onClick={retrieveCombineThoughtDataFromGraph} className="m-2">Export!</button>
             </div>
 
           </div>
@@ -716,11 +719,9 @@ function UpdateItemInfo(props) {
                 </div>
 
                 { extendedInputs }
-                <button onClick={retrieveThoughtDataFromGraph} className="m-2">Export!</button>
 
                 {/* Add combine Item fields */}
                 { combineItemInputs }
-                <button onClick={retrieveCombineThoughtDataFromGraph} className="m-2">Export!</button>
 
                 <button type="submit" className="btn btn-outline-info btn-lg btn-block">Update Item</button>
             </form>
