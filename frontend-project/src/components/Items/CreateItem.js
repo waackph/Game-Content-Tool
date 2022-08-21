@@ -50,15 +50,40 @@ function CreateItem (props) {
   const [Thought, setThought] = useState(defaultThought);
   const [allItems, setAllItems] = useState([]);
 
+  const defaultCombineThought = {
+    '_id': 111,
+    'Thought': 'Descriptive Thought',
+    'IsRoot': true,
+    'x': 40,
+    'y': 100,
+    'Links': [
+      {
+        'Id': 112,
+        'Option': 'First link',
+        '_validMoods': [0],
+        'IsLocked': false,
+        'NextNode': {
+          '_id': 113,
+          'Thought': 'First node',
+          'IsRoot': false,
+          'x': 80,
+          'y': 100,
+          'Links': [],
+        },
+      }
+    ]}
   const defaultCombineItem = {'Name': '', 'texturePath': '', 'ItemType': 'conscious.DataHolderItem',
   'Rotation': 0, 'PositionX': 0, 'PositionY': 0, 
   'ExamineText': '', 'IsInInventory': false, 'UseAble': false, 'PickUpAble': false, 
   'CombineAble': false, 'GiveAble': false, 'UseWith': false, 'ItemDependency': -1,
-  'Thought': defaultThought}
+  'Thought': defaultCombineThought}
   const [CombineItem, setCombineItem] = useState(defaultCombineItem);
 
   let thoughtConnections = [];
   let exportedThoughts = {};
+
+  let combineThoughtConnections = [];
+  let combineExportedThoughts = {};
 
   let { room_id } = useParams();
   let navigate = useNavigate();
@@ -132,23 +157,32 @@ function CreateItem (props) {
 
   const onChangeCombineItem = e => {
     let { name, value } = e.target;
-    // In case of checkbox value, assign correct boolean
-    if(value === 'on') {
-      name = name.substring(4);
-      value = !CombineItem[name];
+    if(name !== 'Thought') {
+      // In case of checkbox value, assign correct boolean
+      if(value === 'on') {
+        name = name.substring(4);
+        value = !CombineItem[name];
+      }
+      setCombineItem({
+        ...CombineItem,
+        [name]: value,
+      })  
     }
-    setCombineItem({
-      ...CombineItem,
-      [name]: value,
-    })  
   }
 
   const getGraphConnections = connections => {
     thoughtConnections = connections;
   }
 
+  const getCombineGraphConnections = connections => {
+    combineThoughtConnections = connections;
+  }
+
+  // Update the thought field from the graph to rerender the whole view correctly, if something else is changed
   function retrieveThoughtDataFromGraph(e) {
-    e.preventDefault();
+    if(e) {
+      e.preventDefault();
+    }
     const svg = d3.select('svg');
     let tempConnections = [...thoughtConnections];
 
@@ -157,8 +191,26 @@ function CreateItem (props) {
     let root = svg.select('#n'+rootNodeId).data()[0];
     root['Links'] = addLinksToThoughtData(svg, tempConnections, rootNodeId);
     exportedThoughts = root;
-    console.log(exportedThoughts);
     setThought(exportedThoughts);
+  }
+
+  // Update the combineItem thought field from the graph to rerender the whole view correctly, if something else is changed
+  function retrieveCombineThoughtDataFromGraph(e) {
+    if(e) {
+      e.preventDefault();
+    }
+    const svg = d3.select('svg');
+    let tempConnections = [...combineThoughtConnections];
+
+    const rootConnection = combineThoughtConnections[0];
+    const rootNodeId = rootConnection.parentNode;
+    let root = svg.select('#n'+rootNodeId).data()[0];
+    root['Links'] = addLinksToThoughtData(svg, tempConnections, rootNodeId);
+    combineExportedThoughts = root;
+    setCombineItem({
+      ...CombineItem,
+      'Thought': combineExportedThoughts,
+    })
   }
 
   const onSubmit = e => {
@@ -318,12 +370,13 @@ function CreateItem (props) {
         </div>
       </div>
 
-      <a className="btn btn-primary" data-toggle="collapse" href="#itemThoughtInputs" 
+      <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#itemThoughtInputs" 
            role="button" aria-expanded="false" aria-controls="collapseExample">
           Thought
       </a>
-      <div className="collapse mt-2" id="itemThoughtInputs">
-        <ThoughtGraph data={Thought} getConnections={getGraphConnections} />
+      <div className="collapse mt-2 mb-2" id="itemThoughtInputs">
+        <ThoughtGraph svgId={'ThoughtGraphInput'} data={Thought} getConnections={getGraphConnections} exportGraphToParent={retrieveThoughtDataFromGraph} />
+        <button onClick={retrieveThoughtDataFromGraph} className="m-2">Export!</button>
       </div>
     </>
     )
@@ -333,11 +386,11 @@ function CreateItem (props) {
   if(ItemType === 'conscious.DataHolderCombineItem') {
     combineItemInputs = (
       <>
-        <a className="btn btn-primary" data-toggle="collapse" href="#combineInputs" 
+        <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#combineInputs" 
            role="button" aria-expanded="false" aria-controls="collapseExample">
           Combine Item
         </a>
-        <div className="collapse mt-2" id="combineInputs">
+        <div className="collapse mt-2 mb-2" id="combineInputs">
           <div className="row">
               <div className="col-md-6 m-auto">
                 <div className='form-group'>
@@ -508,6 +561,16 @@ function CreateItem (props) {
               />
             </div>
           </div>
+
+          <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#combineItemThoughtInputs" 
+           role="button" aria-expanded="false" aria-controls="collapseExample">
+              Thought
+          </a>
+          <div className="collapse mt-2 mb-2" id="combineItemThoughtInputs">
+            <ThoughtGraph svgId={'CombineItemThoughtGraphInput'} data={CombineItem.Thought} getConnections={getCombineGraphConnections} exportGraphToParent={retrieveCombineThoughtDataFromGraph} />
+            <button onClick={retrieveCombineThoughtDataFromGraph} className="m-2">Export!</button>
+          </div>
+
         </div>
       </>
     )
@@ -619,8 +682,6 @@ function CreateItem (props) {
                 </div>
 
               { extendedInputs }
-
-              <button onClick={retrieveThoughtDataFromGraph} className="m-2">Export!</button>
 
               {/* Add combine Item fields */}
               { combineItemInputs }

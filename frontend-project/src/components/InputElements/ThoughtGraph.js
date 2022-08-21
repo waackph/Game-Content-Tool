@@ -29,7 +29,7 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
   });
 }
 
-const ThoughtGraph = ({ data, getConnections }) => {
+const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   const defaultNode = {'IsRoot': false};
   const defaultLink = {'IsLocked': false, '_validMoods': [0]};
 
@@ -133,18 +133,18 @@ const ThoughtGraph = ({ data, getConnections }) => {
 
   const assignDataToNode = e => {
     e.preventDefault();
-    d3.select('svg').select('#n'+nodeInputData._id).data([nodeInputData]);
+    d3.select('#'+svgId).select('#n'+nodeInputData._id).data([nodeInputData]);
   }
 
   const assignDataToLink = e => {
     e.preventDefault();
-    d3.select('svg').select('#e'+linkInputData.Id).data([linkInputData]);
+    d3.select('#'+svgId).select('#e'+linkInputData.Id).data([linkInputData]);
   }
 
   const dragstarted = (e, d) => {
     if(inAddEdgeMode) {
       const Id = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
-      d3.select('#chartGroup').append('line')
+      d3.select('#' + svgId + ' #chartGroup').append('line')
         .style("stroke", "grey")
         .style("stroke-width", 5)
         .attr("x1", d.x) //d3.select(this).attr('cx'))
@@ -190,7 +190,7 @@ const ThoughtGraph = ({ data, getConnections }) => {
       d3.select('#e' + newLineId).attr("x2", e.x).attr("y2", e.y);
     }
     else {
-        // move circle
+      // move circle
       d3.select(this).attr("cx", d.x = e.x).attr("cy", d.y = e.y);
       // move lines, circle is attached to
       graphConnections.forEach(elem => {
@@ -236,11 +236,16 @@ const ThoughtGraph = ({ data, getConnections }) => {
   }
 
   function onNodeClick(e, d) {
+
     if(!inAddEdgeMode) {
       if(inputMaskActive === d._id) {
         setNodeInputData({});
         inputMaskActive = -1;
         d3.select(this).style('fill', 'grey');
+        // export graph data to thought field in parent view, 
+        // so that the view is re-rendered and state is correctly set 
+        // (this has been a problem with the inAddEdgeMode-boolean value)
+        exportGraphToParent(e);
       }
       else {
         setLinkInputData({});
@@ -257,6 +262,10 @@ const ThoughtGraph = ({ data, getConnections }) => {
       setLinkInputData({});
       inputMaskActive = -1;
       d3.select(this).style('stroke', 'grey');
+      // export graph data to thought field in parent view, 
+      // so that the view is re-rendered and state is correctly set 
+      // (this has been a problem with the inAddEdgeMode-boolean value)
+      exportGraphToParent(e);
     }
     else {
       setNodeInputData({});
@@ -270,7 +279,7 @@ const ThoughtGraph = ({ data, getConnections }) => {
   const onAddNode = e => {
     e.preventDefault();
     const Id = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
-    const circle = d3.select('#chartGroup').append('circle')
+    const circle = d3.select('#' + svgId + ' #chartGroup').append('circle')
       .data([{...defaultNode, '_id': Id}])
       .attr("r", 15)
       .attr("cx", svgWidth/2).attr('cy', svgHeight/2)
@@ -292,6 +301,7 @@ const ThoughtGraph = ({ data, getConnections }) => {
 
     // Create root container where we will append all other chart elements
     const svgEl = d3.select(svgRef.current);
+    svgEl.attr('id', svgId);
     svgEl.selectAll("*").remove(); // Clear svg content before adding new elements 
 
     const svg = svgEl
@@ -301,14 +311,14 @@ const ThoughtGraph = ({ data, getConnections }) => {
 
     // Add zoom and pan
     function handleZoom(e) {
-      d3.select('svg g')
+      d3.select('#' + svgId + ' g')
         .attr('transform', e.transform);
     }
     let zoom = d3.zoom()
       .scaleExtent([1, 5])
       // .translateExtent([[0, 0], [width, height]])  // constraints area to pan in
       .on('zoom', handleZoom);
-    d3.select('svg')
+    d3.select('#'+svgId)
       .call(zoom);
 
     // Draw elements
@@ -351,13 +361,11 @@ const ThoughtGraph = ({ data, getConnections }) => {
       // onNodeEnter, onNodeOut,
     ]); // redraw chart if data changes (margins added because react is complaining otherwise...)
 
-    // TODO: For dependency array look into:
-    // UseCallback: https://www.w3schools.com/react/react_usecallback.asp
-    // UseMemo: https://www.w3schools.com/react/react_usememo.asp
+    // TODO: change useEffect to not have missing dependencies (actually only the data field should be relevant)
 
   return ( 
     <div>
-      <svg ref={svgRef} width={svgWidth} height={svgHeight} />
+      <svg id={svgId} ref={svgRef} width={svgWidth} height={svgHeight} />
       <NodeInput data={nodeInputData} onChange={onChangeInputNodeData} assignDataToNode={assignDataToNode} deleteNode={deleteNode} />
       <LinkInput data={linkInputData} onChange={onChangeInputLinkData} onSelectChange={onChangeSelectLinkData} assignDataToLink={assignDataToLink} deleteLink={deleteLink} />
       <button className="m-2" onClick={onAddNode}>Add Node</button>

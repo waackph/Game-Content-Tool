@@ -120,6 +120,10 @@
   border: solid 1px white;
 }
 
+#combineItemThoughtInputs {
+  border: solid 1px white;
+}
+
 .active {
   stroke: #000;
   stroke-width: 2px;
