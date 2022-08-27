@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 
 const CommandSchema = new mongoose.Schema({
-    $type: {
+    CommandType: {
         type: String,
         required: true,
     },
     _destinationX: {
         type: Number,
-        required: true,
+        required: false,
     },
     _destinationY: {
         type: Number,
-        required: true,
+        required: false,
     },
     CommandFinished: {
         type: Boolean,

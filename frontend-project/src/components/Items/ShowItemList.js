@@ -3,6 +3,7 @@ import '../../App.css';
 import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import ItemCard from './ItemCard'
+import SequenceCard from '../Rooms/SequenceCard';
 
 
 function ShowItemList(props) {
@@ -11,6 +12,8 @@ function ShowItemList(props) {
     const [Name, setName] = useState([]);
     const [texturePath, setTexturePath] = useState([]);
     const [RoomWidth, setRoomWidth] = useState([]);
+    const [EntrySequence, setEntrySequence] = useState({'_currentIndex': 1, 'SequenceFinished': false, '_commands': []});
+
     let { room_id } = useParams();
     let navigate = useNavigate();
 
@@ -18,11 +21,11 @@ function ShowItemList(props) {
         axios
           .get('http://localhost:8082/api/items/' + room_id)
           .then(res => {
-            console.log(res);
             setRoom(res.data);
             setName(res.data.Name);
             setTexturePath(res.data.texturePath);
             setRoomWidth(res.data.RoomWidth);
+            setEntrySequence(res.data.EntrySequence);
           })
           .catch(err => { 
             console.log('Error from ShowItemList'); 
@@ -50,19 +53,45 @@ function ShowItemList(props) {
         else if(e.target.name === 'RoomWidth') {
             setRoomWidth(e.target.value);
         }
+        else if(['_destinationX', '_destinationY', 'CommandType'].includes(e.target.name)) {
+            let cmds = [...EntrySequence._commands];
+            cmds[e.target.dataset.id][e.target.name] = e.target.value;
+            setEntrySequence({...EntrySequence, _commands: cmds});
+        }
         else {
             console.log('No matching variable to fieldname')
         }
     };
 
+    const addSequenceCommand = e => {
+        // e.preventDefault();
+        const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.WalkCommand'}
+        setEntrySequence({
+            ...EntrySequence, 
+            _commands: [...EntrySequence._commands, defaultCommand]
+        })
+    }
+
+    const deleteRow = cmd => {
+        setEntrySequence({
+            ...EntrySequence, 
+            _commands: EntrySequence._commands.filter(val => val !== cmd)
+        });
+    }
+
     const onSubmit = e => {
         e.preventDefault();
 
-        const data = {
+        let data = {
             Name: Name,
             RoomWidth: RoomWidth,
             texturePath: texturePath,
         };
+
+        if(EntrySequence._commands.length !== 0) {
+            data['EntrySequence'] = EntrySequence;
+        }
+        console.log(data);
 
         axios
           .put('http://localhost:8082/api/' + room_id, data)
@@ -136,6 +165,8 @@ function ShowItemList(props) {
                                 onChange={onChange}
                             />
                         </div>
+
+                        <SequenceCard sequence={EntrySequence} add={addSequenceCommand} delete={deleteRow} onChange={onChange} />
 
                         <button type="submit" className="btn btn-outline-info btn-lg btn-block">
                             Update Room

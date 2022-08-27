@@ -8,7 +8,7 @@ function CreateRoom (props) {
   const [Name, setName] = useState('');
   const [RoomWidth, setRoomWidth] = useState('');
   const [texturePath, setTexturePath] = useState('');
-  // TODO: Add EntrySequence
+
   let navigate = useNavigate();
 
   const onChange = e => {

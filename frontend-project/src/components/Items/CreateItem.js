@@ -166,7 +166,7 @@ function CreateItem (props) {
       setCombineItem({
         ...CombineItem,
         [name]: value,
-      })  
+      })
     }
   }
 
