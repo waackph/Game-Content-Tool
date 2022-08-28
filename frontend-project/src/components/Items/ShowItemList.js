@@ -63,8 +63,8 @@ function ShowItemList(props) {
         }
     };
 
-    const addSequenceCommand = e => {
-        // e.preventDefault();
+    const addSequenceCommand = (e) => {
+        e.preventDefault();
         const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.WalkCommand'}
         setEntrySequence({
             ...EntrySequence, 
@@ -72,7 +72,7 @@ function ShowItemList(props) {
         })
     }
 
-    const deleteRow = cmd => {
+    const deleteRow = (e, cmd) => {
         setEntrySequence({
             ...EntrySequence, 
             _commands: EntrySequence._commands.filter(val => val !== cmd)

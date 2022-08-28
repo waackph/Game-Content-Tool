@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import NodeInput from "./NodeInput";
 import LinkInput from "./LinkInput";
 import '../../App.css';
+import { link } from "d3";
 // Using this post as a guideline: https://ncoughlin.com/posts/d3-react/
 // This post is better: https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
 
@@ -107,9 +108,42 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
         value = true;
       }
     }
+    if(['_destinationX', '_destinationY', 'CommandType'].includes(e.target.name)) {
+      let cmds = [...linkInputData.ThoughtSequence._commands];
+      cmds[e.target.dataset.id][e.target.name] = e.target.value;
+      setLinkInputData({
+        ...linkInputData,
+        'ThoughtSequence': {...linkInputData.ThoughtSequence, _commands: cmds}
+      });
+    }
+    else {
+      setLinkInputData({
+        ...linkInputData,
+        [name]: value,
+      });
+    }
+  }
+
+  const addSequenceCommand = (e) => {
+    e.preventDefault();
+    const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.WalkCommand'}
     setLinkInputData({
       ...linkInputData,
-      [name]: value,
+      'ThoughtSequence': {
+        ...linkInputData.ThoughtSequence, 
+        _commands: [...linkInputData.ThoughtSequence._commands, defaultCommand]
+      }
+    });
+  }
+
+  const deleteRow = (e, cmd) => {
+    e.preventDefault();
+    setLinkInputData({
+      ...linkInputData,
+      'ThoughtSequence': {
+        ...linkInputData.ThoughtSequence, 
+        _commands: linkInputData.ThoughtSequence._commands.filter(val => val !== cmd)
+      }
     });
   }
 
@@ -367,7 +401,15 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
     <div>
       <svg id={svgId} ref={svgRef} width={svgWidth} height={svgHeight} />
       <NodeInput data={nodeInputData} onChange={onChangeInputNodeData} assignDataToNode={assignDataToNode} deleteNode={deleteNode} />
-      <LinkInput data={linkInputData} onChange={onChangeInputLinkData} onSelectChange={onChangeSelectLinkData} assignDataToLink={assignDataToLink} deleteLink={deleteLink} />
+      <LinkInput 
+        data={linkInputData} 
+        onChange={onChangeInputLinkData} 
+        onSelectChange={onChangeSelectLinkData} 
+        assignDataToLink={assignDataToLink} 
+        deleteLink={deleteLink} 
+        addCmd={addSequenceCommand} 
+        deleteCmd={deleteRow} 
+        />
       <button className="m-2" onClick={onAddNode}>Add Node</button>
       <button onClick={onAddLink}>Add Edge</button>
     </div>

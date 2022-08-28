@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const AnimationSchema = require('./Animation');
+const SequenceSchema = require('./Sequence')
 
 const ThoughtLinkSchema = new mongoose.Schema({
     linkType: {
@@ -57,6 +58,10 @@ const ThoughtLinkSchema = new mongoose.Schema({
         type: AnimationSchema,
         required: false,
     },
+    ThoughtSequence: {
+        type: SequenceSchema,
+        required: false,
+    }
 });
 
 const ThoughtNodeSchema = new mongoose.Schema({
