@@ -36,7 +36,7 @@ const SequenceCard = (props) => {
             <div className="col-2 p-2">
                 {idx === 0 ? (
                     <button
-                    onClick={() => props.add()}
+                    onClick={(e) => props.add(e)}
                     type="button"
                     className="btn btn-primary text-center"
                     >
@@ -47,7 +47,7 @@ const SequenceCard = (props) => {
                 )}
                 <button
                     className="btn btn-danger"
-                    onClick={() => props.delete(val)}
+                    onClick={(e) => props.delete(e, val)}
                     >
                     {/* <i className="fa fa-minus" aria-hidden="true" /> */}
                         <h3>-</h3>

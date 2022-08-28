@@ -1,6 +1,7 @@
 import CheckboxField from "./CheckboxField";
 // import { MultiSelect } from "react-multi-select-component";
 import Select from 'react-select';
+import SequenceCard from "../Rooms/SequenceCard";
 
 const moodOptions = [
   { label: "None", value: 0 },
@@ -22,9 +23,10 @@ const verbOptions = [
   { label: "WakeUp", value: 9 },
 ];
 
+const defaultSequence = {'_currentIndex': 1, 'SequenceFinished': false, '_commands': []};
 
 // TODO: Add fields linkType, Verb, MoodChange, UnlockId, Animation
-function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink}) {
+function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink, addCmd, deleteCmd}) {
     if (Object.keys(data).length === 0) {
         return(<></>);
     }
@@ -35,6 +37,9 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
       if(data.IsFinal) {
         let moodChange = moodOptions.filter(elem => { return data.MoodChange === elem.value });
         let verb = verbOptions.filter(elem => { return data.Verb === elem.value });
+        if(!data.hasOwnProperty('ThoughtSequence')) {
+          data.ThoughtSequence = defaultSequence;
+        }
         finalLinkInputData = (
           <>
             <div className="col-md-4 m-auto">
@@ -61,6 +66,10 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
                   isMulti={false}
                 />
               </div>
+            </div>
+
+            <div className="col-md-12 m-auto">
+              <SequenceCard sequence={data.ThoughtSequence} add={addCmd} delete={deleteCmd} onChange={onChange} />
             </div>
           </>
         );
