@@ -154,4 +154,78 @@ router.delete('/items/:item_id', (req, res) => {
       .catch(err => res.status(400).json({ error: 'Unable to remove item' }));
 });
 
+// @route GET api/characters
+// @description Get all characters
+// @access Public
+router.get('/characters/:room_id', (req, res) => {
+  Room.findById(req.params.room_id)
+    .then(room => res.json(room))
+    .catch(err => res.status(404).json({ nocharactersfound: 'No characters found' }));
+});
+
+// @route GET api/characters/:id
+// @description get specific character by id
+// @access Public
+router.get('/characters/:room_id/:character_id', (req, res) => {
+    Room.findOne({"_id": req.params.room_id})
+      .then(room => {
+        // get the correct character by ID
+        let character;
+        room.Characters.forEach(it => {
+          if(String(it._id) === req.params.character_id) {
+            character = it;
+            return;
+          }
+        });
+        console.log(character);
+        res.json(character);
+      })
+      .catch(err => res.status(404).json({ nocharacterfound: 'No character found' }));
+});
+
+// @route POST api/characters
+// @description add character to given room
+// @access Public
+router.post('/characters/:room_id', (req, res) => {
+  console.log(req.params.room_id);
+  console.log(req.body);
+  Room.updateOne({ _id: req.params.room_id }, { $push: { Characters: req.body } })
+    .then(character => res.json(character))
+    .catch(err => res.status(400).json({ error: 'Unable to add character' }));
+});
+
+// @route PUT api/characters/:id
+// @description Update character
+// @access Public
+router.put('/characters/:room_id/:character_id', (req, res) => {
+  req.body['_id'] = req.params.character_id;
+  Room.findOneAndUpdate(
+    {'_id': req.params.room_id, 'Characters._id': req.params.character_id},
+    {
+      '$set': {
+        'Characters.$': req.body
+      }
+    }
+  )
+    .then(character => res.json({ msg: 'character updated' }))
+    .catch(err => res.status(400).json({ error: 'Unable to update character' }));
+});
+
+// @route GET api/books/:id
+// @description Delete character by id
+// @access Public
+router.delete('/characters/:character_id', (req, res) => {
+    // Room.findByIdAndRemove(req.params.character_id, req.body)
+    Room.updateOne(
+      {
+        'Characters._id': req.params.character_id
+      },
+      {
+        $pull: { Characters: { _id: req.params.character_id } }
+      }
+    )
+      .then(character => res.json({ msg: 'character removed' }))
+      .catch(err => res.status(400).json({ error: 'Unable to remove character' }));
+});
+
 module.exports = router;

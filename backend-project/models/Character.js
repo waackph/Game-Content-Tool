@@ -1,18 +1,23 @@
 const mongoose = require('mongoose');
 // const AnimationSchema = require('./Animation');
 const DialogNodeSchema = require('./DialogTree');
+const ThoughtNodeSchema = require('./Thought');
 
 const CharacterSchema = new mongoose.Schema({
     // Required Fields for all characters
+    Id: {
+        type: Number,
+        required: true,
+    },
     Name: {
         type: String,
         required: true,
     },
     texture_path: {
         type: String,
-        required: false,
+        required: true,
     },
-    $type: {
+    characterType: {
         type: String,
         required: true,
     },
@@ -28,37 +33,37 @@ const CharacterSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    IsInInventory: {
-        type: Boolean,
-        required: false,
-    },
     ItemDependency: {
         type: String,  // Is Object ID
-        required: true,
+        required: false,
     },
     DialogUnlocked: {
         type: Boolean,
-        required: true,
-    },
-    TreeStructure: {
-        type: [DialogNodeSchema],
-        required: true,
+        required: false,
     },
     Pronoun: {
         type: String,
-        required: true,
+        required: false,
     },
     CatchPhrase: {
         type: String,
-        required: true,
+        required: false,
     },
     GiveAble: {
         type: Boolean,
-        required: true,
+        required: false,
     },
     MoodChange: {
         type: Number,
-        required: true,
+        required: false,
+    },
+    TreeStructure: {
+        type: [DialogNodeSchema],
+        required: false,
+    },
+    Thought: {
+        type: ThoughtNodeSchema,
+        required: false,
     },
     // Animation: {
     //     type: AnimationSchema,
