@@ -59,6 +59,7 @@ function CreateUpdateCharacter(props) {
       axios
         .get('http://localhost:8082/api/characters/' + room_id + '/' + character_id)  //this.props.match.params.room_id)
         .then(res => {
+          console.log(res.data)
           setId(res.data.Id);
           setName(res.data.Name);
           setTexturePath(res.data.texture_path);
@@ -192,6 +193,7 @@ function CreateUpdateCharacter(props) {
         CatchPhrase: CatchPhrase,
         GiveAble: GiveAble,
         MoodChange: MoodChange,
+        Thought: Thought
       };
     }
 

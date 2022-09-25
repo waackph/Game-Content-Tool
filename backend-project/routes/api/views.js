@@ -113,8 +113,6 @@ router.get('/items/:room_id/:item_id', (req, res) => {
 // @description add item to given room
 // @access Public
 router.post('/items/:room_id', (req, res) => {
-  console.log(req.params.room_id);
-  console.log(req.body);
   Room.updateOne({ _id: req.params.room_id }, { $push: { Items: req.body } })
     .then(item => res.json(item))
     .catch(err => res.status(400).json({ error: 'Unable to add item' }));
@@ -177,7 +175,6 @@ router.get('/characters/:room_id/:character_id', (req, res) => {
             return;
           }
         });
-        console.log(character);
         res.json(character);
       })
       .catch(err => res.status(404).json({ nocharacterfound: 'No character found' }));
@@ -187,8 +184,6 @@ router.get('/characters/:room_id/:character_id', (req, res) => {
 // @description add character to given room
 // @access Public
 router.post('/characters/:room_id', (req, res) => {
-  console.log(req.params.room_id);
-  console.log(req.body);
   Room.updateOne({ _id: req.params.room_id }, { $push: { Characters: req.body } })
     .then(character => res.json(character))
     .catch(err => res.status(400).json({ error: 'Unable to add character' }));
