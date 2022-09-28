@@ -1,5 +1,4 @@
 
-
 export function addLinksToThoughtData(svg, connections, parentNodeId) {
     let links = [];
 
@@ -48,4 +47,36 @@ export function addLinksToThoughtData(svg, connections, parentNodeId) {
       elem['NextNode'] = addItemIdToThoughtNodes(elem['NextNode'], itemId);
     });
     return nestedThought;
+  }
+
+  export function createDialogTreeStructure(svg, connections) {
+    let treeStructure = [];
+
+    function onlyUnique(value, index, self) {
+      return self.indexOf(value) === index;
+    }
+    let parentNodes = connections.map(elem => elem.parentNode);
+    parentNodes = parentNodes.filter(onlyUnique);
+    
+    parentNodes.forEach(nodeId => {
+      let currentNode = svg.select('#n'+nodeId).data()[0];
+      currentNode['_edges'] = []
+      const nodeConnections = connections.filter(elem => elem.parentNode === nodeId);
+      nodeConnections.forEach(conn => {
+        if(conn.parentNode === nodeId) {
+          let currentLink = svg.select('#e'+conn.link).data()[0];
+          currentLink['_nextNodeId'] = conn.childNode;
+          currentNode['_edges'].push(currentLink);
+          // if childNode is final node, then add also
+          if(!parentNodes.some(elem => elem === conn.childNode)) {
+            let nextNode = svg.select('#n'+conn.childNode).data()[0];
+            nextNode['_edges'] = [];
+            treeStructure.push(nextNode);
+          }
+        }
+      });
+      treeStructure.push(currentNode);
+    });
+
+    return treeStructure;
   }

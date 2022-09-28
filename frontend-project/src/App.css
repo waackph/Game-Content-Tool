@@ -144,6 +144,10 @@
   border: solid 1px white;
 }
 
+#characterDialogInputs {
+  border: solid 1px white;
+}
+
 .active {
   stroke: #000;
   stroke-width: 2px;

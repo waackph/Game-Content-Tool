@@ -4,7 +4,8 @@ import axios from 'axios';
 import * as d3 from "d3";
 import CheckboxField from '../InputElements/CheckboxField';
 import ThoughtGraph from '../InputElements/ThoughtGraph';
-import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../helpers/ItemThoughtHelpers';
+import { addLinksToThoughtData, addItemIdToThoughtNodes, createDialogTreeStructure } from '../helpers/ItemThoughtHelpers';
+import DialogGraph from '../InputElements/DialogGraph';
 
 
 function CreateUpdateCharacter(props) {
@@ -49,6 +50,20 @@ function CreateUpdateCharacter(props) {
   let thoughtConnections = [];
   let exportedThoughts = {};
 
+  // TODO: Add Dialog Graph
+  // Structure:
+    // TreeStructure: [
+    //     nodes: {
+    //         node: { edges: [ edge: {nextNodeId} ] }
+    //         # -> Last node has an edge with nextNodeId=0
+    //     }
+    // ]
+  // => A list of nodes, where a node contains the following edges. Each edge references the next node by its ID
+  const [TreeStructure, setTreeStructure] = useState([]);
+  let dialogConnections = [];
+  let exportedDialog = {};
+
+
   const [allItems, setAllItems] = useState([]);
 
   let { room_id, character_id } = useParams();
@@ -74,6 +89,7 @@ function CreateUpdateCharacter(props) {
           setGiveAble(res.data.GiveAble);
           setMoodChange(res.data.MoodChange);
           setThought(res.data.Thought);
+          setTreeStructure(res.data.TreeStructure);
         })
         .catch(err => { 
           console.log('Error from CreateUpdateCharacter'); 
@@ -137,6 +153,20 @@ function CreateUpdateCharacter(props) {
     thoughtConnections = connections;
   }
 
+  // Functions to manage Dialog Graph
+  const getDialogGraphConnections = connections => {
+    dialogConnections = connections;
+  }
+
+  function retrieveDialogDataFromGraph(e) {
+    e.preventDefault();
+    const svg = d3.select('#DialogGraphInput');
+    let tempConnections = [...dialogConnections];
+
+    exportedDialog = createDialogTreeStructure(svg, tempConnections);
+    setTreeStructure(exportedDialog);
+  }
+
   function retrieveThoughtDataFromGraph(e) {
     e.preventDefault();
     const svg = d3.select('#ThoughtGraphInput');
@@ -174,7 +204,8 @@ function CreateUpdateCharacter(props) {
         CatchPhrase: CatchPhrase,
         GiveAble: GiveAble,
         MoodChange: MoodChange,
-        Thought: Thought
+        Thought: Thought,
+        TreeStructure: TreeStructure
       };
     }
     else {
@@ -193,7 +224,8 @@ function CreateUpdateCharacter(props) {
         CatchPhrase: CatchPhrase,
         GiveAble: GiveAble,
         MoodChange: MoodChange,
-        Thought: Thought
+        Thought: Thought,
+        TreeStructure: TreeStructure
       };
     }
 
@@ -225,6 +257,8 @@ function CreateUpdateCharacter(props) {
         setCatchPhrase('');
         setGiveAble(false);
         setMoodChange(0);
+        setThought(defaultThought);
+        setTreeStructure([]);
         navigate(`/item-list/${room_id}`);
       })
       .catch(err => {
@@ -435,6 +469,16 @@ function CreateUpdateCharacter(props) {
           <div className="collapse mt-2 mb-2" id="itemThoughtInputs">
             <ThoughtGraph svgId={'ThoughtGraphInput'} data={Thought} getConnections={getGraphConnections} exportGraphToParent={retrieveThoughtDataFromGraph} />
             <button onClick={retrieveThoughtDataFromGraph} className="m-2">Export!</button>
+          </div>
+          <br></br>
+
+          <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#characterDialogInputs" 
+            role="button" aria-expanded="false" aria-controls="collapseExample">
+              Dialog
+          </a>
+          <div className="collapse mt-2 mb-2" id="characterDialogInputs">
+            <DialogGraph svgId={'DialogGraphInput'} data={TreeStructure} getConnections={getDialogGraphConnections} exportGraphToParent={retrieveDialogDataFromGraph} />
+            <button onClick={retrieveDialogDataFromGraph} className="m-2">Export!</button>
           </div>
           <br></br>
 
