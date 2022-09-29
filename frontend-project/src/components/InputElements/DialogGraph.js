@@ -7,7 +7,7 @@ import '../../App.css';
 // This post is better: https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
 
 function getNodeById(nodeId, nodes) {
-  const thisNode = nodes.filter(node => node.Id == nodeId);
+  const thisNode = nodes.filter(node => node.Id === nodeId);
   if (thisNode) {
     return thisNode[0];
   }
@@ -19,7 +19,7 @@ function getNodeById(nodeId, nodes) {
 function createGraphFromLinkedObject(canvas, nodes, connections) {
   Array.prototype.forEach.call(nodes, node => {
     // if not already processed - create circle for node
-    if(!connections.some(elem => elem.childNode === node.Id)) {
+    if(d3.selectAll('circle').filter(function(d) { return d.Id === node.Id }).empty()) {
       const nodeData = {...node}
       canvas.append('circle').attr("r", 15).attr("cx", node.x).attr('cy', node.y).style('fill', 'grey').data([nodeData]).attr("id", function(d) { return "n" + d.Id; });
     }
@@ -27,11 +27,12 @@ function createGraphFromLinkedObject(canvas, nodes, connections) {
       connections.push({'parentNode': node.Id, 'childNode': link._nextNodeId, 'link': link.Id});
       // Add next node
       const nextNode = getNodeById(link._nextNodeId, nodes);
-      console.log(nextNode);
       if(nextNode) {
-        console.log('has next node')
         const nodeData = {...nextNode}
-        canvas.append('circle').attr("r", 15).attr("cx", nextNode.x).attr('cy', nextNode.y).style('fill', 'grey').data([nodeData]).attr("id", function(d) { return "n" + d.Id; });
+        // if not already processed - create circle for node
+        if(d3.selectAll('circle').filter(function(d) { return d.Id === nextNode.Id }).empty()) {
+          canvas.append('circle').attr("r", 15).attr("cx", nextNode.x).attr('cy', nextNode.y).style('fill', 'grey').data([nodeData]).attr("id", function(d) { return "n" + d.Id; });
+        }
         const linkData = {...link};
         canvas.append('line')
           .style("stroke", "grey")
@@ -286,7 +287,6 @@ const DialogGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   }
 
   function onNodeClick(e, d) {
-    console.log(graphConnections)
     if(!inAddEdgeMode) {
       if(inputMaskActive === d.Id) {
         setNodeInputData({});
@@ -388,10 +388,6 @@ const DialogGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
     svg.selectAll('line').lower();
     svg.selectAll('line')
       .on('click', onLinkClick);
-    // Check if data is present
-    // svg.selectAll('circle').each(function(d){console.log(d.Thought)});
-    // svg.selectAll('line').each(function(d){console.log(d.Option)});
-    // console.log(graphConnections);
     getConnections(graphConnections);
   }, [data, getConnections,
       margin.left, margin.top,

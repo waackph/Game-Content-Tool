@@ -77,6 +77,5 @@ export function addLinksToThoughtData(svg, connections, parentNodeId) {
       });
       treeStructure.push(currentNode);
     });
-
     return treeStructure;
   }

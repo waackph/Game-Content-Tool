@@ -6,7 +6,7 @@ const DialogEdgeSchema = new mongoose.Schema({
         required: true,
     },
     _nextNodeId: {
-        type: String,  // Is Object ID
+        type: Number,  // Is Object ID
         required: true,
     },
     _dialogLine: {
