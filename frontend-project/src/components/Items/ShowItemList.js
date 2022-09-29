@@ -3,7 +3,8 @@ import '../../App.css';
 import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import ItemCard from './ItemCard'
-import SequenceCard from '../Rooms/SequenceCard';
+import CharacterCard from '../Characters/CharacterCard'
+import SequenceCard from '../InputElements/SequenceCard';
 
 
 function ShowItemList(props) {
@@ -104,13 +105,22 @@ function ShowItemList(props) {
     };
 
     let itemList;
-
     if(!room.Items) {
         itemList = 'There is no item record!';
     }
     else {
         itemList = room.Items.map((item, k) =>
             <ItemCard item={item} room_id={room_id} key={k} />
+        );
+    }
+
+    let characterList;
+    if(!room.Characters) {
+        characterList = 'There is no character record!';
+    }
+    else {
+        characterList = room.Characters.map((character, k) =>
+            <CharacterCard character={character} room_id={room_id} key={k} />
         );
     }
 
@@ -188,10 +198,19 @@ function ShowItemList(props) {
                         <Link to={`/create-item/${room_id}`} className='btn btn-outline-warning float-right'>
                             + Add new Item
                         </Link>
+
+                        <Link to={`/create-character/${room_id}`} className='btn btn-outline-warning float-right'>
+                            + Add new Character
+                        </Link>
                     </div>
                 </div>
                 <div className='list'>
+                    <h6>Items:</h6>
                     {itemList}
+                </div>
+                <div className='list'>
+                    <h6>Characters:</h6>
+                    {characterList}
                 </div>
                 <br />
             </div>

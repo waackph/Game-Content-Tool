@@ -82,7 +82,7 @@ function UpdateItemInfo(props) {
     const [allItems, setAllItems] = useState([]);
 
     let thoughtConnections = [];
-    let exportedThoughts = {};  
+    let exportedThoughts = {};
 
     let combineThoughtConnections = [];
     let combineExportedThoughts = {};

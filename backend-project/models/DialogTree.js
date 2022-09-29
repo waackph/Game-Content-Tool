@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 
 const DialogEdgeSchema = new mongoose.Schema({
+    Id: {
+        type: Number,
+        required: true,
+    },
     _nextNodeId: {
-        type: String,  // Is Object ID
+        type: Number,  // Is Object ID
         required: true,
     },
     _dialogLine: {
@@ -12,10 +16,22 @@ const DialogEdgeSchema = new mongoose.Schema({
     MoodDependence: {
         type: Number,
         required: true,
-    }
+    },
+    x: {
+        type: Number,
+        required: false,
+    },
+    y: {
+        type: Number,
+        required: false,
+    },
 });
 
 const DialogNodeSchema = new mongoose.Schema({
+    Id: {
+        type: Number,
+        required: true,
+    },
     _dialogLine: {
         type: String,
         required: true,
@@ -23,7 +39,15 @@ const DialogNodeSchema = new mongoose.Schema({
     _edges: {
         type: [DialogEdgeSchema],
         required: true,
-    }
+    },
+    x: {
+        type: Number,
+        required: false,
+    },
+    y: {
+        type: Number,
+        required: false,
+    },
 });
 
 module.exports = DialogNodeSchema;

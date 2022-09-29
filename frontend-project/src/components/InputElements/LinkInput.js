@@ -1,7 +1,7 @@
 import CheckboxField from "./CheckboxField";
 // import { MultiSelect } from "react-multi-select-component";
 import Select from 'react-select';
-import SequenceCard from "../Rooms/SequenceCard";
+import SequenceCard from "../InputElements/SequenceCard";
 
 const moodOptions = [
   { label: "None", value: 0 },

@@ -38,6 +38,12 @@
     color: white;
   }
   
+  .CreateCharacter {
+    background-color: #2c3e50;
+    min-height: 100vh;
+    color: white;
+  }
+  
   .CreateRoom {
     background-color: #2c3e50;
     min-height: 100vh;
@@ -45,6 +51,12 @@
   }
 
   .ShowItemDetails {
+    background-color: #2c3e50;
+    min-height: 100vh;
+    color: white;
+  }
+
+  .ShowCharacter {
     background-color: #2c3e50;
     min-height: 100vh;
     color: white;
@@ -129,6 +141,10 @@
 }
 
 #combineItemThoughtInputs {
+  border: solid 1px white;
+}
+
+#characterDialogInputs {
   border: solid 1px white;
 }
 
