@@ -1,0 +1,497 @@
+{
+  "1": {
+    "RoomWidth": 1920,
+    "Items": [
+      {
+        "Id": 7731,
+        "Name": "fcs",
+        "texturePath": "csydwhi",
+        "Rotation": 0,
+        "PositionX": 0,
+        "PositionY": 0,
+        "ExamineText": "csycysc",
+        "IsInInventory": false,
+        "UseAble": true,
+        "PickUpAble": false,
+        "CombineAble": false,
+        "GiveAble": false,
+        "UseWith": false,
+        "ItemDependency": "-1",
+        "Thought": {
+          "Thought": "Descriptive Thought",
+          "IsRoot": true,
+          "ThingId": "7731",
+          "Links": [
+            {
+              "Id": 2,
+              "_validMoods": [],
+              "Option": "First link",
+              "NextNode": {
+                "Thought": "First node",
+                "IsRoot": false,
+                "ThingId": 7731,
+                "Links": [
+                  {
+                    "Id": 6882,
+                    "NextNode": {
+                      "Thought": "testInsert",
+                      "ThingId": 7731,
+                      "Links": []
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "$type": "conscious.DataHolderItem"
+      },
+      {
+        "Id": 2064,
+        "Name": "abv",
+        "texturePath": "dfee",
+        "Rotation": 0,
+        "PositionX": 0,
+        "PositionY": 0,
+        "ExamineText": "fess",
+        "IsInInventory": false,
+        "UseAble": false,
+        "PickUpAble": false,
+        "CombineAble": false,
+        "GiveAble": false,
+        "UseWith": false,
+        "ItemDependency": "-1",
+        "Thought": {
+          "Thought": "Descriptive Thought",
+          "IsRoot": true,
+          "ThingId": "2064",
+          "Links": [
+            {
+              "Id": 2,
+              "_validMoods": [
+                2
+              ],
+              "Option": "First linkabc",
+              "IsLocked": true,
+              "NextNode": {
+                "Thought": "First node",
+                "IsRoot": false,
+                "ThingId": 2064,
+                "Links": []
+              },
+              "IsFinal": true,
+              "Verb": 2,
+              "MoodChange": 1
+            }
+          ]
+        },
+        "$type": "conscious.DataHolderItem"
+      },
+      {
+        "Id": 8189,
+        "Name": "combinettest",
+        "texturePath": "fasrfaf",
+        "Rotation": 0,
+        "PositionX": 0,
+        "PositionY": 0,
+        "ExamineText": "",
+        "IsInInventory": false,
+        "UseAble": true,
+        "PickUpAble": false,
+        "CombineAble": true,
+        "GiveAble": false,
+        "UseWith": true,
+        "ItemDependency": "-1",
+        "CombineItem": {
+          "Id": 290,
+          "Name": "fasrbf",
+          "texturePath": "feasef",
+          "Rotation": 0,
+          "PositionX": 0,
+          "PositionY": 0,
+          "ExamineText": "",
+          "IsInInventory": false,
+          "UseAble": false,
+          "PickUpAble": false,
+          "CombineAble": false,
+          "GiveAble": false,
+          "UseWith": false,
+          "ItemDependency": "-1",
+          "Thought": {
+            "Thought": "Descriptive Thought",
+            "IsRoot": true,
+            "ThingId": "290",
+            "Links": [
+              {
+                "Id": 112,
+                "_validMoods": [
+                  0
+                ],
+                "Option": "First link",
+                "IsLocked": false,
+                "NextNode": {
+                  "Thought": "First node",
+                  "IsRoot": false,
+                  "ThingId": 290,
+                  "Links": [
+                    {
+                      "IsLocked": false,
+                      "_validMoods": [
+                        0
+                      ],
+                      "Id": 9977,
+                      "NextNode": {
+                        "IsRoot": false,
+                        "Links": [],
+                        "ThingId": 290
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "$type": "conscious.DataHolderItem"
+        },
+        "Thought": {
+          "Thought": "Descriptive Thought",
+          "IsRoot": true,
+          "ThingId": "8189",
+          "Links": [
+            {
+              "Id": 2,
+              "_validMoods": [
+                0
+              ],
+              "Option": "First link",
+              "IsLocked": false,
+              "NextNode": {
+                "Thought": "First node",
+                "IsRoot": false,
+                "ThingId": 8189,
+                "Links": [
+                  {
+                    "IsLocked": false,
+                    "_validMoods": [
+                      0
+                    ],
+                    "Id": 7375,
+                    "NextNode": {
+                      "IsRoot": false,
+                      "ThingId": 8189,
+                      "Links": []
+                    }
+                  },
+                  {
+                    "IsLocked": false,
+                    "_validMoods": [
+                      0
+                    ],
+                    "Id": 5062,
+                    "NextNode": {
+                      "IsRoot": false,
+                      "ThingId": 8189,
+                      "Links": []
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "$type": "conscious.DataHolderCombineItem"
+      },
+      {
+        "Id": 8106,
+        "Name": "",
+        "texturePath": "",
+        "Rotation": 0,
+        "PositionX": 0,
+        "PositionY": 0,
+        "ExamineText": "",
+        "IsInInventory": false,
+        "UseAble": false,
+        "PickUpAble": false,
+        "CombineAble": false,
+        "GiveAble": false,
+        "UseWith": false,
+        "ItemDependency": "-1",
+        "Thought": {
+          "Thought": "Descriptive Thought",
+          "IsRoot": true,
+          "ThingId": "8106",
+          "Links": [
+            {
+              "Id": 2,
+              "_validMoods": [
+                0
+              ],
+              "Option": "First link",
+              "IsLocked": false,
+              "NextNode": {
+                "Thought": "First node",
+                "IsRoot": false,
+                "Links": [],
+                "ThingId": 8106
+              }
+            }
+          ]
+        },
+        "$type": "conscious.DataHolderItem"
+      },
+      {
+        "Id": 4602,
+        "Name": "sequencethoughttest",
+        "texturePath": "",
+        "Rotation": 0,
+        "PositionX": 0,
+        "PositionY": 0,
+        "ExamineText": "",
+        "IsInInventory": false,
+        "UseAble": false,
+        "PickUpAble": false,
+        "CombineAble": false,
+        "GiveAble": false,
+        "UseWith": false,
+        "ItemDependency": "-1",
+        "Thought": {
+          "Thought": "Descriptive Thought",
+          "IsRoot": true,
+          "ThingId": "4602",
+          "Links": [
+            {
+              "Id": 2,
+              "_validMoods": [
+                1
+              ],
+              "Option": "First linkabc",
+              "IsLocked": false,
+              "NextNode": {
+                "Thought": "First node",
+                "IsRoot": false,
+                "ThingId": 4602,
+                "Links": [
+                  {
+                    "IsLocked": false,
+                    "_validMoods": [
+                      0
+                    ],
+                    "Id": 1184,
+                    "NextNode": {
+                      "IsRoot": false,
+                      "ThingId": 4602,
+                      "Links": []
+                    }
+                  }
+                ]
+              },
+              "IsFinal": true,
+              "Verb": 1,
+              "MoodChange": 1,
+              "ThoughtSequence": {
+                "_currentIndex": 1,
+                "_commands": [
+                  {
+                    "_destinationX": 2,
+                    "_destinationY": 0,
+                    "CommandFinished": false,
+                    "$type": "conscious.WalkCommand"
+                  },
+                  {
+                    "_destinationX": 6,
+                    "_destinationY": 0,
+                    "CommandFinished": false,
+                    "$type": "conscious.WalkCommand"
+                  }
+                ],
+                "SequenceFinished": false
+              },
+              "$type": "conscious.FinalThoughtLink, conscious"
+            }
+          ]
+        },
+        "$type": "conscious.DataHolderItem"
+      },
+      {
+        "Id": 8049,
+        "Name": "",
+        "texture_path": "",
+        "Rotation": 0,
+        "PositionX": 0,
+        "PositionY": 0,
+        "ItemDependency": "-1",
+        "DialogUnlocked": false,
+        "Pronoun": "",
+        "CatchPhrase": "",
+        "GiveAble": false,
+        "MoodChange": 0,
+        "Thought": {
+          "Thought": "Descriptive Thought",
+          "IsRoot": true,
+          "ThingId": "8049",
+          "Links": [
+            {
+              "Id": 2,
+              "_validMoods": [
+                0
+              ],
+              "Option": "First link",
+              "IsLocked": false,
+              "NextNode": {
+                "Thought": "First node",
+                "IsRoot": false,
+                "Links": [],
+                "ThingId": 8049
+              }
+            }
+          ]
+        },
+        "TreeStructure": [],
+        "$type": "conscious.DataHolderCharacter"
+      },
+      {
+        "Id": 9249,
+        "Name": "testChar",
+        "texture_path": "path",
+        "Rotation": 5,
+        "PositionX": 3,
+        "PositionY": 14,
+        "ItemDependency": "-1",
+        "DialogUnlocked": false,
+        "Pronoun": "Hen",
+        "CatchPhrase": "abc Thought!",
+        "GiveAble": true,
+        "MoodChange": 3,
+        "Thought": {
+          "Thought": "Descriptive Thought",
+          "IsRoot": true,
+          "ThingId": "9249",
+          "Links": [
+            {
+              "Id": 2,
+              "_validMoods": [
+                0
+              ],
+              "Option": "First link",
+              "IsLocked": false,
+              "NextNode": {
+                "Thought": "First node",
+                "IsRoot": false,
+                "ThingId": 9249,
+                "Links": [
+                  {
+                    "IsLocked": false,
+                    "_validMoods": [
+                      0
+                    ],
+                    "Id": 851,
+                    "Option": "abc",
+                    "NextNode": {
+                      "IsRoot": false,
+                      "Thought": "de",
+                      "Links": [],
+                      "ThingId": 9249
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "TreeStructure": [],
+        "$type": "conscious.DataHolderCharacter"
+      },
+      {
+        "Id": 1275,
+        "Name": "fdwj",
+        "texture_path": "fen",
+        "Rotation": 0,
+        "PositionX": 0,
+        "PositionY": 0,
+        "ItemDependency": "-1",
+        "DialogUnlocked": false,
+        "Pronoun": "fena",
+        "CatchPhrase": "fean",
+        "GiveAble": false,
+        "MoodChange": 0,
+        "TreeStructure": [
+          {
+            "Id": 9767,
+            "_dialogLine": "ab",
+            "_edges": [
+              {
+                "Id": 2530,
+                "_nextNodeId": 5877,
+                "_dialogLine": "gh",
+                "MoodDependence": 2
+              }
+            ]
+          },
+          {
+            "Id": 200,
+            "_dialogLine": "ef",
+            "_edges": []
+          },
+          {
+            "Id": 5877,
+            "_dialogLine": "cd",
+            "_edges": [
+              {
+                "Id": 5085,
+                "_nextNodeId": 200,
+                "_dialogLine": "ij",
+                "MoodDependence": 0
+              }
+            ]
+          }
+        ],
+        "Thought": {
+          "Thought": "Descriptive Thought",
+          "IsRoot": true,
+          "ThingId": "1275",
+          "Links": [
+            {
+              "Id": 2,
+              "_validMoods": [
+                0
+              ],
+              "Option": "First link",
+              "IsLocked": false,
+              "NextNode": {
+                "Thought": "First node",
+                "IsRoot": false,
+                "Links": [],
+                "ThingId": 1275
+              }
+            }
+          ]
+        },
+        "$type": "conscious.DataHolderCharacter"
+      }
+    ],
+    "EntrySequence": {
+      "_currentIndex": 1,
+      "_commands": [
+        {
+          "_destinationX": 5,
+          "_destinationY": 2,
+          "CommandFinished": false,
+          "$type": "conscious.WalkCommand"
+        },
+        {
+          "_destinationX": 32,
+          "_destinationY": 3,
+          "CommandFinished": false,
+          "$type": "conscious.WaitCommand"
+        },
+        {
+          "_destinationX": 2,
+          "_destinationY": 0,
+          "CommandFinished": false,
+          "$type": "conscious.WalkCommand"
+        }
+      ],
+      "SequenceFinished": false
+    }
+  }
+}
