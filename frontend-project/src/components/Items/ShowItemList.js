@@ -13,7 +13,7 @@ function ShowItemList(props) {
     const [Name, setName] = useState([]);
     const [texturePath, setTexturePath] = useState([]);
     const [RoomWidth, setRoomWidth] = useState([]);
-    const [EntrySequence, setEntrySequence] = useState({'_currentIndex': 1, 'SequenceFinished': false, '_commands': []});
+    const [EntrySequence, setEntrySequence] = useState({'_currentIndex': 1, 'SequenceFinished': false, 'Commands': []});
 
     let { room_id } = useParams();
     let navigate = useNavigate();
@@ -55,9 +55,9 @@ function ShowItemList(props) {
             setRoomWidth(e.target.value);
         }
         else if(['_destinationX', '_destinationY', 'CommandType'].includes(e.target.name)) {
-            let cmds = [...EntrySequence._commands];
+            let cmds = [...EntrySequence.Commands];
             cmds[e.target.dataset.id][e.target.name] = e.target.value;
-            setEntrySequence({...EntrySequence, _commands: cmds});
+            setEntrySequence({...EntrySequence, Commands: cmds});
         }
         else {
             console.log('No matching variable to fieldname')
@@ -66,17 +66,17 @@ function ShowItemList(props) {
 
     const addSequenceCommand = (e) => {
         e.preventDefault();
-        const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.WalkCommand'}
+        const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
         setEntrySequence({
             ...EntrySequence, 
-            _commands: [...EntrySequence._commands, defaultCommand]
+            Commands: [...EntrySequence.Commands, defaultCommand]
         })
     }
 
     const deleteRow = (e, cmd) => {
         setEntrySequence({
             ...EntrySequence, 
-            _commands: EntrySequence._commands.filter(val => val !== cmd)
+            Commands: EntrySequence.Commands.filter(val => val !== cmd)
         });
     }
 
@@ -89,7 +89,7 @@ function ShowItemList(props) {
             texturePath: texturePath,
         };
 
-        if(EntrySequence._commands.length !== 0) {
+        if(EntrySequence.Commands.length !== 0) {
             data['EntrySequence'] = EntrySequence;
         }
         console.log(data);

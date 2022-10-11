@@ -72,7 +72,7 @@ function UpdateItemInfo(props) {
           },
         }
       ]}
-    const defaultCombineItem = {'Name': '', 'texturePath': '', 'ItemType': 'conscious.DataHolderItem',
+    const defaultCombineItem = {'Name': '', 'texturePath': '', 'ItemType': 'conscious.DataHolderItem, conscious',
     'Rotation': 0, 'PositionX': 0, 'PositionY': 0, 
     'ExamineText': '', 'IsInInventory': false, 'UseAble': false, 'PickUpAble': false, 
     'CombineAble': false, 'GiveAble': false, 'UseWith': false, 'ItemDependency': -1,
@@ -137,7 +137,7 @@ function UpdateItemInfo(props) {
           }
           else if(e.target.name === 'ItemType') {
             setItemType(e.target.value);
-            if(e.target.value === 'conscious.DataHolderCombineItem') {
+            if(e.target.value === 'conscious.DataHolderCombineItem, conscious') {
               setCombineAble(true);
             }
           }
@@ -261,7 +261,7 @@ function UpdateItemInfo(props) {
             ItemDependency: ItemDependency,
             Thought: Thought
         };
-        if(ItemType === 'conscious.DataHolderCombineItem') {
+        if(ItemType === 'conscious.DataHolderCombineItem, conscious') {
           if(!CombineItem.hasOwnProperty('Id')) {
             const IdCombine = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
             CombineItem.Thought = addItemIdToThoughtNodes(CombineItem.Thought, IdCombine);
@@ -302,7 +302,7 @@ function UpdateItemInfo(props) {
 
     let selectItemOptions = allItems.map((item, idx) => {
       let val;
-      if(item['ItemType'] !== 'conscious.DataHolderThing' && item['Id'] !== Id) {
+      if(item['ItemType'] !== 'conscious.DataHolderThing, conscious' && item['Id'] !== Id) {
         val = <option key={idx} value={item['Id']}>{item['Name']}: {item['ExamineText']}</option>;
       }
       return val;
@@ -310,7 +310,7 @@ function UpdateItemInfo(props) {
 
     // Decide what extended fields should be added
     let extendedInputs = (<></>)
-    if(ItemType !== 'conscious.DataHolderThing') {
+    if(ItemType !== 'conscious.DataHolderThing, conscious') {
       // append different sets of components using inputs = [input1, input2]
       extendedInputs = (
       <>
@@ -412,7 +412,7 @@ function UpdateItemInfo(props) {
     }
 
     let combineItemInputs = (<></>);
-    if(ItemType === 'conscious.DataHolderCombineItem') {
+    if(ItemType === 'conscious.DataHolderCombineItem, conscious') {
       combineItemInputs = (
         <>
           <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#combineInputs" 
@@ -454,11 +454,11 @@ function UpdateItemInfo(props) {
                     <select className="form-select" name='ItemType' 
                             onChange={onChangeCombineItem} value={CombineItem.ItemType}
                             aria-label="Select item type">
-                      <option value="conscious.DataHolderThing">Thing</option>
-                      <option value="conscious.DataHolderItem">Item</option>
-                      <option value="conscious.DataHolderDoor">Door</option>
-                      <option value="conscious.DataHolderKey">Key</option>
-                      {/* <option value="conscious.DataHolderCombineItem">CombineItem</option> */}
+                      <option value="conscious.DataHolderThing, conscious">Thing</option>
+                      <option value="conscious.DataHolderItem, conscious">Item</option>
+                      <option value="conscious.DataHolderDoor, conscious">Door</option>
+                      <option value="conscious.DataHolderKey, conscious">Key</option>
+                      {/* <option value="conscious.DataHolderCombineItem, conscious">CombineItem</option> */}
                     </select>
                   </div>
                 </div>
@@ -666,11 +666,11 @@ function UpdateItemInfo(props) {
                         <select className="form-select" name='ItemType' 
                                 value={ItemType} onChange={onChange} 
                                 aria-label="Select item type">
-                          <option value="conscious.DataHolderThing">Thing</option>
-                          <option value="conscious.DataHolderItem">Item</option>
-                          <option value="conscious.DataHolderCombineItem">CombineItem</option>
-                          <option value="conscious.DataHolderDoor">Door</option>
-                          <option value="conscious.DataHolderKey">Key</option>
+                          <option value="conscious.DataHolderThing, conscious">Thing</option>
+                          <option value="conscious.DataHolderItem, conscious">Item</option>
+                          <option value="conscious.DataHolderCombineItem, conscious">CombineItem</option>
+                          <option value="conscious.DataHolderDoor, conscious">Door</option>
+                          <option value="conscious.DataHolderKey, conscious">Key</option>
                         </select>
                       </div>
                     </div>

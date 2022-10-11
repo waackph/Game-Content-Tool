@@ -36,11 +36,11 @@ function ShowItemDetails(props) {
     }
 
     // const item = this.state.item;
-    const itemTypes = {'conscious.DataHolderThing': 'Thing', 
-                       'conscious.DataHolderItem': 'Item', 
-                       'conscious.DataHolderKey': 'Key',
-                       'conscious.DataHolderDoor': 'Door',
-                       'conscious.DataHolderCombineItem': 'CombineItem'}
+    const itemTypes = {'conscious.DataHolderThing, conscious': 'Thing', 
+                       'conscious.DataHolderItem, conscious': 'Item', 
+                       'conscious.DataHolderKey, conscious': 'Key',
+                       'conscious.DataHolderDoor, conscious': 'Door',
+                       'conscious.DataHolderCombineItem, conscious': 'CombineItem'}
 
     let optionalInfo = (<></>)
     if(itemTypes[item.ItemType] !== 'Thing') {

@@ -109,11 +109,11 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
       }
     }
     if(['_destinationX', '_destinationY', 'CommandType'].includes(e.target.name)) {
-      let cmds = [...linkInputData.ThoughtSequence._commands];
+      let cmds = [...linkInputData.ThoughtSequence.Commands];
       cmds[e.target.dataset.id][e.target.name] = e.target.value;
       setLinkInputData({
         ...linkInputData,
-        'ThoughtSequence': {...linkInputData.ThoughtSequence, _commands: cmds}
+        'ThoughtSequence': {...linkInputData.ThoughtSequence, Commands: cmds}
       });
     }
     else {
@@ -126,12 +126,12 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
 
   const addSequenceCommand = (e) => {
     e.preventDefault();
-    const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.WalkCommand'}
+    const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
     setLinkInputData({
       ...linkInputData,
       'ThoughtSequence': {
         ...linkInputData.ThoughtSequence, 
-        _commands: [...linkInputData.ThoughtSequence._commands, defaultCommand]
+        Commands: [...linkInputData.ThoughtSequence.Commands, defaultCommand]
       }
     });
   }
@@ -142,7 +142,7 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
       ...linkInputData,
       'ThoughtSequence': {
         ...linkInputData.ThoughtSequence, 
-        _commands: linkInputData.ThoughtSequence._commands.filter(val => val !== cmd)
+        Commands: linkInputData.ThoughtSequence.Commands.filter(val => val !== cmd)
       }
     });
   }

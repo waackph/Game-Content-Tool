@@ -5,7 +5,7 @@ const SequenceCard = (props) => {
     const sequence = props.sequence;
 
     // Create Commands list
-    let commands = sequence._commands.map((val, idx) => {
+    let commands = sequence.Commands.map((val, idx) => {
         let _destinationX = `_destinationX-${val.index}`;
         let _destinationY = `_destinationY-${val.index}`;
         let CommandType = `CommandType-${val.index}`;
@@ -29,8 +29,8 @@ const SequenceCard = (props) => {
                         onChange={(e) => props.onChange(e)} value={val.CommandType}
                         data-id={idx} id={CommandType}
                         aria-label="Select command type">
-                    <option value="conscious.WalkCommand">Walk</option>
-                    <option value="conscious.WaitCommand">Wait</option>
+                    <option value="conscious.DataHolderWalkCommand, conscious">Walk</option>
+                    <option value="conscious.DataHolderWaitCommand, conscious">Wait</option>
                 </select>
             </div>
             <div className="col-2 p-2">

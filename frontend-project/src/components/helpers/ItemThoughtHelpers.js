@@ -26,7 +26,7 @@ export function addLinksToThoughtData(svg, connections, parentNodeId) {
         let linkData = svg.select('#e'+linkId).data()[0];
         // add linkType if IsFinal is set to true, else remove it, if present
         if(linkData.IsFinal && !linkData.hasOwnProperty('linkType')) {
-          linkData['linkType'] = 'conscious.FinalThoughtLink, conscious';
+          linkData['linkType'] = 'conscious.DataHolderFinalThoughtLink, conscious';
         }
         else if((!linkData.hasOwnProperty('IsFinal') || !linkData['IsFinal']) && linkData.hasOwnProperty('linkType')) {
           delete linkData['linkType'];

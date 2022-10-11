@@ -12,7 +12,7 @@ function CreateUpdateCharacter(props) {
   const [Id, setId] = useState(0);
   const [Name, setName] = useState('');
   const [texturePath, setTexturePath] = useState('');
-  const [CharacterType, setCharacterType] = useState('conscious.DataHolderCharacter');
+  const [CharacterType, setCharacterType] = useState('conscious.DataHolderCharacter, conscious');
   const [Rotation, setRotation] = useState(0);
   const [PositionX, setPositionX] = useState(0);
   const [PositionY, setPositionY] = useState(0);
@@ -247,7 +247,7 @@ function CreateUpdateCharacter(props) {
         setId(0);
         setName('');
         setTexturePath('');
-        setCharacterType('conscious.DataHolderCharacter');
+        setCharacterType('conscious.DataHolderCharacter, conscious');
         setRotation(0);
         setPositionX(0);
         setPositionY(0);
@@ -276,7 +276,7 @@ function CreateUpdateCharacter(props) {
 
   // Decide what extended fields should be added
   let extendedInputs = (<></>)
-  if(CharacterType === 'conscious.DataHolderPuzzleCharacter') {
+  if(CharacterType === 'conscious.DataHolderPuzzleCharacter, conscious') {
     extendedInputs = (
       <>
         <div className="row">
@@ -359,8 +359,8 @@ function CreateUpdateCharacter(props) {
                   <select className="form-select" name='CharacterType' 
                           onChange={onChange} value={CharacterType}
                           aria-label="Select character type">
-                    <option value="conscious.DataHolderCharacter">Character</option>
-                    <option value="conscious.DataHolderPuzzleCharacter">PuzzleCharacter</option>
+                    <option value="conscious.DataHolderCharacter, conscious">Character</option>
+                    <option value="conscious.DataHolderPuzzleCharacter, conscious">PuzzleCharacter</option>
                   </select>
                 </div>
               </div>

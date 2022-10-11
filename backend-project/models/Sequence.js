@@ -24,7 +24,7 @@ const SequenceSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    _commands: {
+    Commands: {
         type: [CommandSchema],
         required: true,
     },

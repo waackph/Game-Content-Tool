@@ -37,7 +37,7 @@ def modify_dict(obj):
 
 def prepare_json(l):
     # TODO: General stuff to change in the GCT
-    # [ ] Types: use following pattern - "conscious.[Objectname], conscious"
+    # [x] Types: use following pattern - "conscious.[Objectname], conscious"
     # [x] [Room] Combine "Items" and "Characters" List into "Things" List
     # [x] [Room] remove "__v"
     # [ ] [Room] Add fields SoundFilePath, LightMapPath
@@ -48,8 +48,10 @@ def prepare_json(l):
     # [ ] [ThoughtNode/ThoughtLink] Add type info (DataHolderX)
     # [x] [TreeStructure] node/link: remove x, y
     # [ ] [TreeStructure] link: remove _id, Id
-    # [ ] [sequence] remove field _currentIndex; rename _commands -> Commands
+    # [ ] [sequence] remove field _currentIndex; 
+    # [x] [sequence] rename _commands -> Commands
     # [ ] [Command] only use valid fields for the respective command type
+    # [ ] [Command] Add missing commands
     l_dict = {}
     for i, d in enumerate(l):
         # remove invalid properties from room
