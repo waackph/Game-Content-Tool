@@ -17,6 +17,7 @@ function UpdateItemInfo(props) {
     const [Rotation, setRotation] = useState(0);
     const [PositionX, setPositionX] = useState(0);
     const [PositionY, setPositionY] = useState(0);
+    const [DrawOrder, setDrawOrder] = useState(3);
     const [ExamineText, setExamineText] = useState('');
     const [IsInInventory, setIsInInventory] = useState(false);
     const [UseAble, setUseAble] = useState(false);
@@ -73,7 +74,7 @@ function UpdateItemInfo(props) {
         }
       ]}
     const defaultCombineItem = {'Name': '', 'texturePath': '', 'ItemType': 'conscious.DataHolderItem, conscious',
-    'Rotation': 0, 'PositionX': 0, 'PositionY': 0, 
+    'Rotation': 0, 'PositionX': 0, 'PositionY': 0, 'DrawOrder': 3,
     'ExamineText': '', 'IsInInventory': false, 'UseAble': false, 'PickUpAble': false, 
     'CombineAble': false, 'GiveAble': false, 'UseWith': false, 'ItemDependency': -1,
     'Thought': defaultCombineThought}
@@ -102,6 +103,7 @@ function UpdateItemInfo(props) {
             setRotation(res.data.Rotation);
             setPositionX(res.data.PositionX);
             setPositionY(res.data.PositionY);
+            setDrawOrder(res.data.DrawOrder);
             setExamineText(res.data.ExamineText);
             setIsInInventory(res.data.IsInInventory);
             setUseAble(res.data.UseAble);
@@ -149,6 +151,9 @@ function UpdateItemInfo(props) {
           }
           else if(e.target.name === 'PositionY') {
             setPositionY(e.target.value);
+          }
+          else if(e.target.name === 'DrawOrder') {
+            setDrawOrder(e.target.value);
           }
           else if(e.target.name === 'ExamineText') {
             setExamineText(e.target.value);
@@ -251,6 +256,7 @@ function UpdateItemInfo(props) {
             Rotation: Rotation,
             PositionX: PositionX,
             PositionY: PositionY,
+            DrawOrder: DrawOrder,
             ExamineText: ExamineText,
             IsInInventory: IsInInventory,
             UseAble: UseAble,
@@ -506,6 +512,22 @@ function UpdateItemInfo(props) {
                 </div>
               </div>
 
+              <div className="row">
+                <div className="col-md-6 m-auto">
+                  <div className='form-group'>
+                    <input
+                    type='number'
+                    placeholder='Draw Order'
+                    name='DrawOrder'
+                    className='form-control'
+                    value={CombineItem.DrawOrder}
+                    onChange={onChangeCombineItem}
+                    />
+                  </div>
+                </div>
+              </div>
+
+
             <div className="row">
               <div className="col-md-6 m-auto">
                 <div className='form-group'>
@@ -714,6 +736,21 @@ function UpdateItemInfo(props) {
                       value={PositionY}
                       onChange={onChange}
                       />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-6 m-auto">
+                    <div className='form-group'>
+                        <input
+                        type='number'
+                        placeholder='Draw Order'
+                        name='DrawOrder'
+                        className='form-control'
+                        value={DrawOrder}
+                        onChange={onChange}
+                        />
                     </div>
                   </div>
                 </div>

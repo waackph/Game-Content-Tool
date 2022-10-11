@@ -16,6 +16,7 @@ function CreateUpdateCharacter(props) {
   const [Rotation, setRotation] = useState(0);
   const [PositionX, setPositionX] = useState(0);
   const [PositionY, setPositionY] = useState(0);
+  const [DrawOrder, setDrawOrder] = useState(4);
   const [ItemDependency, setItemDependency] = useState(-1);
   const [DialogUnlocked, setDialogUnlocked] = useState(false);
   const [Pronoun, setPronoun] = useState('');
@@ -82,6 +83,7 @@ function CreateUpdateCharacter(props) {
           setRotation(res.data.Rotation);
           setPositionX(res.data.PositionX);
           setPositionY(res.data.PositionY);
+          setDrawOrder(res.data.DrawOrder);
           setItemDependency(res.data.ItemDependency);
           setDialogUnlocked(res.data.DialogUnlocked);
           setPronoun(res.data.Pronoun);
@@ -124,6 +126,9 @@ function CreateUpdateCharacter(props) {
     }
     else if(e.target.name === 'PositionY') {
       setPositionY(e.target.value);
+    }
+    else if(e.target.name === 'DrawOrder') {
+      setDrawOrder(e.target.value);
     }
     else if(e.target.name === 'ItemDependency') {
       setItemDependency(e.target.value);
@@ -198,6 +203,7 @@ function CreateUpdateCharacter(props) {
         Rotation: Rotation,
         PositionX: PositionX,
         PositionY: PositionY,
+        DrawOrder: DrawOrder,
         ItemDependency: ItemDependency,
         DialogUnlocked: DialogUnlocked,
         Pronoun: Pronoun,
@@ -218,6 +224,7 @@ function CreateUpdateCharacter(props) {
         Rotation: Rotation,
         PositionX: PositionX,
         PositionY: PositionY,
+        DrawOrder: DrawOrder,
         ItemDependency: ItemDependency,
         DialogUnlocked: DialogUnlocked,
         Pronoun: Pronoun,
@@ -404,6 +411,21 @@ function CreateUpdateCharacter(props) {
                 value={PositionY}
                 onChange={onChange}
                 />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6 m-auto">
+              <div className='form-group'>
+                  <input
+                  type='number'
+                  placeholder='Draw Order'
+                  name='DrawOrder'
+                  className='form-control'
+                  value={DrawOrder}
+                  onChange={onChange}
+                  />
               </div>
             </div>
           </div>

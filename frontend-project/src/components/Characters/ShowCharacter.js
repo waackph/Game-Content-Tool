@@ -63,6 +63,10 @@ function ShowCharacter(props) {
                 <td>{ character.PositionY }</td>
             </tr>
             <tr>
+                <td>DrawOrder</td>
+                <td>{ character.DrawOrder }</td>
+            </tr>
+            <tr>
                 <td>Pronoun</td>
                 <td>{ character.Pronoun }</td>
             </tr>

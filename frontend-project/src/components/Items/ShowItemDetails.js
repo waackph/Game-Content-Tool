@@ -59,6 +59,10 @@ function ShowItemDetails(props) {
                             <td>{ item.PositionY }</td>
                         </tr>
                         <tr>
+                            <td>Draw Order</td>
+                            <td>{ item.DrawOrder }</td>
+                        </tr>
+                        <tr>
                             <td>Examine Text</td>
                             <td>{ item.ExamineText }</td>
                         </tr>

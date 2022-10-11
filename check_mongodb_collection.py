@@ -41,7 +41,7 @@ def prepare_json(l):
     # [x] [Room] Combine "Items" and "Characters" List into "Things" List
     # [x] [Room] remove "__v"
     # [x] [Room] Add fields SoundFilePath, LightMapPath
-    # [ ] [Thing] add Draw order field
+    # [x] [Thing] add DrawOrder field
     # [ ] [Door] add fields InitPlayerPosX, InitPlayerPosY, CloseTexturePath / ? DoorId, RoomId
     # [ ] [ThoughtNode] rename _id to Id, add field LinkageId
     # [ ] [ThoughtLink] ValidMoods must have value 0 as default (no empty list)
