@@ -8,6 +8,8 @@ function CreateRoom (props) {
   const [Name, setName] = useState('');
   const [RoomWidth, setRoomWidth] = useState('');
   const [texturePath, setTexturePath] = useState('');
+  const [SoundFilePath, setSoundFilePath] = useState('');
+  const [LightMapPath, setLightMapPath] = useState('');
 
   let navigate = useNavigate();
 
@@ -21,6 +23,12 @@ function CreateRoom (props) {
     else if(e.target.name === 'texturePath') {
       setTexturePath(e.target.value);
     }
+    else if(e.target.name === 'SoundFilePath') {
+      setSoundFilePath(e.target.value);
+    }
+    else if(e.target.name === 'LightMapPath') {
+      setLightMapPath(e.target.value);
+    }
     else {
       console.log('No matching variable to fieldname')
     }
@@ -33,6 +41,8 @@ function CreateRoom (props) {
       Name: Name,
       RoomWidth: RoomWidth,
       texturePath: texturePath,
+      SoundFilePath: SoundFilePath,
+      LightMapPath: LightMapPath,
     };
 
     axios
@@ -95,6 +105,28 @@ function CreateRoom (props) {
                   name='texturePath'
                   className='form-control'
                   value={texturePath}
+                  onChange={onChange}
+                />
+              </div>
+
+              <div className='form-group'>
+                <input
+                  type='text'
+                  placeholder='Sound File Path'
+                  name='SoundFilePath'
+                  className='form-control'
+                  value={SoundFilePath}
+                  onChange={onChange}
+                />
+              </div>
+
+              <div className='form-group'>
+                <input
+                  type='text'
+                  placeholder='Light Map Path'
+                  name='LightMapPath'
+                  className='form-control'
+                  value={LightMapPath}
                   onChange={onChange}
                 />
               </div>

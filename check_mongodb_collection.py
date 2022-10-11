@@ -40,7 +40,7 @@ def prepare_json(l):
     # [x] Types: use following pattern - "conscious.[Objectname], conscious"
     # [x] [Room] Combine "Items" and "Characters" List into "Things" List
     # [x] [Room] remove "__v"
-    # [ ] [Room] Add fields SoundFilePath, LightMapPath
+    # [x] [Room] Add fields SoundFilePath, LightMapPath
     # [ ] [Thing] add Draw order field
     # [ ] [Door] add fields InitPlayerPosX, InitPlayerPosY, CloseTexturePath / ? DoorId, RoomId
     # [ ] [ThoughtNode] rename _id to Id, add field LinkageId

@@ -16,6 +16,14 @@ const RoomSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    SoundFilePath: {
+        type: String,
+        required: false,
+    },
+    LightMapPath: {
+        type: String,
+        required: false,
+    },
     EntrySequence: {
         type: SequenceSchema,
         required: false,
