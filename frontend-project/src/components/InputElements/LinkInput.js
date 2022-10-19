@@ -23,7 +23,7 @@ const verbOptions = [
   { label: "WakeUp", value: 9 },
 ];
 
-const defaultSequence = {'_currentIndex': 1, 'SequenceFinished': false, 'Commands': []};
+const defaultSequence = {'Commands': []};
 
 // TODO: Add fields linkType, Verb, MoodChange, UnlockId, Animation
 function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink, addCmd, deleteCmd}) {

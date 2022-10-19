@@ -11,7 +11,7 @@ function CreateRoom (props) {
   const [texturePath, setTexturePath] = useState('');
   const [SoundFilePath, setSoundFilePath] = useState('');
   const [LightMapPath, setLightMapPath] = useState('');
-  const [EntrySequence, setEntrySequence] = useState({'_currentIndex': 1, 'SequenceFinished': false, 'Commands': []});
+  const [EntrySequence, setEntrySequence] = useState({'Commands': []});
 
   let navigate = useNavigate();
 
@@ -83,7 +83,7 @@ function CreateRoom (props) {
         setTexturePath('');
         setSoundFilePath('');
         setLightMapPath('');
-        setEntrySequence({'_currentIndex': 1, 'SequenceFinished': false, 'Commands': []});
+        setEntrySequence({'Commands': []});
         navigate(`/item-list/${res.data._id}`); //"/item-list/" + res._id);
       })
       .catch(err => {

@@ -48,9 +48,9 @@ def prepare_json(l):
     # [ ] [ThoughtNode/ThoughtLink] Add type info (DataHolderX)
     # [x] [TreeStructure] node/link: remove x, y
     # [ ] [TreeStructure] link: remove _id, Id
-    # [ ] [sequence] remove field _currentIndex; 
+    # [x] [sequence] remove field _currentIndex and SequenceFinished; 
     # [x] [sequence] rename _commands -> Commands
-    # [ ] [sequence] debug for room views
+    # [x] [sequence] debug for room views
     # [ ] [Command] only use valid fields for the respective command type
     # [ ] [Command] Add missing commands
     l_dict = {}

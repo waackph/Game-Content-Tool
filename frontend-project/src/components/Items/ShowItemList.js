@@ -14,7 +14,7 @@ function ShowItemList(props) {
     const [RoomWidth, setRoomWidth] = useState(0);
     const [SoundFilePath, setSoundFilePath] = useState('');
     const [LightMapPath, setLightMapPath] = useState('');
-    const [EntrySequence, setEntrySequence] = useState({'_currentIndex': 1, 'SequenceFinished': false, 'Commands': []});
+    const [EntrySequence, setEntrySequence] = useState({'Commands': []});
 
     let { room_id } = useParams();
     let navigate = useNavigate();

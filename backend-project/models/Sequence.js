@@ -20,16 +20,8 @@ const CommandSchema = new mongoose.Schema({
 });
 
 const SequenceSchema = new mongoose.Schema({
-    _currentIndex: {
-        type: Number,
-        required: true,
-    },
     Commands: {
         type: [CommandSchema],
-        required: true,
-    },
-    SequenceFinished: {
-        type: Boolean,
         required: true,
     },
 });
