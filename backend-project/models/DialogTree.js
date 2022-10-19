@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const DialogEdgeSchema = new mongoose.Schema({
-    Id: {
-        type: Number,
-        required: true,
-    },
     _nextNodeId: {
         type: Number,  // Is Object ID
         required: true,

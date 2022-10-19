@@ -25,6 +25,9 @@ def modify_dict(obj):
         for field in fields_to_remove:
             if field in obj.keys():
                 del obj[field]
+        # if dialog link: remove Id field as well (used for graphinput)
+        if '_nextNodeId' in obj.keys() and 'Id' in obj.keys():
+            del obj['Id']
         # change type field name to '$type'
         has_type = [k for k in obj.keys() if 'type' in k.lower()]
         if has_type and len(has_type) == 1:
@@ -47,7 +50,7 @@ def prepare_json(l):
     # [ ] [ThoughtLink] ValidMoods must have value 0 as default (no empty list)
     # [ ] [ThoughtNode/ThoughtLink] Add type info (DataHolderX)
     # [x] [TreeStructure] node/link: remove x, y
-    # [ ] [TreeStructure] link: remove _id, Id
+    # [x] [TreeStructure] link: remove _id, Id
     # [x] [sequence] remove field _currentIndex and SequenceFinished; 
     # [x] [sequence] rename _commands -> Commands
     # [x] [sequence] debug for room views
