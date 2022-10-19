@@ -50,7 +50,7 @@ def prepare_json(l):
     # [ ] [ThoughtLink] ValidMoods must have value 0 as default (no empty list)
     # [ ] [ThoughtNode/ThoughtLink] Add type info (DataHolderX)
     # [x] [TreeStructure] node/link: remove x, y
-    # [x] [TreeStructure] link: remove _id, Id
+    # [x] [TreeStructure] link: remove _id, Id (removed in post processing script)
     # [x] [sequence] remove field _currentIndex and SequenceFinished; 
     # [x] [sequence] rename _commands -> Commands
     # [x] [sequence] debug for room views
