@@ -6,13 +6,14 @@ import ItemCard from './ItemCard'
 import CharacterCard from '../Characters/CharacterCard'
 import SequenceCard from '../InputElements/SequenceCard';
 
-
 function ShowItemList(props) {
 
     const [room, setRoom] = useState([]);
-    const [Name, setName] = useState([]);
-    const [texturePath, setTexturePath] = useState([]);
-    const [RoomWidth, setRoomWidth] = useState([]);
+    const [Name, setName] = useState('');
+    const [texturePath, setTexturePath] = useState('');
+    const [RoomWidth, setRoomWidth] = useState(0);
+    const [SoundFilePath, setSoundFilePath] = useState('');
+    const [LightMapPath, setLightMapPath] = useState('');
     const [EntrySequence, setEntrySequence] = useState({'_currentIndex': 1, 'SequenceFinished': false, 'Commands': []});
 
     let { room_id } = useParams();
@@ -26,6 +27,8 @@ function ShowItemList(props) {
             setName(res.data.Name);
             setTexturePath(res.data.texturePath);
             setRoomWidth(res.data.RoomWidth);
+            setSoundFilePath(res.data.SoundFilePath);
+            setLightMapPath(res.data.LightMapPath);
             setEntrySequence(res.data.EntrySequence);
           })
           .catch(err => { 
@@ -54,6 +57,12 @@ function ShowItemList(props) {
         else if(e.target.name === 'RoomWidth') {
             setRoomWidth(e.target.value);
         }
+        else if(e.target.name === 'SoundFilePath') {
+            setSoundFilePath(e.target.value);
+        }
+        else if(e.target.name === 'LightMapPath') {
+            setLightMapPath(e.target.value);
+        }      
         else if(['_destinationX', '_destinationY', 'CommandType'].includes(e.target.name)) {
             let cmds = [...EntrySequence.Commands];
             cmds[e.target.dataset.id][e.target.name] = e.target.value;
@@ -65,7 +74,9 @@ function ShowItemList(props) {
     };
 
     const addSequenceCommand = (e) => {
-        e.preventDefault();
+        if(e) {
+            e.preventDefault();
+        }
         const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
         setEntrySequence({
             ...EntrySequence, 
@@ -87,6 +98,8 @@ function ShowItemList(props) {
             Name: Name,
             RoomWidth: RoomWidth,
             texturePath: texturePath,
+            SoundFilePath: SoundFilePath,
+            LightMapPath: LightMapPath,
         };
 
         if(EntrySequence.Commands.length !== 0) {
@@ -173,6 +186,28 @@ function ShowItemList(props) {
                                 className='form-control'
                                 value={RoomWidth}
                                 onChange={onChange}
+                            />
+                        </div>
+
+                        <div className='form-group'>
+                            <input
+                            type='text'
+                            placeholder='Sound File Path'
+                            name='SoundFilePath'
+                            className='form-control'
+                            value={SoundFilePath}
+                            onChange={onChange}
+                            />
+                        </div>
+
+                        <div className='form-group'>
+                            <input
+                            type='text'
+                            placeholder='Light Map Path'
+                            name='LightMapPath'
+                            className='form-control'
+                            value={LightMapPath}
+                            onChange={onChange}
                             />
                         </div>
 

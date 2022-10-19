@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css';
+import SequenceCard from '../InputElements/SequenceCard';
 import axios from 'axios';
 
 function CreateRoom (props) {
 
   const [Name, setName] = useState('');
-  const [RoomWidth, setRoomWidth] = useState('');
+  const [RoomWidth, setRoomWidth] = useState(0);
   const [texturePath, setTexturePath] = useState('');
   const [SoundFilePath, setSoundFilePath] = useState('');
   const [LightMapPath, setLightMapPath] = useState('');
+  const [EntrySequence, setEntrySequence] = useState({'_currentIndex': 1, 'SequenceFinished': false, 'Commands': []});
 
   let navigate = useNavigate();
 
@@ -29,10 +31,34 @@ function CreateRoom (props) {
     else if(e.target.name === 'LightMapPath') {
       setLightMapPath(e.target.value);
     }
+    else if(['_destinationX', '_destinationY', 'CommandType'].includes(e.target.name)) {
+      let cmds = [...EntrySequence.Commands];
+      cmds[e.target.dataset.id][e.target.name] = e.target.value;
+      setEntrySequence({...EntrySequence, Commands: cmds});
+    }
     else {
       console.log('No matching variable to fieldname')
     }
   };
+
+  const addSequenceCommand = (e) => {
+    if(e) {
+        e.preventDefault();
+    }
+    const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
+    setEntrySequence({
+        ...EntrySequence, 
+        Commands: [...EntrySequence.Commands, defaultCommand]
+    })
+  }
+
+  const deleteRow = (e, cmd) => {
+    setEntrySequence({
+        ...EntrySequence, 
+        Commands: EntrySequence.Commands.filter(val => val !== cmd)
+    });
+  }
+
 
   const onSubmit = e => {
     e.preventDefault();
@@ -44,6 +70,10 @@ function CreateRoom (props) {
       SoundFilePath: SoundFilePath,
       LightMapPath: LightMapPath,
     };
+  
+    if(EntrySequence.Commands.length !== 0) {
+      data['EntrySequence'] = EntrySequence;
+    }
 
     axios
       .post('http://localhost:8082/api', data)
@@ -51,6 +81,9 @@ function CreateRoom (props) {
         setName('');
         setRoomWidth('');
         setTexturePath('');
+        setSoundFilePath('');
+        setLightMapPath('');
+        setEntrySequence({'_currentIndex': 1, 'SequenceFinished': false, 'Commands': []});
         navigate(`/item-list/${res.data._id}`); //"/item-list/" + res._id);
       })
       .catch(err => {
@@ -130,6 +163,8 @@ function CreateRoom (props) {
                   onChange={onChange}
                 />
               </div>
+
+              <SequenceCard sequence={EntrySequence} add={addSequenceCommand} delete={deleteRow} onChange={onChange} />
 
               <input
                   type="submit"
