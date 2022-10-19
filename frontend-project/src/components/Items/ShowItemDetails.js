@@ -127,6 +127,34 @@ function ShowItemDetails(props) {
         )
     }
 
+    let doorInfo = (<></>)
+    if(itemTypes[item.ItemType] === 'Door') {
+        doorInfo = (
+            <>
+            Door specific attributes:
+                <table className="table table-hover table-dark">
+                    <tbody>
+                        <tr>
+                            <td>Room Id</td>
+                            <td>{ item.RoomId }</td>
+                        </tr>
+                        <tr>
+                            <td>Init Player Pos X</td>
+                            <td>{ item.InitPlayerPosX }</td>
+                        </tr>
+                        <tr>
+                            <td>Init Player Pos Y</td>
+                            <td>{ item.InitPlayerPosY }</td>
+                        </tr>
+                        <tr>
+                            <td>Close Texture Path</td>
+                            <td>{ itemTypes[item.CloseTexturePath] }</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </>
+        )
+    }
 
     let ItemShow = (
         <>
@@ -160,6 +188,8 @@ function ShowItemDetails(props) {
                                 { optionalInfo }
                             </tbody>
                         </table>
+
+                        { doorInfo }
 
                         { combineItemInfo }
                     </div>

@@ -9,15 +9,16 @@ import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../helpers/ItemT
 
 function CreateItem (props) {
 
-  // TODO: Add object type input field CombineItem.Thought
   const [Name, setName] = useState('');
   const [texturePath, setTexturePath] = useState('');
   const [ItemType, setItemType] = useState('conscious.DataHolderItem, conscious');
   const [Rotation, setRotation] = useState(0);
   const [PositionX, setPositionX] = useState(0);
   const [PositionY, setPositionY] = useState(0);
+  // Thing variables
   const [DrawOrder, setDrawOrder] = useState(3);
   const [ExamineText, setExamineText] = useState('');
+  // Item variables
   const [IsInInventory, setIsInInventory] = useState(false);
   const [UseAble, setUseAble] = useState(false);
   const [PickUpAble, setPickUpAble] = useState(false);
@@ -25,6 +26,11 @@ function CreateItem (props) {
   const [GiveAble, setGiveAble] = useState(false);
   const [UseWith, setUseWith] = useState(false);
   const [ItemDependency, setItemDependency] = useState(-1);
+  // Door variables
+  const [RoomId, setRoomId] = useState(-1);
+  const [InitPlayerPosX, setInitPlayerPosX] = useState(-1);
+  const [InitPlayerPosY, setInitPlayerPosY] = useState(-1);
+  const [CloseTexturePath, setCloseTexturePath] = useState('');
   
   const defaultThought = {
     '_id': 1,
@@ -50,6 +56,7 @@ function CreateItem (props) {
     ]}
   const [Thought, setThought] = useState(defaultThought);
   const [allItems, setAllItems] = useState([]);
+  const [allRooms, setAllRooms] = useState([]);
 
   const defaultCombineThought = {
     '_id': 111,
@@ -98,6 +105,16 @@ function CreateItem (props) {
       })
       .catch(err => { 
         console.log('Error from getAllItems'); 
+    });
+
+    // get all rooms for roomId in case of door type as select input
+    axios
+      .get('http://localhost:8082/api/rooms')
+      .then(res => {
+        setAllRooms(res.data);
+      })
+      .catch(err => { 
+        console.log('Error from getAllRooms'); 
     });
   }, [])
 
@@ -151,9 +168,18 @@ function CreateItem (props) {
     else if(e.target.name === 'ItemDependency') {
       setItemDependency(e.target.value);
     }
-    // else if(e.target.name === 'Thought') {
-    //   setThought(e.target.value);
-    // }
+    else if(e.target.name === 'RoomId') {
+      setRoomId(e.target.value);
+    }
+    else if(e.target.name === 'InitPlayerPosX') {
+      setInitPlayerPosX(e.target.value);
+    }
+    else if(e.target.name === 'InitPlayerPosY') {
+      setInitPlayerPosY(e.target.value);
+    }
+    else if(e.target.name === 'CloseTexturePath') {
+      setCloseTexturePath(e.target.value);
+    }
     else {
         console.log('No matching variable to fieldname')
     }
@@ -241,6 +267,10 @@ function CreateItem (props) {
       GiveAble: GiveAble,
       UseWith: UseWith,
       ItemDependency: ItemDependency,
+      RoomId: RoomId,
+      InitPlayerPosX: InitPlayerPosX,
+      InitPlayerPosY: InitPlayerPosY,
+      CloseTexturePath: CloseTexturePath,
       Thought: Thought
     };
     if(ItemType === 'conscious.DataHolderCombineItem, conscious') {
@@ -267,6 +297,10 @@ function CreateItem (props) {
         setUseWith(false);
         setItemDependency(-1);
         setCombineItem(defaultCombineItem);
+        setRoomId(-1);
+        setInitPlayerPosX(0);
+        setInitPlayerPosY(0);
+        setCloseTexturePath('');
         setThought(defaultThought);
         navigate(`/item-list/${room_id}`);
       })
@@ -280,6 +314,14 @@ function CreateItem (props) {
     let val;
     if(item['ItemType'] !== 'conscious.DataHolderThing, conscious') {
       val = <option key={idx} value={item['Id']}>{item['Name']}</option>;
+    }
+    return val;
+  });
+
+  let selectRoomOptions = allRooms.map((room, idx) => {
+    let val;
+    if(room['_id'] !== room_id) {
+      val = <option key={idx} value={room['Id']}>{room['Name']}</option>;
     }
     return val;
   });
@@ -387,6 +429,70 @@ function CreateItem (props) {
     )
   }
 
+  console.log(allRooms)
+
+  let extendedDoorInputs = (<></>)
+  if(ItemType === 'conscious.DataHolderDoor, conscious') {
+    // append different sets of components using inputs = [input1, input2]
+    extendedDoorInputs = (
+    <>
+      <div className="row">
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <input
+                type='number'
+                placeholder='Init Player Pos X'
+                name='InitPlayerPosX'
+                className='form-control'
+                value={InitPlayerPosX}
+                onChange={onChange}
+            />
+          </div>
+        </div>
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <input
+                type='number'
+                placeholder='Init Player Pos Y'
+                name='InitPlayerPosY'
+                className='form-control'
+                value={InitPlayerPosY}
+                onChange={onChange}
+            />
+          </div>
+        </div>        
+      </div>
+
+      <div className="row">
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <input
+                type='text'
+                placeholder='Close Texture Path'
+                name='CloseTexturePath'
+                className='form-control'
+                value={CloseTexturePath}
+                onChange={onChange}
+            />
+          </div>
+        </div>
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <div className="selectWrapper">
+              <select className="form-select" name='RoomId' 
+                    onChange={onChange} value={RoomId}
+                    aria-label="Select Room the door leads to">
+                <option value="-1">No Room Selected</option>
+                { selectRoomOptions }
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+    )
+  }
+
   let combineItemInputs = (<></>);
   if(ItemType === 'conscious.DataHolderCombineItem, conscious') {
     combineItemInputs = (
@@ -432,7 +538,7 @@ function CreateItem (props) {
                           aria-label="Select item type">
                     <option value="conscious.DataHolderThing, conscious">Thing</option>
                     <option value="conscious.DataHolderItem, conscious">Item</option>
-                    <option value="conscious.DataHolderDoor, conscious">Door</option>
+                    {/* <option value="conscious.DataHolderDoor, conscious">Door</option> */}
                     <option value="conscious.DataHolderKey, conscious">Key</option>
                     {/* <option value="conscious.DataHolderCombineItem, conscious">CombineItem</option> */}
                   </select>
@@ -717,6 +823,9 @@ function CreateItem (props) {
                 </div>
 
               { extendedInputs }
+
+              {/* Add Door Item fields */}
+              { extendedDoorInputs }
 
               {/* Add combine Item fields */}
               { combineItemInputs }

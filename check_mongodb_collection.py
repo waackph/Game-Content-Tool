@@ -42,7 +42,7 @@ def prepare_json(l):
     # [x] [Room] remove "__v"
     # [x] [Room] Add fields SoundFilePath, LightMapPath
     # [x] [Thing] add DrawOrder field
-    # [ ] [Door] add fields InitPlayerPosX, InitPlayerPosY, CloseTexturePath / ? DoorId, RoomId
+    # [x] [Door] add fields InitPlayerPosX, InitPlayerPosY, CloseTexturePath, RoomId
     # [ ] [ThoughtNode] rename _id to Id, add field LinkageId
     # [ ] [ThoughtLink] ValidMoods must have value 0 as default (no empty list)
     # [ ] [ThoughtNode/ThoughtLink] Add type info (DataHolderX)
@@ -50,6 +50,7 @@ def prepare_json(l):
     # [ ] [TreeStructure] link: remove _id, Id
     # [ ] [sequence] remove field _currentIndex; 
     # [x] [sequence] rename _commands -> Commands
+    # [ ] [sequence] debug for room views
     # [ ] [Command] only use valid fields for the respective command type
     # [ ] [Command] Add missing commands
     l_dict = {}

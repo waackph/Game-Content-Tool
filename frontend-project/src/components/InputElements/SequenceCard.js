@@ -4,6 +4,10 @@ import '../../App.css';
 const SequenceCard = (props) => {
     const sequence = props.sequence;
 
+    if(!sequence) {
+        return(<></>)
+    }
+
     // Create Commands list
     let commands = sequence.Commands.map((val, idx) => {
         let _destinationX = `_destinationX-${val.index}`;

@@ -70,6 +70,22 @@ const ItemSchema = new mongoose.Schema({
         type: CombineItemSchema,
         required: false,
     },
+    RoomId: { // is an Object ID
+        type: Number,
+        required: false,
+    },
+    InitPlayerPosX: {
+        type: Number,
+        required: false,
+    },
+    InitPlayerPosY: {
+        type: Number,
+        required: false,
+    },
+    CloseTexturePath: {
+        type: String,
+        required: false,
+    },
     Thought: {
         type: ThoughtNodeSchema,
         required: false,
