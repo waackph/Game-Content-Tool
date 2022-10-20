@@ -6,6 +6,7 @@ import * as d3 from "d3";
 import '../../App.css';
 import ThoughtGraph from '../InputElements/ThoughtGraph';
 import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../helpers/ItemThoughtHelpers';
+import { createRandomId } from '../helpers/GeneralHelpers';
 
 function UpdateItemInfo(props) {
 
@@ -34,7 +35,7 @@ function UpdateItemInfo(props) {
   const [CloseTexturePath, setCloseTexturePath] = useState('');
 
   const defaultThought = {
-    'Id': 1,
+    'Id': createRandomId(),
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
     'LinkageId': 0,
@@ -43,13 +44,13 @@ function UpdateItemInfo(props) {
     'y': 100,
     'Links': [
       {
-        'Id': 2,
+        'Id': createRandomId(),
         'Option': 'First link',
         '_validMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          'Id': 3,
+          'Id': createRandomId(),
           'Thought': 'First node',
           'IsRoot': false,
           'LinkageId': 0,
@@ -63,7 +64,7 @@ function UpdateItemInfo(props) {
   const [Thought, setThought] = useState(defaultThought);  
 
   const defaultCombineThought = {
-    'Id': 111,
+    'Id': createRandomId(),
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
     'LinkageId': 0,
@@ -71,13 +72,13 @@ function UpdateItemInfo(props) {
     'y': 100,
     'Links': [
       {
-        'Id': 112,
+        'Id': createRandomId(),
         'Option': 'First link',
         '_validMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          'Id': 113,
+          'Id': createRandomId(),
           'Thought': 'First node',
           'IsRoot': false,
           'LinkageId': 0,

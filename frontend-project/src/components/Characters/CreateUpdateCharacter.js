@@ -6,7 +6,7 @@ import CheckboxField from '../InputElements/CheckboxField';
 import ThoughtGraph from '../InputElements/ThoughtGraph';
 import { addLinksToThoughtData, addItemIdToThoughtNodes, createDialogTreeStructure } from '../helpers/ItemThoughtHelpers';
 import DialogGraph from '../InputElements/DialogGraph';
-
+import { createRandomId } from '../helpers/GeneralHelpers';
 
 function CreateUpdateCharacter(props) {
   const [Id, setId] = useState(0);
@@ -25,7 +25,7 @@ function CreateUpdateCharacter(props) {
   const [MoodChange, setMoodChange] = useState(0);
 
   const defaultThought = {
-    'Id': 1,
+    'Id': createRandomId(),
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
     'LinkageId': 0,
@@ -34,13 +34,13 @@ function CreateUpdateCharacter(props) {
     'y': 100,
     'Links': [
       {
-        'Id': 2,
+        'Id': createRandomId(),
         'Option': 'First link',
         '_validMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          'Id': 3,
+          'Id': createRandomId(),
           'Thought': 'First node',
           'IsRoot': false,
           'LinkageId': 0,

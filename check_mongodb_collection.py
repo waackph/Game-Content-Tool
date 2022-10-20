@@ -49,7 +49,8 @@ def prepare_json(l):
     # [x] [ThoughtNode] rename _id to Id, add field LinkageId
     # [x] [ThoughtLink] ValidMoods must have value 0 as default (no empty list)
     # [x] [ThoughtNode/ThoughtLink] Add type info (DataHolderX)
-    # [ ] [ThoughtNode/Link] UI: Clicking different nodes/edges leads to too much recursion error
+    # [x] [Thought] default thought data structure must have unique IDs (currently its just hard coded as 1, 2, ...)
+    # [ ] [ThoughtNode/Link] UI: Clicking different nodes/edges leads to "too much recursion" error
     # [x] [TreeStructure] node/link: remove x, y
     # [x] [TreeStructure] link: remove _id, Id (removed in post processing script)
     # [x] [sequence] remove field _currentIndex and SequenceFinished; 

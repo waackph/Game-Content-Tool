@@ -6,6 +6,7 @@ import '../../App.css';
 import CheckboxField from '../InputElements/CheckboxField';
 import ThoughtGraph from '../InputElements/ThoughtGraph';
 import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../helpers/ItemThoughtHelpers';
+import { createRandomId } from '../helpers/GeneralHelpers';
 
 function CreateItem (props) {
 
@@ -33,7 +34,7 @@ function CreateItem (props) {
   const [CloseTexturePath, setCloseTexturePath] = useState('');
   
   const defaultThought = {
-    'Id': 1,
+    'Id': createRandomId(),
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
     'LinkageId': 0,
@@ -42,13 +43,13 @@ function CreateItem (props) {
     'y': 100,
     'Links': [
       {
-        'Id': 2,
+        'Id': createRandomId(),
         'Option': 'First link',
         '_validMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          'Id': 3,
+          'Id': createRandomId(),
           'Thought': 'First node',
           'IsRoot': false,
           'LinkageId': 0,
@@ -64,7 +65,7 @@ function CreateItem (props) {
   const [allRooms, setAllRooms] = useState([]);
 
   const defaultCombineThought = {
-    'Id': 111,
+    'Id': createRandomId(),
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
     'LinkageId': 0,
@@ -73,13 +74,13 @@ function CreateItem (props) {
     'y': 100,
     'Links': [
       {
-        'Id': 112,
+        'Id': createRandomId(),
         'Option': 'First link',
         '_validMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          'Id': 113,
+          'Id': createRandomId(),
           'Thought': 'First node',
           'IsRoot': false,
           'LinkageId': 0,
