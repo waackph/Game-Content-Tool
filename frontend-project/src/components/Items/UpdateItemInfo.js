@@ -34,9 +34,10 @@ function UpdateItemInfo(props) {
   const [CloseTexturePath, setCloseTexturePath] = useState('');
 
   const defaultThought = {
-    '_id': 1,
+    'Id': 1,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
+    'LinkageId': 0,
     'x': 40,
     'y': 100,
     'Links': [
@@ -46,9 +47,10 @@ function UpdateItemInfo(props) {
         '_validMoods': [0],
         'IsLocked': false,
         'NextNode': {
-          '_id': 3,
+          'Id': 3,
           'Thought': 'First node',
           'IsRoot': false,
+          'LinkageId': 0,
           'x': 80,
           'y': 100,
           'Links': [],
@@ -58,9 +60,10 @@ function UpdateItemInfo(props) {
   const [Thought, setThought] = useState(defaultThought);  
 
   const defaultCombineThought = {
-    '_id': 111,
+    'Id': 111,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
+    'LinkageId': 0,
     'x': 40,
     'y': 100,
     'Links': [
@@ -70,9 +73,10 @@ function UpdateItemInfo(props) {
         '_validMoods': [0],
         'IsLocked': false,
         'NextNode': {
-          '_id': 113,
+          'Id': 113,
           'Thought': 'First node',
           'IsRoot': false,
+          'LinkageId': 0,
           'x': 80,
           'y': 100,
           'Links': [],

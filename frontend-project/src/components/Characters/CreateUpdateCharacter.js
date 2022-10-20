@@ -25,7 +25,7 @@ function CreateUpdateCharacter(props) {
   const [MoodChange, setMoodChange] = useState(0);
 
   const defaultThought = {
-    '_id': 1,
+    'Id': 1,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
     'x': 40,
@@ -37,7 +37,7 @@ function CreateUpdateCharacter(props) {
         '_validMoods': [0],
         'IsLocked': false,
         'NextNode': {
-          '_id': 3,
+          'Id': 3,
           'Thought': 'First node',
           'IsRoot': false,
           'x': 80,

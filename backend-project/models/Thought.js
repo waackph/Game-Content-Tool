@@ -65,7 +65,7 @@ const ThoughtLinkSchema = new mongoose.Schema({
 });
 
 const ThoughtNodeSchema = new mongoose.Schema({
-    _id: {
+    Id: {
         type: Number,
         required: false,
     },
@@ -81,7 +81,7 @@ const ThoughtNodeSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    _linkageId: { // is an Object ID
+    LinkageId: { // is an Object ID
         type: String,
         required: false,
     },

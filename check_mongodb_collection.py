@@ -46,8 +46,8 @@ def prepare_json(l):
     # [x] [Room] Add fields SoundFilePath, LightMapPath
     # [x] [Thing] add DrawOrder field
     # [x] [Door] add fields InitPlayerPosX, InitPlayerPosY, CloseTexturePath, RoomId
-    # [ ] [ThoughtNode] rename _id to Id, add field LinkageId
-    # [ ] [ThoughtLink] ValidMoods must have value 0 as default (no empty list)
+    # [x] [ThoughtNode] rename _id to Id, add field LinkageId
+    # [x] [ThoughtLink] ValidMoods must have value 0 as default (no empty list)
     # [ ] [ThoughtNode/ThoughtLink] Add type info (DataHolderX)
     # [x] [TreeStructure] node/link: remove x, y
     # [x] [TreeStructure] link: remove _id, Id (removed in post processing script)
