@@ -29,7 +29,7 @@ export function addLinksToThoughtData(svg, connections, parentNodeId) {
           linkData['linkType'] = 'conscious.DataHolderFinalThoughtLink, conscious';
         }
         else if((!linkData.hasOwnProperty('IsFinal') || !linkData['IsFinal']) && linkData.hasOwnProperty('linkType')) {
-          delete linkData['linkType'];
+          linkData['linkType'] = 'conscious.DataHolderThoughtLink, conscious';
         }
 
         let nextNodeData = svg.select('#n'+nextNodeId).data()[0];

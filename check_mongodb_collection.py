@@ -48,7 +48,8 @@ def prepare_json(l):
     # [x] [Door] add fields InitPlayerPosX, InitPlayerPosY, CloseTexturePath, RoomId
     # [x] [ThoughtNode] rename _id to Id, add field LinkageId
     # [x] [ThoughtLink] ValidMoods must have value 0 as default (no empty list)
-    # [ ] [ThoughtNode/ThoughtLink] Add type info (DataHolderX)
+    # [x] [ThoughtNode/ThoughtLink] Add type info (DataHolderX)
+    # [ ] [ThoughtNode/Link] UI: Clicking different nodes/edges leads to too much recursion error
     # [x] [TreeStructure] node/link: remove x, y
     # [x] [TreeStructure] link: remove _id, Id (removed in post processing script)
     # [x] [sequence] remove field _currentIndex and SequenceFinished; 

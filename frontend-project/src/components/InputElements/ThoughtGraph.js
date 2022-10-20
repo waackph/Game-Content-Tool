@@ -31,8 +31,8 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
 }
 
 const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
-  const defaultNode = {'IsRoot': false, 'LinkageId': 0};
-  const defaultLink = {'IsLocked': false, '_validMoods': [0]};
+  const defaultNode = {'IsRoot': false, 'LinkageId': 0, 'thoughtType': 'conscious.DataHolderThoughtNode, conscious'};
+  const defaultLink = {'IsLocked': false, '_validMoods': [0], 'linkType': 'conscious.DataHolderThoughtLink, conscious'};
 
   const [nodeInputData, setNodeInputData] = useState({});
   const [linkInputData, setLinkInputData] = useState({});

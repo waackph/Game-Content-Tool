@@ -28,6 +28,8 @@ function CreateUpdateCharacter(props) {
     'Id': 1,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
+    'LinkageId': 0,
+    'thoughtType': 'conscious.DataHolderThoughtNode, conscious',
     'x': 40,
     'y': 100,
     'Links': [
@@ -36,10 +38,13 @@ function CreateUpdateCharacter(props) {
         'Option': 'First link',
         '_validMoods': [0],
         'IsLocked': false,
+        'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
           'Id': 3,
           'Thought': 'First node',
           'IsRoot': false,
+          'LinkageId': 0,
+          'thoughtType': 'conscious.DataHolderThoughtNode, conscious',
           'x': 80,
           'y': 100,
           'Links': [],
