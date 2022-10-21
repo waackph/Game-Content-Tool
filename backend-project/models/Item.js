@@ -32,6 +32,10 @@ const ItemSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    DrawOrder: {
+        type: Number,
+        required: true,
+    },
 
     // Not required for all items
     ExamineText: {

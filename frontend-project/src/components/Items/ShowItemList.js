@@ -29,7 +29,9 @@ function ShowItemList(props) {
             setRoomWidth(res.data.RoomWidth);
             setSoundFilePath(res.data.SoundFilePath);
             setLightMapPath(res.data.LightMapPath);
-            setEntrySequence(res.data.EntrySequence);
+            if(res.data.EntrySequence){
+                setEntrySequence(res.data.EntrySequence);
+            }
           })
           .catch(err => { 
             console.log('Error from ShowItemList'); 
