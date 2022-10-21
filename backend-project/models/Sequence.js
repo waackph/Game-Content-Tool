@@ -5,6 +5,7 @@ const CommandSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    // Walk
     _destinationX: {
         type: Number,
         required: false,
@@ -13,10 +14,20 @@ const CommandSchema = new mongoose.Schema({
         type: Number,
         required: false,
     },
-    CommandFinished: {
-        type: Boolean,
-        required: true,
+    // Wait
+    MillisecondsToWait: {
+        type: Number,
+        required: false,
     },
+    CmdSoundFilePath: {
+        type: String,
+        required: false,
+    },
+    // DoorAction
+    DoorId: {
+        type: Number,
+        required: false,
+    }
 });
 
 const SequenceSchema = new mongoose.Schema({

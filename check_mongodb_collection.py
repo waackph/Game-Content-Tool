@@ -39,7 +39,7 @@ def modify_dict(obj):
     return obj
 
 def prepare_json(l):
-    # TODO: General stuff to change in the GCT
+    # General stuff to change in the GCT
     # [x] Types: use following pattern - "conscious.[Objectname], conscious"
     # [x] [Room] Combine "Items" and "Characters" List into "Things" List
     # [x] [Room] remove "__v"
@@ -50,14 +50,15 @@ def prepare_json(l):
     # [x] [ThoughtLink] ValidMoods must have value 0 as default (no empty list)
     # [x] [ThoughtNode/ThoughtLink] Add type info (DataHolderX)
     # [x] [Thought] default thought data structure must have unique IDs (currently its just hard coded as 1, 2, ...)
-    # [ ] [ThoughtNode/Link] UI: Clicking different nodes/edges leads to "too much recursion" error
+    # [x] [ThoughtNode/Link] UI: Clicking different nodes/edges leads to "too much recursion" error 
+    #   -> This has happened because of the changed data model, leading to Ids being undefined
     # [x] [TreeStructure] node/link: remove x, y
     # [x] [TreeStructure] link: remove _id, Id (removed in post processing script)
     # [x] [sequence] remove field _currentIndex and SequenceFinished; 
     # [x] [sequence] rename _commands -> Commands
     # [x] [sequence] debug for room views
-    # [ ] [Command] only use valid fields for the respective command type
-    # [ ] [Command] Add missing commands
+    # [x] [Command] only use valid fields for the respective command type
+    # [x] [Command] Add missing commands with types
     l_dict = {}
     for i, d in enumerate(l):
         # remove invalid properties from room

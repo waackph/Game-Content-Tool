@@ -34,8 +34,11 @@ function UpdateItemInfo(props) {
   const [InitPlayerPosY, setInitPlayerPosY] = useState(-1);
   const [CloseTexturePath, setCloseTexturePath] = useState('');
 
+  const firstId = createRandomId();
+  const secondId = createRandomId();
+  const thirdId = createRandomId();
   const defaultThought = {
-    'Id': createRandomId(),
+    'Id': firstId,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
     'LinkageId': 0,
@@ -44,13 +47,13 @@ function UpdateItemInfo(props) {
     'y': 100,
     'Links': [
       {
-        'Id': createRandomId(),
+        'Id': secondId,
         'Option': 'First link',
         '_validMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          'Id': createRandomId(),
+          'Id': thirdId,
           'Thought': 'First node',
           'IsRoot': false,
           'LinkageId': 0,
@@ -63,8 +66,11 @@ function UpdateItemInfo(props) {
     ]}
   const [Thought, setThought] = useState(defaultThought);  
 
+  const forthId = createRandomId();
+  const fifthId = createRandomId();
+  const sixthId = createRandomId();
   const defaultCombineThought = {
-    'Id': createRandomId(),
+    'Id': forthId,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
     'LinkageId': 0,
@@ -72,13 +78,13 @@ function UpdateItemInfo(props) {
     'y': 100,
     'Links': [
       {
-        'Id': createRandomId(),
+        'Id': fifthId,
         'Option': 'First link',
         '_validMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          'Id': createRandomId(),
+          'Id': sixthId,
           'Thought': 'First node',
           'IsRoot': false,
           'LinkageId': 0,

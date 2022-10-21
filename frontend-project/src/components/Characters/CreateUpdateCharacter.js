@@ -24,8 +24,11 @@ function CreateUpdateCharacter(props) {
   const [GiveAble, setGiveAble] = useState(false);
   const [MoodChange, setMoodChange] = useState(0);
 
+  const firstId = createRandomId();
+  const secondId = createRandomId();
+  const thirdId = createRandomId();
   const defaultThought = {
-    'Id': createRandomId(),
+    'Id': firstId,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
     'LinkageId': 0,
@@ -34,13 +37,13 @@ function CreateUpdateCharacter(props) {
     'y': 100,
     'Links': [
       {
-        'Id': createRandomId(),
+        'Id': secondId,
         'Option': 'First link',
         '_validMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          'Id': createRandomId(),
+          'Id': thirdId,
           'Thought': 'First node',
           'IsRoot': false,
           'LinkageId': 0,

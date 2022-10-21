@@ -108,7 +108,10 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
         value = true;
       }
     }
-    if(['_destinationX', '_destinationY', 'CommandType'].includes(e.target.name)) {
+    else if(['CommandType',
+             '_destinationX', '_destinationY', 
+             'MillisecondsToWait', 'CmdSoundFilePath',
+             'DoorId'].includes(e.target.name)) {
       let cmds = [...linkInputData.ThoughtSequence.Commands];
       cmds[e.target.dataset.id][e.target.name] = e.target.value;
       setLinkInputData({
@@ -126,7 +129,7 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
 
   const addSequenceCommand = (e) => {
     e.preventDefault();
-    const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
+    const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
     setLinkInputData({
       ...linkInputData,
       'ThoughtSequence': {

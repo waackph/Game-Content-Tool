@@ -62,8 +62,11 @@ function ShowItemList(props) {
         }
         else if(e.target.name === 'LightMapPath') {
             setLightMapPath(e.target.value);
-        }      
-        else if(['_destinationX', '_destinationY', 'CommandType'].includes(e.target.name)) {
+        }
+        else if(['CommandType',
+        '_destinationX', '_destinationY', 
+        'MillisecondsToWait', 'CmdSoundFilePath',
+        'DoorId'].includes(e.target.name)) {
             let cmds = [...EntrySequence.Commands];
             cmds[e.target.dataset.id][e.target.name] = e.target.value;
             setEntrySequence({...EntrySequence, Commands: cmds});
@@ -77,7 +80,7 @@ function ShowItemList(props) {
         if(e) {
             e.preventDefault();
         }
-        const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
+        const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
         setEntrySequence({
             ...EntrySequence, 
             Commands: [...EntrySequence.Commands, defaultCommand]

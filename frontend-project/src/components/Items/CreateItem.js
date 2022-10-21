@@ -33,8 +33,11 @@ function CreateItem (props) {
   const [InitPlayerPosY, setInitPlayerPosY] = useState(-1);
   const [CloseTexturePath, setCloseTexturePath] = useState('');
   
+  const firstId = createRandomId();
+  const secondId = createRandomId();
+  const thirdId = createRandomId();
   const defaultThought = {
-    'Id': createRandomId(),
+    'Id': firstId,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
     'LinkageId': 0,
@@ -43,13 +46,13 @@ function CreateItem (props) {
     'y': 100,
     'Links': [
       {
-        'Id': createRandomId(),
+        'Id': secondId,
         'Option': 'First link',
         '_validMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          'Id': createRandomId(),
+          'Id': thirdId,
           'Thought': 'First node',
           'IsRoot': false,
           'LinkageId': 0,
@@ -64,8 +67,11 @@ function CreateItem (props) {
   const [allItems, setAllItems] = useState([]);
   const [allRooms, setAllRooms] = useState([]);
 
+  const forthId = createRandomId();
+  const fifthId = createRandomId();
+  const sixthId = createRandomId();
   const defaultCombineThought = {
-    'Id': createRandomId(),
+    'Id': forthId,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
     'LinkageId': 0,
@@ -74,13 +80,13 @@ function CreateItem (props) {
     'y': 100,
     'Links': [
       {
-        'Id': createRandomId(),
+        'Id': fifthId,
         'Option': 'First link',
         '_validMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          'Id': createRandomId(),
+          'Id': sixthId,
           'Thought': 'First node',
           'IsRoot': false,
           'LinkageId': 0,
