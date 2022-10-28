@@ -13,6 +13,11 @@ def get_collection_content(collection):
     #     print(x)
     #     print()
 
+def is_default_thought(thought):
+    return (len(thought['Links']) > 0 
+            and thought['Links'][0]['Option'] == "First link"
+            and len(thought['Links'][0]['NextNode']['Links']) == 0)
+
 def modify_dict(obj):
     # If obj is a list of dict, then call the function for each dict
     if type(obj) is list and len(obj) > 0 and type(obj[0]) is dict:
@@ -28,11 +33,25 @@ def modify_dict(obj):
         # if dialog link: remove Id field as well (used for graphinput)
         if '_nextNodeId' in obj.keys() and 'Id' in obj.keys():
             del obj['Id']
-        # change type field name to '$type'
+        # Remove default data structures
+        if 'Thought' in obj.keys() and type(obj['Thought']) == dict and is_default_thought(obj['Thought']):
+            obj['Thought'] = None
+        if 'ThoughtSequence' in obj.keys() and not obj['ThoughtSequence'].get('Commands'):
+            obj['ThoughtSequence'] = None
+        if 'EntrySequence' in obj.keys() and not obj['EntrySequence'].get('Commands'):
+            obj['EntrySequence'] = None
+        if 'CombineItem' in obj.keys() and not obj['CombineItem'].get('Name'):
+            obj['CombineItem'] = None
+        # Remove file ending of texturePath
+        if obj.get('texturePath'):
+            obj['texturePath'] = obj['texturePath'].split('.png')[0]
+        # change type field name to '$type' and reorder so that $type is at first position
         has_type = [k for k in obj.keys() if 'type' in k.lower()]
         if has_type and len(has_type) == 1:
-            obj['$type'] = obj[has_type[0]]
+            new_obj = {'$type': obj[has_type[0]]}
             del obj[has_type[0]]
+            new_obj.update(obj)
+            obj = new_obj
         for k in obj.keys():
             if type(obj[k]) == dict or type(obj[k]) == list:
                 obj[k] = modify_dict(obj[k])
@@ -59,6 +78,14 @@ def prepare_json(l):
     # [x] [sequence] debug for room views
     # [x] [Command] only use valid fields for the respective command type
     # [x] [Command] Add missing commands with types
+    # [?] [Defaults] If on submit a default data structure is still the same, then do not submit it to the backend or submit it as null
+    # [ ] [Changes] things that needed to be changed to be similar to Game Data Structure:
+        # /- texturePath: "textures/..." -> "Backgrounds/..."
+        # /- Thought: null stead of default thought data structure
+        # /- Add correct song file name: Red_Curtains
+        # /- Most important: $type always needs to be on first position of keys in an object
+        # /- Defaults: also remove defautSequence, defaultCommand, defaultNode, defaultLink, defaultCombineItem, defaultCombineThought
+
     l_dict = {}
     for i, d in enumerate(l):
         # remove invalid properties from room
@@ -72,7 +99,8 @@ def prepare_json(l):
         del d['Items']
         # Change 'xyType' Fields to '$type'; remove _id, x and y fields
         d['Things'] = modify_dict(d['Things'])
-        d['EntrySequence'] = modify_dict(d['EntrySequence'])
+        if 'EntrySequence' in d.keys():
+            d['EntrySequence'] = modify_dict(d['EntrySequence'])
         l_dict[str(i+1)] = d
     return l_dict
 

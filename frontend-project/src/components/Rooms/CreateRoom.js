@@ -77,6 +77,9 @@ function CreateRoom (props) {
     if(EntrySequence.Commands.length !== 0) {
       data['EntrySequence'] = EntrySequence;
     }
+    else{
+      data['EntrySequence'] = null;
+    }
 
     axios
       .post('http://localhost:8082/api', data)

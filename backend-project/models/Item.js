@@ -4,6 +4,10 @@ const ThoughtNodeSchema = require('./Thought');
 
 const ItemSchema = new mongoose.Schema({
     // Required Fields for all items
+    ItemType: { // is actually "$type"
+        type: String,
+        required: true,
+    },
     Id: {
         type: Number,
         required: true,
@@ -15,10 +19,6 @@ const ItemSchema = new mongoose.Schema({
     texturePath: {
         type: String,
         required: false,
-    },
-    ItemType: { // is actually "$type"
-        type: String,
-        required: true,
     },
     Rotation: {
         type: Number,

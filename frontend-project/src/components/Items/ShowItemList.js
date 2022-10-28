@@ -32,6 +32,9 @@ function ShowItemList(props) {
             if(res.data.EntrySequence){
                 setEntrySequence(res.data.EntrySequence);
             }
+            else{
+                setEntrySequence({'Commands': []});
+            }
           })
           .catch(err => { 
             console.log('Error from ShowItemList'); 
@@ -109,6 +112,9 @@ function ShowItemList(props) {
 
         if(EntrySequence.Commands.length !== 0) {
             data['EntrySequence'] = EntrySequence;
+        }
+        else{
+            data['EntrySequence'] = null;
         }
         console.log(data);
 

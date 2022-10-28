@@ -3,12 +3,12 @@ const AnimationSchema = require('./Animation');
 const SequenceSchema = require('./Sequence')
 
 const ThoughtLinkSchema = new mongoose.Schema({
-    Id: {
-        type: Number,
-        required: true,
-    },
     linkType: {
         type: String,
+        required: true,
+    },
+    Id: {
+        type: Number,
         required: true,
     },
     _validMoods: {
@@ -65,15 +65,15 @@ const ThoughtLinkSchema = new mongoose.Schema({
 });
 
 const ThoughtNodeSchema = new mongoose.Schema({
+    thoughtType: {
+        type: String,
+        required: true,
+    },
     Id: {
         type: Number,
         required: false,
     },
     Thought: {
-        type: String,
-        required: true,
-    },
-    thoughtType: {
         type: String,
         required: true,
     },
