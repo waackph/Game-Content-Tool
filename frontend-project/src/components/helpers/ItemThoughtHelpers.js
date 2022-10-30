@@ -24,18 +24,20 @@ export function addLinksToThoughtData(svg, connections, parentNodeId) {
       const nextNodeId = connection.childNode;
       
       let linkData = svg.select('#e'+linkId).data()[0];
-      // add linkType if IsFinal is set to true, else remove it, if present
-      if(linkData.IsFinal && !linkData.hasOwnProperty('linkType')) {
-        linkData['linkType'] = 'conscious.DataHolderFinalThoughtLink, conscious';
-      }
-      else if((!linkData.hasOwnProperty('IsFinal') || !linkData['IsFinal']) && linkData.hasOwnProperty('linkType')) {
-        linkData['linkType'] = 'conscious.DataHolderThoughtLink, conscious';
-      }
+      if(linkData) {
+        // add linkType if IsFinal is set to true, else remove it, if present
+        if(linkData.IsFinal && !linkData.hasOwnProperty('linkType')) {
+          linkData['linkType'] = 'conscious.DataHolderFinalThoughtLink, conscious';
+        }
+        else if((!linkData.hasOwnProperty('IsFinal') || !linkData['IsFinal']) && linkData.hasOwnProperty('linkType')) {
+          linkData['linkType'] = 'conscious.DataHolderThoughtLink, conscious';
+        }
 
-      let nextNodeData = svg.select('#n'+nextNodeId).data()[0];
-      nextNodeData['Links'] = addLinksToThoughtData(svg, connections, nextNodeId);
-      linkData['NextNode'] = nextNodeData;
-      links.push(linkData);
+        let nextNodeData = svg.select('#n'+nextNodeId).data()[0];
+        nextNodeData['Links'] = addLinksToThoughtData(svg, connections, nextNodeId);
+        linkData['NextNode'] = nextNodeData;
+        links.push(linkData);
+      }
     })
   }
   return links;

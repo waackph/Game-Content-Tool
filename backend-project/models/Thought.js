@@ -11,7 +11,7 @@ const ThoughtLinkSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    _validMoods: {
+    ValidMoods: {
         type: [Number],
         required: false,
     },
@@ -51,7 +51,11 @@ const ThoughtLinkSchema = new mongoose.Schema({
         required: false,
     },
     UnlockId: { // is an Object ID
-        type: String,
+        type: Number,
+        required: false,
+    },
+    IsSuccessEdge: {
+        type: Boolean,
         required: false,
     },
     Animation: {
@@ -86,7 +90,7 @@ const ThoughtNodeSchema = new mongoose.Schema({
         required: false,
     },
     LinkageId: { // is an Object ID
-        type: String,
+        type: Number,
         required: false,
     },
     Links: {

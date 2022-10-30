@@ -45,6 +45,12 @@ def modify_dict(obj):
         # Remove file ending of texturePath
         if obj.get('texturePath'):
             obj['texturePath'] = obj['texturePath'].split('.png')[0]
+        # Remove node if no further thought exists ('lastnode')
+        if obj.get('IsFinal') and obj.get('NextNode').get('Thought') == 'lastnode':
+            obj['NextNode'] = None
+        # Change thoughtlink to finalthoughtlink if isfinal is true
+        if obj.get('IsFinal') and obj.get('linkType'):
+            obj['linkType'] = 'conscious.DataHolderFinalThoughtLink, conscious'
         # change type field name to '$type' and reorder so that $type is at first position
         has_type = [k for k in obj.keys() if 'type' in k.lower()]
         if has_type and len(has_type) == 1:
@@ -78,14 +84,15 @@ def prepare_json(l):
     # [x] [sequence] debug for room views
     # [x] [Command] only use valid fields for the respective command type
     # [x] [Command] Add missing commands with types
-    # [?] [Defaults] If on submit a default data structure is still the same, then do not submit it to the backend or submit it as null
-    # [ ] [Changes] things that needed to be changed to be similar to Game Data Structure:
+    # [x] [Defaults] If on submit a default data structure is still the same, then do not submit it to the backend or submit it as null
+    # [x] [Changes] things that needed to be changed to be similar to Game Data Structure:
         # /- texturePath: "textures/..." -> "Backgrounds/..."
         # /- Thought: null stead of default thought data structure
         # /- Add correct song file name: Red_Curtains
         # /- Most important: $type always needs to be on first position of keys in an object
         # /- Defaults: also remove defautSequence, defaultCommand, defaultNode, defaultLink, defaultCombineItem, defaultCombineThought
-
+    # [x] [ThoughtLink] Add IsSuccessEdge and UnlockId (edge to be unlocked - can be any thoughtlink)
+    # [x] [ThoughtGraph] Quickfix: Can't remove nodes and edges... needs to be fixed
     l_dict = {}
     for i, d in enumerate(l):
         # remove invalid properties from room

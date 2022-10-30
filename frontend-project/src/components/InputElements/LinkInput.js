@@ -32,7 +32,7 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
     }
     else {
       // set validMoods data into right format for multiselect
-      let validMoods = moodOptions.filter(elem => { return data._validMoods.includes(elem.value) });
+      let validMoods = moodOptions.filter(elem => { return data.ValidMoods.includes(elem.value) });
       let finalLinkInputData = (<></>);
       if(data.IsFinal) {
         let moodChange = moodOptions.filter(elem => { return data.MoodChange === elem.value });
@@ -68,6 +68,27 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
               </div>
             </div>
 
+            <div className="col-md-4 m-auto">
+              <CheckboxField
+                checkLabel='Is Success Edge'
+                name='IsSuccessEdge'
+                value={data.IsSuccessEdge}
+                onChange={onChange}
+              />
+            </div>
+
+            <div className="col-md-4 m-auto">
+              <input 
+                type="number"
+                id='UnlockId'
+                placeholder='Unlock Id'
+                className='form-control'
+                name='UnlockId'
+                value={data.UnlockId}
+                onChange={onChange}
+              />
+            </div>
+
             <div className="col-md-12 m-auto">
               <SequenceCard sequence={data.ThoughtSequence} add={addCmd} delete={deleteCmd} onChange={onChange} />
             </div>
@@ -94,7 +115,7 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
             <div className='SelectContainer'>
               {/* <pre>{JSON.stringify(validMoods)}</pre>  */}
               <Select
-                name='_validMoods'
+                name='ValidMoods'
                 placeholder='Valid Moods'
                 // labelledBy='Select valid moods for option'
                 value={validMoods}

@@ -48,7 +48,7 @@ function CreateItem (props) {
       {
         'Id': secondId,
         'Option': 'First link',
-        '_validMoods': [0],
+        'ValidMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
@@ -82,7 +82,7 @@ function CreateItem (props) {
       {
         'Id': fifthId,
         'Option': 'First link',
-        '_validMoods': [0],
+        'ValidMoods': [0],
         'IsLocked': false,
         'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {

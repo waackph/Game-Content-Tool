@@ -32,7 +32,7 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
 
 const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   const defaultNode = {'IsRoot': false, 'LinkageId': 0, 'thoughtType': 'conscious.DataHolderThoughtNode, conscious'};
-  const defaultLink = {'IsLocked': false, '_validMoods': [0], 'linkType': 'conscious.DataHolderThoughtLink, conscious'};
+  const defaultLink = {'IsLocked': false, 'ValidMoods': [0], 'linkType': 'conscious.DataHolderThoughtLink, conscious'};
 
   const [nodeInputData, setNodeInputData] = useState({});
   const [linkInputData, setLinkInputData] = useState({});
@@ -108,7 +108,7 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
         value = true;
       }
     }
-    else if(['CommandType',
+    if(['CommandType',
              '_destinationX', '_destinationY', 
              'MillisecondsToWait', 'CmdSoundFilePath',
              'DoorId'].includes(e.target.name)) {
@@ -153,7 +153,7 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   const onChangeSelectLinkData = (e, action) => {
     const name = action.name;
     let value = null;
-    if(name === '_validMoods') {
+    if(name === 'ValidMoods') {
       value = [];
       e.forEach(elem => {
         value.push(elem['value']);

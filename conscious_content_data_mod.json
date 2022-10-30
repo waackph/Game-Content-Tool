@@ -1,6 +1,6 @@
 {
   "1": {
-    "RoomWidth": 1920,
+    "RoomWidth": 3840,
     "SoundFilePath": "Red_Curtains",
     "LightMapPath": "light/light_gimp_v2",
     "EntrySequence": null,
@@ -27,6 +27,135 @@
         "InitPlayerPosY": -1,
         "CloseTexturePath": "",
         "Thought": null
+      },
+      {
+        "$type": "conscious.DataHolderItem, conscious",
+        "Id": 3242,
+        "Name": "Alarm Clock",
+        "texturePath": "Objects/alarm_clock_draft",
+        "Rotation": 0,
+        "PositionX": 1576,
+        "PositionY": 578,
+        "DrawOrder": 3,
+        "ExamineText": "Its my alarm clock",
+        "IsInInventory": false,
+        "UseAble": false,
+        "PickUpAble": false,
+        "CombineAble": false,
+        "GiveAble": false,
+        "UseWith": false,
+        "ItemDependency": "-1",
+        "RoomId": -1,
+        "InitPlayerPosX": -1,
+        "InitPlayerPosY": -1,
+        "CloseTexturePath": "",
+        "Thought": {
+          "$type": "conscious.DataHolderThoughtNode, conscious",
+          "Id": 1538,
+          "Thought": "[Alarm Clock] Oh no, I don't wanna know the time right now.",
+          "IsRoot": true,
+          "ThingId": "3242",
+          "LinkageId": 0,
+          "Links": [
+            {
+              "$type": "conscious.DataHolderThoughtLink, conscious",
+              "Id": 8226,
+              "ValidMoods": [
+                0
+              ],
+              "Option": "First link",
+              "IsLocked": false,
+              "NextNode": {
+                "$type": "conscious.DataHolderThoughtNode, conscious",
+                "Id": 6437,
+                "Thought": "Its already 12 am. Fuck. I don't want to get up.",
+                "IsRoot": false,
+                "LinkageId": 0,
+                "ThingId": 3242,
+                "Links": [
+                  {
+                    "$type": "conscious.DataHolderThoughtLink, conscious",
+                    "IsLocked": false,
+                    "ValidMoods": [
+                      0
+                    ],
+                    "Id": 3877,
+                    "NextNode": {
+                      "$type": "conscious.DataHolderThoughtNode, conscious",
+                      "IsRoot": false,
+                      "LinkageId": 0,
+                      "Id": 5041,
+                      "Thought": "But why? There is only struggle awaiting me.",
+                      "ThingId": 3242,
+                      "Links": [
+                        {
+                          "$type": "conscious.DataHolderFinalThoughtLink, conscious",
+                          "IsLocked": false,
+                          "ValidMoods": [
+                            0
+                          ],
+                          "Id": 5856,
+                          "NextNode": {
+                            "$type": "conscious.DataHolderThoughtNode, conscious",
+                            "IsRoot": false,
+                            "LinkageId": 0,
+                            "Id": 3604,
+                            "Thought": "No. Exhausting is the right word. Maybe I try some time later again.",
+                            "ThingId": 3242,
+                            "Links": []
+                          },
+                          "Option": "Thats what makes it interessting!",
+                          "IsFinal": true,
+                          "ThoughtSequence": null,
+                          "MoodChange": 0
+                        },
+                        {
+                          "$type": "conscious.DataHolderFinalThoughtLink, conscious",
+                          "IsLocked": false,
+                          "ValidMoods": [
+                            0
+                          ],
+                          "Id": 7483,
+                          "NextNode": {
+                            "$type": "conscious.DataHolderThoughtNode, conscious",
+                            "IsRoot": false,
+                            "LinkageId": 0,
+                            "Id": 9437,
+                            "Thought": "Right. Just like in the last days. (Sigh) Ok. Here we go.",
+                            "ThingId": 3242,
+                            "Links": []
+                          },
+                          "Option": "If I don't get up now I struggle with myself the rest of the day that I can't get up. Is that better?",
+                          "IsFinal": true,
+                          "ThoughtSequence": null,
+                          "Verb": 9,
+                          "IsSuccessEdge": true,
+                          "MoodChange": 0,
+                          "UnlockId": "0"
+                        }
+                      ]
+                    },
+                    "Option": "But I should!"
+                  },
+                  {
+                    "$type": "conscious.DataHolderFinalThoughtLink, conscious",
+                    "IsLocked": false,
+                    "ValidMoods": [
+                      0
+                    ],
+                    "Id": 2811,
+                    "NextNode": null,
+                    "Option": "Right. I just continue laying. Maybe I fall asleep again.",
+                    "IsFinal": true,
+                    "ThoughtSequence": null,
+                    "MoodChange": 0,
+                    "Verb": 0
+                  }
+                ]
+              }
+            }
+          ]
+        }
       }
     ]
   }
