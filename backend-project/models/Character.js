@@ -17,7 +17,7 @@ const CharacterSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    texture_path: {
+    texturePath: {
         type: String,
         required: true,
     },

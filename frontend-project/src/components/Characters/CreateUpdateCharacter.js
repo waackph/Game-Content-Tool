@@ -86,7 +86,7 @@ function CreateUpdateCharacter(props) {
           console.log(res.data)
           setId(res.data.Id);
           setName(res.data.Name);
-          setTexturePath(res.data.texture_path);
+          setTexturePath(res.data.texturePath);
           setCharacterType(res.data.characterType);
           setRotation(res.data.Rotation);
           setPositionX(res.data.PositionX);
@@ -206,7 +206,7 @@ function CreateUpdateCharacter(props) {
       data = {
         Id: tempId,
         Name: Name,
-        texture_path: texturePath,
+        texturePath: texturePath,
         characterType: CharacterType,
         Rotation: Rotation,
         PositionX: PositionX,
@@ -227,7 +227,7 @@ function CreateUpdateCharacter(props) {
       data = {
         Id: Id,
         Name: Name,
-        texture_path: texturePath,
+        texturePath: texturePath,
         characterType: CharacterType,
         Rotation: Rotation,
         PositionX: PositionX,

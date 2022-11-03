@@ -44,7 +44,7 @@ function ShowCharacter(props) {
             </tr>
             <tr>
                 <td>Texture Path</td>
-                <td>{ character.texture_path }</td>
+                <td>{ character.texturePath }</td>
             </tr>
             <tr>
                 <td>Character Type</td>

@@ -48,6 +48,9 @@ def modify_dict(obj):
         # Remove node if no further thought exists ('lastnode')
         if obj.get('IsFinal') and obj.get('NextNode').get('Thought') == 'lastnode':
             obj['NextNode'] = None
+        # Remove last node, if last dialog edge
+        if obj.get('_dialogLine') and obj.get('_nextNodeId') and obj.get('isFinalDialogOption'):
+            obj['_nextNodeId'] = 0
         # Change thoughtlink to finalthoughtlink if isfinal is true
         if obj.get('IsFinal') and obj.get('linkType'):
             obj['linkType'] = 'conscious.DataHolderFinalThoughtLink, conscious'
@@ -108,7 +111,7 @@ def prepare_json(l):
         d['Things'] = modify_dict(d['Things'])
         if 'EntrySequence' in d.keys():
             d['EntrySequence'] = modify_dict(d['EntrySequence'])
-        l_dict[str(i+1)] = d
+        l_dict[str(i+2)] = d
     return l_dict
 
 if __name__ == "__main__":

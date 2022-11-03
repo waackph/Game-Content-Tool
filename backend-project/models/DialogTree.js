@@ -17,6 +17,10 @@ const DialogEdgeSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    isFinalDialogOption: {
+        type: Boolean,
+        required: false,
+    },
     x: {
         type: Number,
         required: false,

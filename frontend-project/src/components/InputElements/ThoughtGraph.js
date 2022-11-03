@@ -153,6 +153,7 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   const onChangeSelectLinkData = (e, action) => {
     const name = action.name;
     let value = null;
+
     if(name === 'ValidMoods') {
       value = [];
       e.forEach(elem => {

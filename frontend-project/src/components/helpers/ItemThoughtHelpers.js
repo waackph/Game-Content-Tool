@@ -77,6 +77,10 @@ export function createDialogTreeStructure(svg, connections) {
         }
       }
     });
+    // starting dialog node needs to have the id 1 (because of implementation purposes in the game)
+    if(!connections.some(elem => elem.childNode === nodeId)) {
+      currentNode.Id = 1;
+    }
     treeStructure.push(currentNode);
   });
   return treeStructure;
