@@ -139,6 +139,10 @@ function ShowItemDetails(props) {
                             <td>{ item.RoomId }</td>
                         </tr>
                         <tr>
+                            <td>Door Id</td>
+                            <td>{ item.DoorId }</td>
+                        </tr>
+                        <tr>
                             <td>Init Player Pos X</td>
                             <td>{ item.InitPlayerPosX }</td>
                         </tr>
@@ -148,7 +152,7 @@ function ShowItemDetails(props) {
                         </tr>
                         <tr>
                             <td>Close Texture Path</td>
-                            <td>{ itemTypes[item.CloseTexturePath] }</td>
+                            <td>{ item.CloseTexturePath }</td>
                         </tr>
                     </tbody>
                 </table>

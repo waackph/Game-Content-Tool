@@ -80,6 +80,10 @@ const ItemSchema = new mongoose.Schema({
         type: Number,
         required: false,
     },
+    DoorId: { // is an Object ID
+        type: Number,
+        required: false,
+    },
     IsUnlocked: { // is an Object ID
         type: Boolean,
         required: false,

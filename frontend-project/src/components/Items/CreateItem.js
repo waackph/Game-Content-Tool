@@ -29,6 +29,7 @@ function CreateItem (props) {
   const [ItemDependency, setItemDependency] = useState(-1);
   // Door variables
   const [RoomId, setRoomId] = useState(0);
+  const [DoorId, setDoorId] = useState(0);
   const [IsUnlocked, setIsUnlocked] = useState(false);
   const [InitPlayerPosX, setInitPlayerPosX] = useState(-1);
   const [InitPlayerPosY, setInitPlayerPosY] = useState(-1);
@@ -189,6 +190,9 @@ function CreateItem (props) {
     else if(e.target.name === 'RoomId') {
       setRoomId(e.target.value);
     }
+    else if(e.target.name === 'DoorId') {
+      setDoorId(e.target.value);
+    }
     else if(e.target.name === 'IsUnlocked') {
       setIsUnlocked(!IsUnlocked);
     }
@@ -289,6 +293,7 @@ function CreateItem (props) {
       UseWith: UseWith,
       ItemDependency: ItemDependency,
       RoomId: RoomId,
+      DoorId: DoorId,
       IsUnlocked: IsUnlocked,
       InitPlayerPosX: InitPlayerPosX,
       InitPlayerPosY: InitPlayerPosY,
@@ -514,7 +519,20 @@ function CreateItem (props) {
       </div>
 
       <div className='row'>
-        <div className="col-md-12 m-auto">
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <input
+                type='number'
+                placeholder='Door Id'
+                name='DoorId'
+                className='form-control'
+                value={DoorId}
+                onChange={onChange}
+            />
+          </div>
+        </div>
+
+        <div className="col-md-6 m-auto">
             <CheckboxField
             checkLabel='Is unlocked'
             value={IsUnlocked}
