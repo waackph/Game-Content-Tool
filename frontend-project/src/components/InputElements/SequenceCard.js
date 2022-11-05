@@ -5,10 +5,55 @@ const SequenceCard = (props) => {
     const sequence = props.sequence;
 
     // Create Commands list
-    let commands = sequence._commands.map((val, idx) => {
-        let _destinationX = `_destinationX-${val.index}`;
-        let _destinationY = `_destinationY-${val.index}`;
+    let commands = sequence.Commands.map((val, idx) => {
+        let DestinationX = `DestinationX-${val.index}`;
+        let DestinationY = `DestinationY-${val.index}`;
+        let MillisecondsToWait = `MillisecondsToWait-${val.index}`;
+        let CmdSoundFilePath = `CmdSoundFilePath-${val.index}`;
+        let DoorId = `DoorId-${val.index}`;
         let CommandType = `CommandType-${val.index}`;
+
+        let waitCmdVars = (<></>);
+        let walkCmdVars = (<></>);
+        let doorActionCmdVars = (<></>);
+        if(val.CommandType === 'conscious.DataHolderWaitCommand, conscious'){
+            waitCmdVars = (
+                <>
+                    <div className="col-2">
+                        <label>Ms to wait</label> <br />
+                        <input className="seqInput" type="number" placeholder="MillisecondsToWait" name="MillisecondsToWait" value={val.MillisecondsToWait} data-id={idx} id={MillisecondsToWait} onChange={(e) => props.onChange(e)} />
+                    </div>
+                    <div className="col-2">
+                        <label>Sound Path</label> <br />
+                        <input className="seqInput" type="text" placeholder="CmdSoundFilePath" name="CmdSoundFilePath" value={val.CmdSoundFilePath} data-id={idx} id={CmdSoundFilePath} onChange={(e) => props.onChange(e)} />
+                    </div>
+                </>
+            );
+        }
+        else if(val.CommandType === 'conscious.DataHolderWalkCommand, conscious'){
+            walkCmdVars = (
+                <>
+                    <div className="col-2">
+                        <label>DestinationX</label> <br />
+                        <input className="seqInput" type="number" placeholder="DestinationX" name="DestinationX" value={val.DestinationX} data-id={idx} id={DestinationX} onChange={(e) => props.onChange(e)} />
+                    </div>
+                    <div className="col-2">
+                        <label>DestinationY</label> <br />
+                        <input className="seqInput" type="number" placeholder="DestinationY" name="DestinationY" value={val.DestinationY} data-id={idx} id={DestinationY} onChange={(e) => props.onChange(e)} />
+                    </div>
+                </>
+            );
+        }
+        else if(val.CommandType === 'conscious.DataHolderDoorActionCommand, conscious'){
+            doorActionCmdVars = (
+                <>
+                    <div className="col-2">
+                        <label>DoorId</label> <br />
+                        <input className="seqInput" type="number" placeholder="DoorId" name="DoorId" value={val.DoorId} data-id={idx} id={DoorId} onChange={(e) => props.onChange(e)} />
+                    </div>
+                </>
+            );
+        }
 
         return (
         <div className='row' key={idx}>
@@ -16,23 +61,24 @@ const SequenceCard = (props) => {
                 <h5>CMD {idx+1}</h5>
             </div>
             <div className="col-2">
-                <label>_destinationX</label> <br />
-                <input className="seqInput" type="number" placeholder="_destinationX" name="_destinationX" value={val._destinationX} data-id={idx} id={_destinationX} onChange={(e) => props.onChange(e)} />
-            </div>
-            <div className="col-2">
-                <label>_destinationY</label> <br />
-                <input className="seqInput" type="number" placeholder="_destinationY" name="_destinationY" value={val._destinationY} data-id={idx} id={_destinationY} onChange={(e) => props.onChange(e)} />
-            </div>
-            <div className="col-2">
                 <label>Type</label> <br />
                 <select name='CommandType' 
                         onChange={(e) => props.onChange(e)} value={val.CommandType}
                         data-id={idx} id={CommandType}
                         aria-label="Select command type">
-                    <option value="conscious.WalkCommand">Walk</option>
-                    <option value="conscious.WaitCommand">Wait</option>
+                    <option value="conscious.DataHolderWalkCommand, conscious">Walk</option>
+                    <option value="conscious.DataHolderWaitCommand, conscious">Wait</option>
+                    <option value="conscious.DataHolderDoorActionCommand, conscious">DoorAction</option>
+                    <option value="conscious.DataHolderAnimateCommand, conscious">Animate</option>
+                    <option value="conscious.DataHolderVanishCommand, conscious">Vanish</option>
+                    <option value="conscious.DataHolderSayCommand, conscious">Say</option>
                 </select>
             </div>
+
+            { waitCmdVars }
+            { walkCmdVars }
+            { doorActionCmdVars }
+
             <div className="col-2 p-2">
                 {idx === 0 ? (
                     <button

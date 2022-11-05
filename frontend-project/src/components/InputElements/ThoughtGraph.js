@@ -10,11 +10,11 @@ import { link } from "d3";
 function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections, depth) {
   Array.prototype.forEach.call(links, link => {
     // Store connection
-    connections.push({'parentNode': id, 'childNode': link.NextNode._id, 'link': link.Id, 'depth': depth});
+    connections.push({'parentNode': id, 'childNode': link.NextNode.Id, 'link': link.Id, 'depth': depth});
     // Add next node
     const nodeData = {...link.NextNode};
     delete nodeData['Links'];
-    canvas.append('circle').attr("r", 15).attr("cx", link.NextNode.x).attr('cy', link.NextNode.y).style('fill', 'grey').data([nodeData]).attr("id", function(d) { return "n" + d._id; });
+    canvas.append('circle').attr("r", 15).attr("cx", link.NextNode.x).attr('cy', link.NextNode.y).style('fill', 'grey').data([nodeData]).attr("id", function(d) { return "n" + d.Id; });
     // Add line between current and next node
     const linkData = {...link};
     delete nodeData['NextNode'];
@@ -26,13 +26,13 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
       .attr("x2", link.NextNode.x)
       .attr("y2", link.NextNode.y)
       .data([linkData]).attr("id", function(d) { return "e" + d.Id; });
-    createGraphFromNestedObject(canvas, link.NextNode.Links, link.NextNode._id, link.NextNode.x, link.NextNode.y, connections, depth+1);
+    createGraphFromNestedObject(canvas, link.NextNode.Links, link.NextNode.Id, link.NextNode.x, link.NextNode.y, connections, depth+1);
   });
 }
 
 const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
-  const defaultNode = {'IsRoot': false};
-  const defaultLink = {'IsLocked': false, '_validMoods': [0]};
+  const defaultNode = {'IsRoot': false, 'LinkageId': 0, 'thoughtType': 'conscious.DataHolderThoughtNode, conscious'};
+  const defaultLink = {'IsLocked': false, 'ValidMoods': [0], 'linkType': 'conscious.DataHolderThoughtLink, conscious'};
 
   const [nodeInputData, setNodeInputData] = useState({});
   const [linkInputData, setLinkInputData] = useState({});
@@ -108,12 +108,15 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
         value = true;
       }
     }
-    if(['_destinationX', '_destinationY', 'CommandType'].includes(e.target.name)) {
-      let cmds = [...linkInputData.ThoughtSequence._commands];
+    if(['CommandType',
+             'DestinationX', 'DestinationY', 
+             'MillisecondsToWait', 'CmdSoundFilePath',
+             'DoorId'].includes(e.target.name)) {
+      let cmds = [...linkInputData.sequence.Commands];
       cmds[e.target.dataset.id][e.target.name] = e.target.value;
       setLinkInputData({
         ...linkInputData,
-        'ThoughtSequence': {...linkInputData.ThoughtSequence, _commands: cmds}
+        'sequence': {...linkInputData.sequence, Commands: cmds}
       });
     }
     else {
@@ -125,13 +128,13 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   }
 
   const addSequenceCommand = (e) => {
-    e.preventDefault();
-    const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.WalkCommand'}
+    // e.preventDefault();
+    const defaultCommand = {index: Math.random(), DestinationX: 0, DestinationY: 0, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
     setLinkInputData({
       ...linkInputData,
-      'ThoughtSequence': {
-        ...linkInputData.ThoughtSequence, 
-        _commands: [...linkInputData.ThoughtSequence._commands, defaultCommand]
+      'sequence': {
+        ...linkInputData.sequence, 
+        Commands: [...linkInputData.sequence.Commands, defaultCommand]
       }
     });
   }
@@ -140,9 +143,9 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
     e.preventDefault();
     setLinkInputData({
       ...linkInputData,
-      'ThoughtSequence': {
-        ...linkInputData.ThoughtSequence, 
-        _commands: linkInputData.ThoughtSequence._commands.filter(val => val !== cmd)
+      'sequence': {
+        ...linkInputData.sequence, 
+        Commands: linkInputData.sequence.Commands.filter(val => val !== cmd)
       }
     });
   }
@@ -150,7 +153,8 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   const onChangeSelectLinkData = (e, action) => {
     const name = action.name;
     let value = null;
-    if(name === '_validMoods') {
+
+    if(name === 'ValidMoods') {
       value = [];
       e.forEach(elem => {
         value.push(elem['value']);
@@ -167,7 +171,7 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
 
   const assignDataToNode = e => {
     e.preventDefault();
-    d3.select('#'+svgId).select('#n'+nodeInputData._id).data([nodeInputData]);
+    d3.select('#'+svgId).select('#n'+nodeInputData.Id).data([nodeInputData]);
   }
 
   const assignDataToLink = e => {
@@ -188,7 +192,7 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
         .data([{...defaultLink, 'Id': Id}]).attr("id", function(d) { return "e" + Id; })
         .on('click', onLinkClick);
       newLineId = Id;
-      startNode = d._id;
+      startNode = d.Id;
     }
     else {
       d3.select(this).raise().classed("active", true);
@@ -228,12 +232,12 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
       d3.select(this).attr("cx", d.x = e.x).attr("cy", d.y = e.y);
       // move lines, circle is attached to
       graphConnections.forEach(elem => {
-        if(d._id === elem.parentNode) {
+        if(d.Id === elem.parentNode) {
           d3.select('#e'+elem.link)
           .attr("x1", d.x = e.x)
           .attr("y1", d.y = e.y);
         }
-        else if(d._id === elem.childNode) {
+        else if(d.Id === elem.childNode) {
           d3.select('#e'+elem.link)
           .attr("x2", d.x = e.x)
           .attr("y2", d.y = e.y);
@@ -259,7 +263,7 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
 
   function onNodeEnter(e, d) {
     if(inAddEdgeMode) {
-      destNode = d._id;
+      destNode = d.Id;
     }
   }
 
@@ -272,7 +276,7 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   function onNodeClick(e, d) {
 
     if(!inAddEdgeMode) {
-      if(inputMaskActive === d._id) {
+      if(inputMaskActive === d.Id) {
         setNodeInputData({});
         inputMaskActive = -1;
         d3.select(this).style('fill', 'grey');
@@ -284,7 +288,7 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
       else {
         setLinkInputData({});
         setNodeInputData(d);
-        inputMaskActive = d._id;
+        inputMaskActive = d.Id;
         setDefaultStyle();
         d3.select(this).style('fill', 'blue');
       }  
@@ -314,12 +318,12 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
     e.preventDefault();
     const Id = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
     const circle = d3.select('#' + svgId + ' #chartGroup').append('circle')
-      .data([{...defaultNode, '_id': Id}])
+      .data([{...defaultNode, 'Id': Id}])
       .attr("r", 15)
       .attr("cx", svgWidth/2).attr('cy', svgHeight/2)
       .style('fill', 'grey')
       .attr('class', 'active')
-      .attr("id", function(d) { return "n" + d._id; });
+      .attr("id", function(d) { return "n" + d.Id; });
     circle.classed("active", false);
     circle.on('click', onNodeClick)
       .on('mouseenter', onNodeEnter)
@@ -365,8 +369,8 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
       .attr("r", 15)
       .attr("cx", data.x).attr('cy', data.y)
       .style('fill', 'grey')
-      .attr("id", function(d) { return "n" + d._id; });
-    createGraphFromNestedObject(svg, data.Links, data._id, data.x, data.y, graphConnections, 1);
+      .attr("id", function(d) { return "n" + d.Id; });
+    createGraphFromNestedObject(svg, data.Links, data.Id, data.x, data.y, graphConnections, 1);
 
     // set up events for all graph elements
     svg.selectAll('circle')

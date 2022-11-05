@@ -5,13 +5,13 @@ const SequenceSchema = require('./Sequence')
 const ThoughtLinkSchema = new mongoose.Schema({
     linkType: {
         type: String,
-        required: false,
+        required: true,
     },
     Id: {
         type: Number,
-        required: false,
+        required: true,
     },
-    _validMoods: {
+    ValidMoods: {
         type: [Number],
         required: false,
     },
@@ -51,21 +51,29 @@ const ThoughtLinkSchema = new mongoose.Schema({
         required: false,
     },
     UnlockId: { // is an Object ID
-        type: String,
+        type: Number,
+        required: false,
+    },
+    IsSuccessEdge: {
+        type: Boolean,
         required: false,
     },
     Animation: {
         type: AnimationSchema,
         required: false,
     },
-    ThoughtSequence: {
+    sequence: {
         type: SequenceSchema,
         required: false,
     }
 });
 
 const ThoughtNodeSchema = new mongoose.Schema({
-    _id: {
+    thoughtType: {
+        type: String,
+        required: true,
+    },
+    Id: {
         type: Number,
         required: false,
     },
@@ -78,11 +86,11 @@ const ThoughtNodeSchema = new mongoose.Schema({
         required: false,
     },
     ThingId: { // is an Object ID
-        type: String,
+        type: Number,
         required: false,
     },
-    _linkageId: { // is an Object ID
-        type: String,
+    LinkageId: { // is an Object ID
+        type: Number,
         required: false,
     },
     Links: {

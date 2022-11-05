@@ -30,6 +30,19 @@ router.get('/items', (req, res) => {
     .catch(err => res.status(404).json({ noroomsanditemsfound: 'No Items found' }));
 });
 
+// @route GET api/rooms
+// @description Get all rooms
+// @access Public
+router.get('/rooms', (req, res) => {
+  Room.find({}, { projection: { _id: 0 } })
+    .then(rooms => {
+      // select Room name and ID
+      roomData = rooms.map((room, idx) => {return {'Name': room.Name, 'Id': idx+1, '_id': room._id}})
+      res.json(roomData);
+    })
+    .catch(err => res.status(404).json({ noroomsandroomsfound: 'No Rooms found' }));
+});
+
 // @route GET api/
 // @description Get all rooms
 // @access Public

@@ -1,4 +1,5 @@
 import Select from 'react-select';
+import CheckboxField from "./CheckboxField";
 
 const moodOptions = [
   { label: "None", value: 0 },
@@ -26,6 +27,15 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
               className='form-control'
               name='_dialogLine'
               value={data._dialogLine}
+              onChange={onChange}
+            />
+          </div>
+
+          <div className="col-md-4 m-auto">
+            <CheckboxField
+              checkLabel='is final dialog option'
+              name='isFinalDialogOption'
+              value={data.isFinalDialogOption}
               onChange={onChange}
             />
           </div>

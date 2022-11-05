@@ -22,8 +22,8 @@ function NodeInput({data, onChange, assignDataToNode, deleteNode}) {
                 type='number'
                 placeholder='Linkage Id'
                 className='form-control'
-                name='Thought'
-                id='ThoughtText'
+                name='LinkageId'
+                id='LinkageId'
                 value={data.Thought}
                 onChange={onChange}
               />
@@ -31,9 +31,9 @@ function NodeInput({data, onChange, assignDataToNode, deleteNode}) {
             {/* IsRoot and ThingId are going to be set automatically by context */}
           </div>
 
-          <div className="graphElemId" readOnly>Node ID: {data._id}</div>
+          <div className="graphElemId" readOnly>Node ID: {data.Id}</div>
           <button onClick={assignDataToNode}>Submit</button>
-          <button onClick={deleteNode} value={data._id}>Delete</button>
+          <button onClick={deleteNode} value={data.Id}>Delete</button>
         </div>
         );
     }

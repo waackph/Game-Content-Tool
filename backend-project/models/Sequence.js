@@ -5,31 +5,34 @@ const CommandSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    _destinationX: {
+    // Walk
+    DestinationX: {
         type: Number,
         required: false,
     },
-    _destinationY: {
+    DestinationY: {
         type: Number,
         required: false,
     },
-    CommandFinished: {
-        type: Boolean,
-        required: true,
+    // Wait
+    MillisecondsToWait: {
+        type: Number,
+        required: false,
     },
+    CmdSoundFilePath: {
+        type: String,
+        required: false,
+    },
+    // DoorAction
+    DoorId: {
+        type: Number,
+        required: false,
+    }
 });
 
 const SequenceSchema = new mongoose.Schema({
-    _currentIndex: {
-        type: Number,
-        required: true,
-    },
-    _commands: {
+    Commands: {
         type: [CommandSchema],
-        required: true,
-    },
-    SequenceFinished: {
-        type: Boolean,
         required: true,
     },
 });

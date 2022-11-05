@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css';
+import SequenceCard from '../InputElements/SequenceCard';
 import axios from 'axios';
 
 function CreateRoom (props) {
 
   const [Name, setName] = useState('');
-  const [RoomWidth, setRoomWidth] = useState('');
+  const [RoomWidth, setRoomWidth] = useState(0);
   const [texturePath, setTexturePath] = useState('');
+  const [SoundFilePath, setSoundFilePath] = useState('');
+  const [LightMapPath, setLightMapPath] = useState('');
+  const [EntrySequence, setEntrySequence] = useState({'Commands': []});
 
   let navigate = useNavigate();
 
@@ -21,10 +25,43 @@ function CreateRoom (props) {
     else if(e.target.name === 'texturePath') {
       setTexturePath(e.target.value);
     }
+    else if(e.target.name === 'SoundFilePath') {
+      setSoundFilePath(e.target.value);
+    }
+    else if(e.target.name === 'LightMapPath') {
+      setLightMapPath(e.target.value);
+    }
+    else if(['CommandType',
+             'DestinationX', 'DestinationY', 
+             'MillisecondsToWait', 'CmdSoundFilePath',
+             'DoorId'].includes(e.target.name)) {
+      let cmds = [...EntrySequence.Commands];
+      cmds[e.target.dataset.id][e.target.name] = e.target.value;
+      setEntrySequence({...EntrySequence, Commands: cmds});
+    }
     else {
-      console.log('No matching variable to fieldname')
+      console.log('No matching variable to fieldname' + e.target.value)
     }
   };
+
+  const addSequenceCommand = (e) => {
+    if(e) {
+        e.preventDefault();
+    }
+    const defaultCommand = {index: Math.random(), DestinationX: 0, DestinationY: 0, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
+    setEntrySequence({
+        ...EntrySequence, 
+        Commands: [...EntrySequence.Commands, defaultCommand]
+    })
+  }
+
+  const deleteRow = (e, cmd) => {
+    setEntrySequence({
+        ...EntrySequence, 
+        Commands: EntrySequence.Commands.filter(val => val !== cmd)
+    });
+  }
+
 
   const onSubmit = e => {
     e.preventDefault();
@@ -33,7 +70,16 @@ function CreateRoom (props) {
       Name: Name,
       RoomWidth: RoomWidth,
       texturePath: texturePath,
+      SoundFilePath: SoundFilePath,
+      LightMapPath: LightMapPath,
     };
+  
+    if(EntrySequence.Commands.length !== 0) {
+      data['EntrySequence'] = EntrySequence;
+    }
+    else{
+      data['EntrySequence'] = null;
+    }
 
     axios
       .post('http://localhost:8082/api', data)
@@ -41,6 +87,9 @@ function CreateRoom (props) {
         setName('');
         setRoomWidth('');
         setTexturePath('');
+        setSoundFilePath('');
+        setLightMapPath('');
+        setEntrySequence({'Commands': []});
         navigate(`/item-list/${res.data._id}`); //"/item-list/" + res._id);
       })
       .catch(err => {
@@ -98,6 +147,30 @@ function CreateRoom (props) {
                   onChange={onChange}
                 />
               </div>
+
+              <div className='form-group'>
+                <input
+                  type='text'
+                  placeholder='Sound File Path'
+                  name='SoundFilePath'
+                  className='form-control'
+                  value={SoundFilePath}
+                  onChange={onChange}
+                />
+              </div>
+
+              <div className='form-group'>
+                <input
+                  type='text'
+                  placeholder='Light Map Path'
+                  name='LightMapPath'
+                  className='form-control'
+                  value={LightMapPath}
+                  onChange={onChange}
+                />
+              </div>
+
+              <SequenceCard sequence={EntrySequence} add={addSequenceCommand} delete={deleteRow} onChange={onChange} />
 
               <input
                   type="submit"

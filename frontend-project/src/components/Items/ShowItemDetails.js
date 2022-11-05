@@ -36,11 +36,11 @@ function ShowItemDetails(props) {
     }
 
     // const item = this.state.item;
-    const itemTypes = {'conscious.DataHolderThing': 'Thing', 
-                       'conscious.DataHolderItem': 'Item', 
-                       'conscious.DataHolderKey': 'Key',
-                       'conscious.DataHolderDoor': 'Door',
-                       'conscious.DataHolderCombineItem': 'CombineItem'}
+    const itemTypes = {'conscious.DataHolderThing, conscious': 'Thing', 
+                       'conscious.DataHolderItem, conscious': 'Item', 
+                       'conscious.DataHolderKey, conscious': 'Key',
+                       'conscious.DataHolderDoor, conscious': 'Door',
+                       'conscious.DataHolderCombineItem, conscious': 'CombineItem'}
 
     let optionalInfo = (<></>)
     if(itemTypes[item.ItemType] !== 'Thing') {
@@ -57,6 +57,10 @@ function ShowItemDetails(props) {
                         <tr>
                             <td>Position Y</td>
                             <td>{ item.PositionY }</td>
+                        </tr>
+                        <tr>
+                            <td>Draw Order</td>
+                            <td>{ item.DrawOrder }</td>
                         </tr>
                         <tr>
                             <td>Examine Text</td>
@@ -123,6 +127,38 @@ function ShowItemDetails(props) {
         )
     }
 
+    let doorInfo = (<></>)
+    if(itemTypes[item.ItemType] === 'Door') {
+        doorInfo = (
+            <>
+            Door specific attributes:
+                <table className="table table-hover table-dark">
+                    <tbody>
+                        <tr>
+                            <td>Room Id</td>
+                            <td>{ item.RoomId }</td>
+                        </tr>
+                        <tr>
+                            <td>Door Id</td>
+                            <td>{ item.DoorId }</td>
+                        </tr>
+                        <tr>
+                            <td>Init Player Pos X</td>
+                            <td>{ item.InitPlayerPosX }</td>
+                        </tr>
+                        <tr>
+                            <td>Init Player Pos Y</td>
+                            <td>{ item.InitPlayerPosY }</td>
+                        </tr>
+                        <tr>
+                            <td>Close Texture Path</td>
+                            <td>{ item.CloseTexturePath }</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </>
+        )
+    }
 
     let ItemShow = (
         <>
@@ -156,6 +192,8 @@ function ShowItemDetails(props) {
                                 { optionalInfo }
                             </tbody>
                         </table>
+
+                        { doorInfo }
 
                         { combineItemInfo }
                     </div>

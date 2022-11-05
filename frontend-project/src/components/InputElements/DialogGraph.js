@@ -49,7 +49,7 @@ function createGraphFromLinkedObject(canvas, nodes, connections) {
 
 const DialogGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   const defaultNode = {'_dialogLine': '', '_edges': []};
-  const defaultLink = {'_dialogLine': '', 'MoodDependence': 0};
+  const defaultLink = {'_dialogLine': '', 'MoodDependence': 0, 'isFinalDialogOption': false};
 
   const [nodeInputData, setNodeInputData] = useState({});
   const [linkInputData, setLinkInputData] = useState({});
@@ -124,13 +124,17 @@ const DialogGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
       else {
         value = true;
       }
+      setLinkInputData({
+        ...linkInputData,
+        [name]: value,
+      });
     }
-    // if(['_destinationX', '_destinationY', 'CommandType'].includes(e.target.name)) {
-    //   let cmds = [...linkInputData.ThoughtSequence._commands];
+    // if(['DestinationX', 'DestinationY', 'CommandType'].includes(e.target.name)) {
+    //   let cmds = [...linkInputData.ThoughtSequence.Commands];
     //   cmds[e.target.dataset.id][e.target.name] = e.target.value;
     //   setLinkInputData({
     //     ...linkInputData,
-    //     'ThoughtSequence': {...linkInputData.ThoughtSequence, _commands: cmds}
+    //     'ThoughtSequence': {...linkInputData.ThoughtSequence, Commands: cmds}
     //   });
     // }
     else {
@@ -143,12 +147,12 @@ const DialogGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
 
   // const addSequenceCommand = (e) => {
   //   e.preventDefault();
-  //   const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandFinished: false, CommandType: 'conscious.WalkCommand'}
+  //   const defaultCommand = {index: Math.random(), DestinationX: 0, DestinationY: 0, CommandFinished: false, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
   //   setLinkInputData({
   //     ...linkInputData,
   //     'ThoughtSequence': {
   //       ...linkInputData.ThoughtSequence, 
-  //       _commands: [...linkInputData.ThoughtSequence._commands, defaultCommand]
+  //       Commands: [...linkInputData.ThoughtSequence.Commands, defaultCommand]
   //     }
   //   });
   // }
@@ -159,7 +163,7 @@ const DialogGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   //     ...linkInputData,
   //     'ThoughtSequence': {
   //       ...linkInputData.ThoughtSequence, 
-  //       _commands: linkInputData.ThoughtSequence._commands.filter(val => val !== cmd)
+  //       Commands: linkInputData.ThoughtSequence.Commands.filter(val => val !== cmd)
   //     }
   //   });
   // }
@@ -167,7 +171,7 @@ const DialogGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   const onChangeSelectLinkData = (e, action) => {
     const name = action.name;
     let value = null;
-    if(name === 'oodDependence') {
+    if(name === 'MoodDependence') {
       value = [];
       e.forEach(elem => {
         value.push(elem['value']);

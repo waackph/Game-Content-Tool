@@ -6,17 +6,20 @@ import '../../App.css';
 import CheckboxField from '../InputElements/CheckboxField';
 import ThoughtGraph from '../InputElements/ThoughtGraph';
 import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../helpers/ItemThoughtHelpers';
+import { createRandomId } from '../helpers/GeneralHelpers';
 
 function CreateItem (props) {
 
-  // TODO: Add object type input field CombineItem.Thought
   const [Name, setName] = useState('');
   const [texturePath, setTexturePath] = useState('');
-  const [ItemType, setItemType] = useState('conscious.DataHolderItem');
+  const [ItemType, setItemType] = useState('conscious.DataHolderItem, conscious');
   const [Rotation, setRotation] = useState(0);
   const [PositionX, setPositionX] = useState(0);
   const [PositionY, setPositionY] = useState(0);
+  // Thing variables
+  const [DrawOrder, setDrawOrder] = useState(3);
   const [ExamineText, setExamineText] = useState('');
+  // Item variables
   const [IsInInventory, setIsInInventory] = useState(false);
   const [UseAble, setUseAble] = useState(false);
   const [PickUpAble, setPickUpAble] = useState(false);
@@ -24,23 +27,38 @@ function CreateItem (props) {
   const [GiveAble, setGiveAble] = useState(false);
   const [UseWith, setUseWith] = useState(false);
   const [ItemDependency, setItemDependency] = useState(-1);
+  // Door variables
+  const [RoomId, setRoomId] = useState(0);
+  const [DoorId, setDoorId] = useState(0);
+  const [IsUnlocked, setIsUnlocked] = useState(false);
+  const [InitPlayerPosX, setInitPlayerPosX] = useState(-1);
+  const [InitPlayerPosY, setInitPlayerPosY] = useState(-1);
+  const [CloseTexturePath, setCloseTexturePath] = useState('');
   
+  const firstId = createRandomId();
+  const secondId = createRandomId();
+  const thirdId = createRandomId();
   const defaultThought = {
-    '_id': 1,
+    'Id': firstId,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
+    'LinkageId': 0,
+    'thoughtType': 'conscious.DataHolderThoughtNode, conscious',
     'x': 40,
     'y': 100,
     'Links': [
       {
-        'Id': 2,
+        'Id': secondId,
         'Option': 'First link',
-        '_validMoods': [0],
+        'ValidMoods': [0],
         'IsLocked': false,
+        'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          '_id': 3,
+          'Id': thirdId,
           'Thought': 'First node',
           'IsRoot': false,
+          'LinkageId': 0,
+          'thoughtType': 'conscious.DataHolderThoughtNode, conscious',
           'x': 80,
           'y': 100,
           'Links': [],
@@ -49,31 +67,40 @@ function CreateItem (props) {
     ]}
   const [Thought, setThought] = useState(defaultThought);
   const [allItems, setAllItems] = useState([]);
+  const [allRooms, setAllRooms] = useState([]);
 
+  const forthId = createRandomId();
+  const fifthId = createRandomId();
+  const sixthId = createRandomId();
   const defaultCombineThought = {
-    '_id': 111,
+    'Id': forthId,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
+    'LinkageId': 0,
+    'thoughtType': 'conscious.DataHolderThoughtNode, conscious',
     'x': 40,
     'y': 100,
     'Links': [
       {
-        'Id': 112,
+        'Id': fifthId,
         'Option': 'First link',
-        '_validMoods': [0],
+        'ValidMoods': [0],
         'IsLocked': false,
+        'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          '_id': 113,
+          'Id': sixthId,
           'Thought': 'First node',
           'IsRoot': false,
+          'LinkageId': 0,
+          'thoughtType': 'conscious.DataHolderThoughtNode, conscious',
           'x': 80,
           'y': 100,
           'Links': [],
         },
       }
     ]}
-  const defaultCombineItem = {'Name': '', 'texturePath': '', 'ItemType': 'conscious.DataHolderItem',
-  'Rotation': 0, 'PositionX': 0, 'PositionY': 0, 
+  const defaultCombineItem = {'Name': '', 'texturePath': '', 'ItemType': 'conscious.DataHolderItem, conscious',
+  'Rotation': 0, 'PositionX': 0, 'PositionY': 0, 'DrawOrder': 3,
   'ExamineText': '', 'IsInInventory': false, 'UseAble': false, 'PickUpAble': false, 
   'CombineAble': false, 'GiveAble': false, 'UseWith': false, 'ItemDependency': -1,
   'Thought': defaultCombineThought}
@@ -98,6 +125,16 @@ function CreateItem (props) {
       .catch(err => { 
         console.log('Error from getAllItems'); 
     });
+
+    // get all rooms for roomId in case of door type as select input
+    axios
+      .get('http://localhost:8082/api/rooms')
+      .then(res => {
+        setAllRooms(res.data);
+      })
+      .catch(err => { 
+        console.log('Error from getAllRooms'); 
+    });
   }, [])
 
 
@@ -110,7 +147,7 @@ function CreateItem (props) {
     }
     else if(e.target.name === 'ItemType') {
       setItemType(e.target.value);
-      if(e.target.value === 'conscious.DataHolderCombineItem') {
+      if(e.target.value === 'conscious.DataHolderCombineItem, conscious') {
         setCombineAble(true);
       }
     }
@@ -122,6 +159,9 @@ function CreateItem (props) {
     }
     else if(e.target.name === 'PositionY') {
       setPositionY(e.target.value);
+    }
+    else if(e.target.name === 'DrawOrder') {
+      setDrawOrder(e.target.value);
     }
     else if(e.target.name === 'ExamineText') {
       setExamineText(e.target.value);
@@ -147,9 +187,24 @@ function CreateItem (props) {
     else if(e.target.name === 'ItemDependency') {
       setItemDependency(e.target.value);
     }
-    // else if(e.target.name === 'Thought') {
-    //   setThought(e.target.value);
-    // }
+    else if(e.target.name === 'RoomId') {
+      setRoomId(e.target.value);
+    }
+    else if(e.target.name === 'DoorId') {
+      setDoorId(e.target.value);
+    }
+    else if(e.target.name === 'IsUnlocked') {
+      setIsUnlocked(!IsUnlocked);
+    }
+    else if(e.target.name === 'InitPlayerPosX') {
+      setInitPlayerPosX(e.target.value);
+    }
+    else if(e.target.name === 'InitPlayerPosY') {
+      setInitPlayerPosY(e.target.value);
+    }
+    else if(e.target.name === 'CloseTexturePath') {
+      setCloseTexturePath(e.target.value);
+    }
     else {
         console.log('No matching variable to fieldname')
     }
@@ -228,6 +283,7 @@ function CreateItem (props) {
       Rotation: Rotation,
       PositionX: PositionX,
       PositionY: PositionY,
+      DrawOrder: DrawOrder,
       ExamineText: ExamineText,
       IsInInventory: IsInInventory,
       UseAble: UseAble,
@@ -236,9 +292,15 @@ function CreateItem (props) {
       GiveAble: GiveAble,
       UseWith: UseWith,
       ItemDependency: ItemDependency,
+      RoomId: RoomId,
+      DoorId: DoorId,
+      IsUnlocked: IsUnlocked,
+      InitPlayerPosX: InitPlayerPosX,
+      InitPlayerPosY: InitPlayerPosY,
+      CloseTexturePath: CloseTexturePath,
       Thought: Thought
     };
-    if(ItemType === 'conscious.DataHolderCombineItem') {
+    if(ItemType === 'conscious.DataHolderCombineItem, conscious') {
       const IdCombine = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
       CombineItem.Thought = addItemIdToThoughtNodes(CombineItem.Thought, IdCombine);
       data = {...data, CombineItem: {...CombineItem, Id: IdCombine}};
@@ -249,7 +311,7 @@ function CreateItem (props) {
       .then(res => {
         setName('');
         setTexturePath('');
-        setItemType('conscious.DataHolderItem');
+        setItemType('conscious.DataHolderItem, conscious');
         setRotation(0);
         setPositionX(0);
         setPositionY(0);
@@ -262,6 +324,11 @@ function CreateItem (props) {
         setUseWith(false);
         setItemDependency(-1);
         setCombineItem(defaultCombineItem);
+        setRoomId(0);
+        setIsUnlocked(false);
+        setInitPlayerPosX(0);
+        setInitPlayerPosY(0);
+        setCloseTexturePath('');
         setThought(defaultThought);
         navigate(`/item-list/${room_id}`);
       })
@@ -273,15 +340,23 @@ function CreateItem (props) {
 
   let selectItemOptions = allItems.map((item, idx) => {
     let val;
-    if(item['ItemType'] !== 'conscious.DataHolderThing') {
+    if(item['ItemType'] !== 'conscious.DataHolderThing, conscious') {
       val = <option key={idx} value={item['Id']}>{item['Name']}</option>;
+    }
+    return val;
+  });
+
+  let selectRoomOptions = allRooms.map((room, idx) => {
+    let val;
+    if(room['_id'] !== room_id) {
+      val = <option key={idx} value={room['Id']}>{room['Name']}</option>;
     }
     return val;
   });
 
   // Decide what extended fields should be added
   let extendedInputs = (<></>)
-  if(ItemType !== 'conscious.DataHolderThing') {
+  if(ItemType !== 'conscious.DataHolderThing, conscious') {
     // append different sets of components using inputs = [input1, input2]
     extendedInputs = (
     <>
@@ -382,8 +457,96 @@ function CreateItem (props) {
     )
   }
 
+  console.log(allRooms)
+
+  let extendedDoorInputs = (<></>)
+  if(ItemType === 'conscious.DataHolderDoor, conscious') {
+    // append different sets of components using inputs = [input1, input2]
+    extendedDoorInputs = (
+    <>
+      <div className="row">
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <input
+                type='number'
+                placeholder='Init Player Pos X'
+                name='InitPlayerPosX'
+                className='form-control'
+                value={InitPlayerPosX}
+                onChange={onChange}
+            />
+          </div>
+        </div>
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <input
+                type='number'
+                placeholder='Init Player Pos Y'
+                name='InitPlayerPosY'
+                className='form-control'
+                value={InitPlayerPosY}
+                onChange={onChange}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <input
+                type='text'
+                placeholder='Close Texture Path'
+                name='CloseTexturePath'
+                className='form-control'
+                value={CloseTexturePath}
+                onChange={onChange}
+            />
+          </div>
+        </div>
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <div className="selectWrapper">
+              <select className="form-select" name='RoomId' 
+                    onChange={onChange} value={RoomId}
+                    aria-label="Select Room the door leads to">
+                <option value="-1">No Room Selected</option>
+                { selectRoomOptions }
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className='row'>
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+            <input
+                type='number'
+                placeholder='Door Id'
+                name='DoorId'
+                className='form-control'
+                value={DoorId}
+                onChange={onChange}
+            />
+          </div>
+        </div>
+
+        <div className="col-md-6 m-auto">
+            <CheckboxField
+            checkLabel='Is unlocked'
+            value={IsUnlocked}
+            name='IsUnlocked'
+            onChange={onChange} 
+            />
+        </div>
+      </div>
+    </>
+    )
+  }
+
   let combineItemInputs = (<></>);
-  if(ItemType === 'conscious.DataHolderCombineItem') {
+  if(ItemType === 'conscious.DataHolderCombineItem, conscious') {
     combineItemInputs = (
       <>
         <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#combineInputs" 
@@ -423,13 +586,13 @@ function CreateItem (props) {
               <div className='form-group'>
                 <div className="selectWrapper">
                   <select className="form-select" name='ItemType' 
-                          onChange={onChangeCombineItem} defaultValue="conscious.DataHolderItem"
+                          onChange={onChangeCombineItem} defaultValue="conscious.DataHolderItem, conscious"
                           aria-label="Select item type">
-                    <option value="conscious.DataHolderThing">Thing</option>
-                    <option value="conscious.DataHolderItem">Item</option>
-                    <option value="conscious.DataHolderDoor">Door</option>
-                    <option value="conscious.DataHolderKey">Key</option>
-                    {/* <option value="conscious.DataHolderCombineItem">CombineItem</option> */}
+                    <option value="conscious.DataHolderThing, conscious">Thing</option>
+                    <option value="conscious.DataHolderItem, conscious">Item</option>
+                    {/* <option value="conscious.DataHolderDoor, conscious">Door</option> */}
+                    <option value="conscious.DataHolderKey, conscious">Key</option>
+                    {/* <option value="conscious.DataHolderCombineItem, conscious">CombineItem</option> */}
                   </select>
                 </div>
               </div>
@@ -462,7 +625,7 @@ function CreateItem (props) {
                     />
                 </div>
               </div>
-
+              
               <div className="col-md-6 m-auto">
                 <div className='form-group'>
                   <input
@@ -476,6 +639,21 @@ function CreateItem (props) {
                 </div>
               </div>
             </div>
+
+          <div className="row">
+            <div className="col-md-6 m-auto">
+              <div className='form-group'>
+                <input
+                type='number'
+                placeholder='Draw Order'
+                name='DrawOrder'
+                className='form-control'
+                value={CombineItem.DrawOrder}
+                onChange={onChangeCombineItem}
+                />
+              </div>
+            </div>
+          </div>
 
           <div className="row">
             <div className="col-md-6 m-auto">
@@ -629,11 +807,11 @@ function CreateItem (props) {
                       <select className="form-select" name='ItemType' 
                               onChange={onChange} defaultValue="conscious.DataHolderItem"
                               aria-label="Select item type">
-                        <option value="conscious.DataHolderThing">Thing</option>
-                        <option value="conscious.DataHolderItem">Item</option>
-                        <option value="conscious.DataHolderDoor">Door</option>
-                        <option value="conscious.DataHolderKey">Key</option>
-                        <option value="conscious.DataHolderCombineItem">CombineItem</option>
+                        <option value="conscious.DataHolderThing, conscious">Thing</option>
+                        <option value="conscious.DataHolderItem, conscious">Item</option>
+                        <option value="conscious.DataHolderDoor, conscious">Door</option>
+                        <option value="conscious.DataHolderKey, conscious">Key</option>
+                        <option value="conscious.DataHolderCombineItem, conscious">CombineItem</option>
                       </select>
                     </div>
                   </div>
@@ -681,7 +859,25 @@ function CreateItem (props) {
                   </div>
                 </div>
 
+                <div className="row">
+                  <div className="col-md-6 m-auto">
+                    <div className='form-group'>
+                      <input
+                      type='number'
+                      placeholder='Draw Order'
+                      name='DrawOrder'
+                      className='form-control'
+                      value={DrawOrder}
+                      onChange={onChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+
               { extendedInputs }
+
+              {/* Add Door Item fields */}
+              { extendedDoorInputs }
 
               {/* Add combine Item fields */}
               { combineItemInputs }

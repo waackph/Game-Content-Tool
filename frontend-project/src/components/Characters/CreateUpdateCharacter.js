@@ -6,16 +6,17 @@ import CheckboxField from '../InputElements/CheckboxField';
 import ThoughtGraph from '../InputElements/ThoughtGraph';
 import { addLinksToThoughtData, addItemIdToThoughtNodes, createDialogTreeStructure } from '../helpers/ItemThoughtHelpers';
 import DialogGraph from '../InputElements/DialogGraph';
-
+import { createRandomId } from '../helpers/GeneralHelpers';
 
 function CreateUpdateCharacter(props) {
   const [Id, setId] = useState(0);
   const [Name, setName] = useState('');
   const [texturePath, setTexturePath] = useState('');
-  const [CharacterType, setCharacterType] = useState('conscious.DataHolderCharacter');
+  const [CharacterType, setCharacterType] = useState('conscious.DataHolderCharacter, conscious');
   const [Rotation, setRotation] = useState(0);
   const [PositionX, setPositionX] = useState(0);
   const [PositionY, setPositionY] = useState(0);
+  const [DrawOrder, setDrawOrder] = useState(4);
   const [ItemDependency, setItemDependency] = useState(-1);
   const [DialogUnlocked, setDialogUnlocked] = useState(false);
   const [Pronoun, setPronoun] = useState('');
@@ -23,22 +24,30 @@ function CreateUpdateCharacter(props) {
   const [GiveAble, setGiveAble] = useState(false);
   const [MoodChange, setMoodChange] = useState(0);
 
+  const firstId = createRandomId();
+  const secondId = createRandomId();
+  const thirdId = createRandomId();
   const defaultThought = {
-    '_id': 1,
+    'Id': firstId,
     'Thought': 'Descriptive Thought',
     'IsRoot': true,
+    'LinkageId': 0,
+    'thoughtType': 'conscious.DataHolderThoughtNode, conscious',
     'x': 40,
     'y': 100,
     'Links': [
       {
-        'Id': 2,
+        'Id': secondId,
         'Option': 'First link',
-        '_validMoods': [0],
+        'ValidMoods': [0],
         'IsLocked': false,
+        'linkType': 'conscious.DataHolderThoughtLink, conscious',
         'NextNode': {
-          '_id': 3,
+          'Id': thirdId,
           'Thought': 'First node',
           'IsRoot': false,
+          'LinkageId': 0,
+          'thoughtType': 'conscious.DataHolderThoughtNode, conscious',
           'x': 80,
           'y': 100,
           'Links': [],
@@ -77,11 +86,12 @@ function CreateUpdateCharacter(props) {
           console.log(res.data)
           setId(res.data.Id);
           setName(res.data.Name);
-          setTexturePath(res.data.texture_path);
+          setTexturePath(res.data.texturePath);
           setCharacterType(res.data.characterType);
           setRotation(res.data.Rotation);
           setPositionX(res.data.PositionX);
           setPositionY(res.data.PositionY);
+          setDrawOrder(res.data.DrawOrder);
           setItemDependency(res.data.ItemDependency);
           setDialogUnlocked(res.data.DialogUnlocked);
           setPronoun(res.data.Pronoun);
@@ -124,6 +134,9 @@ function CreateUpdateCharacter(props) {
     }
     else if(e.target.name === 'PositionY') {
       setPositionY(e.target.value);
+    }
+    else if(e.target.name === 'DrawOrder') {
+      setDrawOrder(e.target.value);
     }
     else if(e.target.name === 'ItemDependency') {
       setItemDependency(e.target.value);
@@ -193,11 +206,12 @@ function CreateUpdateCharacter(props) {
       data = {
         Id: tempId,
         Name: Name,
-        texture_path: texturePath,
+        texturePath: texturePath,
         characterType: CharacterType,
         Rotation: Rotation,
         PositionX: PositionX,
         PositionY: PositionY,
+        DrawOrder: DrawOrder,
         ItemDependency: ItemDependency,
         DialogUnlocked: DialogUnlocked,
         Pronoun: Pronoun,
@@ -213,11 +227,12 @@ function CreateUpdateCharacter(props) {
       data = {
         Id: Id,
         Name: Name,
-        texture_path: texturePath,
+        texturePath: texturePath,
         characterType: CharacterType,
         Rotation: Rotation,
         PositionX: PositionX,
         PositionY: PositionY,
+        DrawOrder: DrawOrder,
         ItemDependency: ItemDependency,
         DialogUnlocked: DialogUnlocked,
         Pronoun: Pronoun,
@@ -247,7 +262,7 @@ function CreateUpdateCharacter(props) {
         setId(0);
         setName('');
         setTexturePath('');
-        setCharacterType('conscious.DataHolderCharacter');
+        setCharacterType('conscious.DataHolderCharacter, conscious');
         setRotation(0);
         setPositionX(0);
         setPositionY(0);
@@ -276,7 +291,7 @@ function CreateUpdateCharacter(props) {
 
   // Decide what extended fields should be added
   let extendedInputs = (<></>)
-  if(CharacterType === 'conscious.DataHolderPuzzleCharacter') {
+  if(CharacterType === 'conscious.DataHolderPuzzleCharacter, conscious') {
     extendedInputs = (
       <>
         <div className="row">
@@ -359,8 +374,8 @@ function CreateUpdateCharacter(props) {
                   <select className="form-select" name='CharacterType' 
                           onChange={onChange} value={CharacterType}
                           aria-label="Select character type">
-                    <option value="conscious.DataHolderCharacter">Character</option>
-                    <option value="conscious.DataHolderPuzzleCharacter">PuzzleCharacter</option>
+                    <option value="conscious.DataHolderCharacter, conscious">Character</option>
+                    <option value="conscious.DataHolderPuzzleCharacter, conscious">PuzzleCharacter</option>
                   </select>
                 </div>
               </div>
@@ -404,6 +419,21 @@ function CreateUpdateCharacter(props) {
                 value={PositionY}
                 onChange={onChange}
                 />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6 m-auto">
+              <div className='form-group'>
+                  <input
+                  type='number'
+                  placeholder='Draw Order'
+                  name='DrawOrder'
+                  className='form-control'
+                  value={DrawOrder}
+                  onChange={onChange}
+                  />
               </div>
             </div>
           </div>

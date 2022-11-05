@@ -5,6 +5,10 @@ const ThoughtNodeSchema = require('./Thought');
 
 const CharacterSchema = new mongoose.Schema({
     // Required Fields for all characters
+    characterType: {
+        type: String,
+        required: true,
+    },
     Id: {
         type: Number,
         required: true,
@@ -13,11 +17,7 @@ const CharacterSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    texture_path: {
-        type: String,
-        required: true,
-    },
-    characterType: {
+    texturePath: {
         type: String,
         required: true,
     },

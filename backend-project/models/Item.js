@@ -4,6 +4,10 @@ const ThoughtNodeSchema = require('./Thought');
 
 const ItemSchema = new mongoose.Schema({
     // Required Fields for all items
+    ItemType: { // is actually "$type"
+        type: String,
+        required: true,
+    },
     Id: {
         type: Number,
         required: true,
@@ -16,10 +20,6 @@ const ItemSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    ItemType: { // is actually "$type"
-        type: String,
-        required: true,
-    },
     Rotation: {
         type: Number,
         required: true,
@@ -29,6 +29,10 @@ const ItemSchema = new mongoose.Schema({
         required: true,
     },
     PositionY: {
+        type: Number,
+        required: true,
+    },
+    DrawOrder: {
         type: Number,
         required: true,
     },
@@ -70,6 +74,34 @@ const ItemSchema = new mongoose.Schema({
         type: CombineItemSchema,
         required: false,
     },
+
+    // Door properties
+    RoomId: { // is an Object ID
+        type: Number,
+        required: false,
+    },
+    DoorId: { // is an Object ID
+        type: Number,
+        required: false,
+    },
+    IsUnlocked: { // is an Object ID
+        type: Boolean,
+        required: false,
+    },
+    InitPlayerPosX: {
+        type: Number,
+        required: false,
+    },
+    InitPlayerPosY: {
+        type: Number,
+        required: false,
+    },
+    CloseTexturePath: {
+        type: String,
+        required: false,
+    },
+
+    // Thought data structure
     Thought: {
         type: ThoughtNodeSchema,
         required: false,

@@ -23,7 +23,7 @@ const verbOptions = [
   { label: "WakeUp", value: 9 },
 ];
 
-const defaultSequence = {'_currentIndex': 1, 'SequenceFinished': false, '_commands': []};
+const defaultSequence = {'Commands': []};
 
 // TODO: Add fields linkType, Verb, MoodChange, UnlockId, Animation
 function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink, addCmd, deleteCmd}) {
@@ -32,13 +32,13 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
     }
     else {
       // set validMoods data into right format for multiselect
-      let validMoods = moodOptions.filter(elem => { return data._validMoods.includes(elem.value) });
+      let validMoods = moodOptions.filter(elem => { return data.ValidMoods.includes(elem.value) });
       let finalLinkInputData = (<></>);
       if(data.IsFinal) {
         let moodChange = moodOptions.filter(elem => { return data.MoodChange === elem.value });
         let verb = verbOptions.filter(elem => { return data.Verb === elem.value });
-        if(!data.hasOwnProperty('ThoughtSequence')) {
-          data.ThoughtSequence = defaultSequence;
+        if(!data.hasOwnProperty('sequence')) {
+          data.sequence = defaultSequence;
         }
         finalLinkInputData = (
           <>
@@ -68,8 +68,29 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
               </div>
             </div>
 
+            <div className="col-md-4 m-auto">
+              <CheckboxField
+                checkLabel='Is Success Edge'
+                name='IsSuccessEdge'
+                value={data.IsSuccessEdge}
+                onChange={onChange}
+              />
+            </div>
+
+            <div className="col-md-4 m-auto">
+              <input 
+                type="number"
+                id='UnlockId'
+                placeholder='Unlock Id'
+                className='form-control'
+                name='UnlockId'
+                value={data.UnlockId}
+                onChange={onChange}
+              />
+            </div>
+
             <div className="col-md-12 m-auto">
-              <SequenceCard sequence={data.ThoughtSequence} add={addCmd} delete={deleteCmd} onChange={onChange} />
+              <SequenceCard sequence={data.sequence} add={addCmd} delete={deleteCmd} onChange={onChange} />
             </div>
           </>
         );
@@ -94,7 +115,7 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
             <div className='SelectContainer'>
               {/* <pre>{JSON.stringify(validMoods)}</pre>  */}
               <Select
-                name='_validMoods'
+                name='ValidMoods'
                 placeholder='Valid Moods'
                 // labelledBy='Select valid moods for option'
                 value={validMoods}
