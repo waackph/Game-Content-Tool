@@ -109,14 +109,14 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
       }
     }
     if(['CommandType',
-             '_destinationX', '_destinationY', 
+             'DestinationX', 'DestinationY', 
              'MillisecondsToWait', 'CmdSoundFilePath',
              'DoorId'].includes(e.target.name)) {
-      let cmds = [...linkInputData.ThoughtSequence.Commands];
+      let cmds = [...linkInputData.sequence.Commands];
       cmds[e.target.dataset.id][e.target.name] = e.target.value;
       setLinkInputData({
         ...linkInputData,
-        'ThoughtSequence': {...linkInputData.ThoughtSequence, Commands: cmds}
+        'sequence': {...linkInputData.sequence, Commands: cmds}
       });
     }
     else {
@@ -128,13 +128,13 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   }
 
   const addSequenceCommand = (e) => {
-    e.preventDefault();
-    const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
+    // e.preventDefault();
+    const defaultCommand = {index: Math.random(), DestinationX: 0, DestinationY: 0, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
     setLinkInputData({
       ...linkInputData,
-      'ThoughtSequence': {
-        ...linkInputData.ThoughtSequence, 
-        Commands: [...linkInputData.ThoughtSequence.Commands, defaultCommand]
+      'sequence': {
+        ...linkInputData.sequence, 
+        Commands: [...linkInputData.sequence.Commands, defaultCommand]
       }
     });
   }
@@ -143,9 +143,9 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
     e.preventDefault();
     setLinkInputData({
       ...linkInputData,
-      'ThoughtSequence': {
-        ...linkInputData.ThoughtSequence, 
-        Commands: linkInputData.ThoughtSequence.Commands.filter(val => val !== cmd)
+      'sequence': {
+        ...linkInputData.sequence, 
+        Commands: linkInputData.sequence.Commands.filter(val => val !== cmd)
       }
     });
   }

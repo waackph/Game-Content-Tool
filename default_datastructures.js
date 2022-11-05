@@ -64,7 +64,7 @@ const defaultCombineItem = {'Name': '', 'texturePath': '', 'ItemType': 'consciou
 
 const defaultSequence = {'Commands': []};
 
-const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
+const defaultCommand = {index: Math.random(), DestinationX: 0, DestinationY: 0, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
 
 const defaultNode = {'_dialogLine': '', '_edges': []};
 

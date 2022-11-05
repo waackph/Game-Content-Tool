@@ -74,8 +74,14 @@ const ItemSchema = new mongoose.Schema({
         type: CombineItemSchema,
         required: false,
     },
+
+    // Door properties
     RoomId: { // is an Object ID
         type: Number,
+        required: false,
+    },
+    IsUnlocked: { // is an Object ID
+        type: Boolean,
         required: false,
     },
     InitPlayerPosX: {
@@ -90,6 +96,8 @@ const ItemSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+
+    // Thought data structure
     Thought: {
         type: ThoughtNodeSchema,
         required: false,

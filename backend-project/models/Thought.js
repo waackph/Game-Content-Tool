@@ -62,7 +62,7 @@ const ThoughtLinkSchema = new mongoose.Schema({
         type: AnimationSchema,
         required: false,
     },
-    ThoughtSequence: {
+    sequence: {
         type: SequenceSchema,
         required: false,
     }
@@ -86,7 +86,7 @@ const ThoughtNodeSchema = new mongoose.Schema({
         required: false,
     },
     ThingId: { // is an Object ID
-        type: String,
+        type: Number,
         required: false,
     },
     LinkageId: { // is an Object ID

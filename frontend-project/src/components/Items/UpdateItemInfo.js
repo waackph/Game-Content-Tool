@@ -29,7 +29,8 @@ function UpdateItemInfo(props) {
   const [UseWith, setUseWith] = useState(false);
   const [ItemDependency, setItemDependency] = useState(-1);
   // Door variables
-  const [RoomId, setRoomId] = useState(-1);
+  const [RoomId, setRoomId] = useState(0);
+  const [IsUnlocked, setIsUnlocked] = useState(false);
   const [InitPlayerPosX, setInitPlayerPosX] = useState(-1);
   const [InitPlayerPosY, setInitPlayerPosY] = useState(-1);
   const [CloseTexturePath, setCloseTexturePath] = useState('');
@@ -137,6 +138,7 @@ function UpdateItemInfo(props) {
           setItemDependency(res.data.ItemDependency);
           setCombineItem(res.data.CombineItem);
           setRoomId(res.data.RoomId);
+          setIsUnlocked(res.data.IsUnlocked);
           setInitPlayerPosX(res.data.InitPlayerPosX);
           setInitPlayerPosY(res.data.InitPlayerPosY);
           setCloseTexturePath(res.data.CloseTexturePath);
@@ -219,6 +221,9 @@ function UpdateItemInfo(props) {
         }
         else if(e.target.name === 'RoomId') {
           setRoomId(e.target.value);
+        }
+        else if(e.target.name === 'IsUnlocked') {
+          setIsUnlocked(!IsUnlocked);
         }
         else if(e.target.name === 'InitPlayerPosX') {
           setInitPlayerPosX(e.target.value);
@@ -313,6 +318,7 @@ function UpdateItemInfo(props) {
           UseWith: UseWith,
           ItemDependency: ItemDependency,
           RoomId: RoomId,
+          IsUnlocked: IsUnlocked,
           InitPlayerPosX: InitPlayerPosX,
           InitPlayerPosY: InitPlayerPosY,
           CloseTexturePath: CloseTexturePath,
@@ -348,7 +354,8 @@ function UpdateItemInfo(props) {
           // setUseWith(false);
           // setItemDependency('');
           // setCombineItem('');
-          // setRoomId(-1);
+          // setRoomId(0);
+          // setIsUnlocked(false);
           // setInitPlayerPosX(0);
           // setInitPlayerPosY(0);
           // setCloseTexturePath('');  
@@ -536,6 +543,17 @@ function UpdateItemInfo(props) {
               </select>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className='row'>
+        <div className="col-md-12 m-auto">
+            <CheckboxField
+            checkLabel='Is unlocked'
+            value={IsUnlocked}
+            name='IsUnlocked'
+            onChange={onChange} 
+            />
         </div>
       </div>
     </>

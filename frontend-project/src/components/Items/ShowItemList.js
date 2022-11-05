@@ -69,7 +69,7 @@ function ShowItemList(props) {
             setLightMapPath(e.target.value);
         }
         else if(['CommandType',
-        '_destinationX', '_destinationY', 
+        'DestinationX', 'DestinationY', 
         'MillisecondsToWait', 'CmdSoundFilePath',
         'DoorId'].includes(e.target.name)) {
             let cmds = [...EntrySequence.Commands];
@@ -85,7 +85,7 @@ function ShowItemList(props) {
         if(e) {
             e.preventDefault();
         }
-        const defaultCommand = {index: Math.random(), _destinationX: 0, _destinationY: 0, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
+        const defaultCommand = {index: Math.random(), DestinationX: 0, DestinationY: 0, CommandType: 'conscious.DataHolderWalkCommand, conscious'}
         setEntrySequence({
             ...EntrySequence, 
             Commands: [...EntrySequence.Commands, defaultCommand]

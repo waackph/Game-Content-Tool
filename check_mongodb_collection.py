@@ -36,8 +36,8 @@ def modify_dict(obj):
         # Remove default data structures
         if 'Thought' in obj.keys() and type(obj['Thought']) == dict and is_default_thought(obj['Thought']):
             obj['Thought'] = None
-        if 'ThoughtSequence' in obj.keys() and not obj['ThoughtSequence'].get('Commands'):
-            obj['ThoughtSequence'] = None
+        if 'sequence' in obj.keys() and not obj['sequence'].get('Commands'):
+            obj['sequence'] = None
         if 'EntrySequence' in obj.keys() and not obj['EntrySequence'].get('Commands'):
             obj['EntrySequence'] = None
         if 'CombineItem' in obj.keys() and not obj['CombineItem'].get('Name'):

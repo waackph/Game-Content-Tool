@@ -37,8 +37,8 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
       if(data.IsFinal) {
         let moodChange = moodOptions.filter(elem => { return data.MoodChange === elem.value });
         let verb = verbOptions.filter(elem => { return data.Verb === elem.value });
-        if(!data.hasOwnProperty('ThoughtSequence')) {
-          data.ThoughtSequence = defaultSequence;
+        if(!data.hasOwnProperty('sequence')) {
+          data.sequence = defaultSequence;
         }
         finalLinkInputData = (
           <>
@@ -90,7 +90,7 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
             </div>
 
             <div className="col-md-12 m-auto">
-              <SequenceCard sequence={data.ThoughtSequence} add={addCmd} delete={deleteCmd} onChange={onChange} />
+              <SequenceCard sequence={data.sequence} add={addCmd} delete={deleteCmd} onChange={onChange} />
             </div>
           </>
         );

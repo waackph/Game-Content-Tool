@@ -6,11 +6,11 @@ const CommandSchema = new mongoose.Schema({
         required: true,
     },
     // Walk
-    _destinationX: {
+    DestinationX: {
         type: Number,
         required: false,
     },
-    _destinationY: {
+    DestinationY: {
         type: Number,
         required: false,
     },

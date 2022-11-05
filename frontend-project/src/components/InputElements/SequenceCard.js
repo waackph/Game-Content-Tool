@@ -6,8 +6,8 @@ const SequenceCard = (props) => {
 
     // Create Commands list
     let commands = sequence.Commands.map((val, idx) => {
-        let _destinationX = `_destinationX-${val.index}`;
-        let _destinationY = `_destinationY-${val.index}`;
+        let DestinationX = `DestinationX-${val.index}`;
+        let DestinationY = `DestinationY-${val.index}`;
         let MillisecondsToWait = `MillisecondsToWait-${val.index}`;
         let CmdSoundFilePath = `CmdSoundFilePath-${val.index}`;
         let DoorId = `DoorId-${val.index}`;
@@ -34,12 +34,12 @@ const SequenceCard = (props) => {
             walkCmdVars = (
                 <>
                     <div className="col-2">
-                        <label>_destinationX</label> <br />
-                        <input className="seqInput" type="number" placeholder="_destinationX" name="_destinationX" value={val._destinationX} data-id={idx} id={_destinationX} onChange={(e) => props.onChange(e)} />
+                        <label>DestinationX</label> <br />
+                        <input className="seqInput" type="number" placeholder="DestinationX" name="DestinationX" value={val.DestinationX} data-id={idx} id={DestinationX} onChange={(e) => props.onChange(e)} />
                     </div>
                     <div className="col-2">
-                        <label>_destinationY</label> <br />
-                        <input className="seqInput" type="number" placeholder="_destinationY" name="_destinationY" value={val._destinationY} data-id={idx} id={_destinationY} onChange={(e) => props.onChange(e)} />
+                        <label>DestinationY</label> <br />
+                        <input className="seqInput" type="number" placeholder="DestinationY" name="DestinationY" value={val.DestinationY} data-id={idx} id={DestinationY} onChange={(e) => props.onChange(e)} />
                     </div>
                 </>
             );
