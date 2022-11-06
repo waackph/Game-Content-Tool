@@ -1,4 +1,8 @@
-# Quickstart
+# Conscious Game Engine Content Tool
+
+The conscious content tool is a tool to create content in the form of a data structure that can be imported by the conscious game engine to create thought-driven point-and-click adventure games. The game engine can be found as a [GitHub repository](https://github.com/waackph/conscious-game) and a prototype game created with the conscious game engine and the conscious content tool can be seen on the [itch.io-project page](https://waackph.itch.io/getting-up-is-hard).
+
+## Quickstart
 
 After running setup.
 
@@ -8,10 +12,23 @@ Start frontend (folder frontend-project): `npm start`
 
 Print/export mongodb (in python): `python3 check_mongodb_collection.py <collection_name> <print||export>`
 
+## General explanation of conscious game engine objects
 
-# Setup
+The conscious game engine has 3 different types of general objects in the world:
+1. rooms: A closed part of the game. Rooms are connected by door-items. A room has items and characters and a background.
+2. items: An item is an object in a room that can be interacted with in some way. 
+3. characters: A character is something that can at least say something, but can also run a dialog with the protagonist.
 
-## react
+Note, that items and characters are things. Things in its abstract form are not much more than sprites represented in the game world. Hence, a background of a room is a thing. Everything that is more important in the world and has more functionality in a room is either an item or character.
+Also, both, items and characters, must have a Thought-Graph, that leads to some interaction.
+
+See more about the content-tool on the itch.io-project page [here](https://waackph.itch.io/conscious-content-tool).
+
+An examplary created data structure is `conscious_content_data_mod.json`. It contains the content of the prototype game [getting up is hard](https://waackph.itch.io/getting-up-is-hard).
+
+## Setup
+
+### react
 
 (Source of code: https://reactjs.org/tutorial/tutorial.html)
 
@@ -28,7 +45,7 @@ If host error, add local variable: HOST=localhost
 
 Start using `npm start` Or: `yarn start`
 
-## Express & NodeJS
+### Express & NodeJS
 
 (Source: https://blog.logrocket.com/mern-stack-tutorial/)
 
@@ -51,87 +68,6 @@ To interact with react frontend and dont vandalate CORS policy `npm install cors
 
 Execute express application: `npm run app`
 
-## MongoDB
+### MongoDB
 
-`docker run -d --name conscious_db -p 127.0.0.1:5012:27017 -v /home/phil/Desktop/stuff/projects_game/06_Game_Implementation/Game-Content-Tool/backend-project/conscious_db_data:/data/db -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=rootpw mongo:5.0.5`
-
-# Syntax and Rules
-
-- To add state, add a constructor to a component class with this.state which is a dictionary holding changable variables
-
------------
-
-Begin auto-generated readme
-
------------
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Docker instance of mongo db: `docker run -d --name conscious_db -p 127.0.0.1:5012:27017 -v /home/phil/Desktop/stuff/projects_game/06_Game_Implementation/Game-Content-Tool/backend-project/conscious_db_data:/data/db -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=rootpw mongo:5.0.5`
