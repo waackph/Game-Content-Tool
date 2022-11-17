@@ -3,6 +3,13 @@ from pymongo import MongoClient
 from bson import json_util
 import json
 
+###
+# This script can either print the data of a given collection of the MongoDB (parameter 'print')
+# or export the data as a JSON file in a form that is valid for the conscious game engine
+# (parameter 'export').
+###
+
+# Method to get a given collection from the mongodb
 def get_collection_content(collection):
     CONNECTION_STRING = "mongodb://root:rootpw@127.0.0.1:5012"
     client = MongoClient(CONNECTION_STRING)
@@ -13,11 +20,13 @@ def get_collection_content(collection):
     #     print(x)
     #     print()
 
+# Helper method to check if a Thought-Object is a default input and therefore can be removed.
 def is_default_thought(thought):
     return (len(thought['Links']) > 0 
             and thought['Links'][0]['Option'] == "First link"
             and len(thought['Links'][0]['NextNode']['Links']) == 0)
 
+# Modify a given object to fit the data structure definition of the conscious game engine.
 def modify_dict(obj):
     # If obj is a list of dict, then call the function for each dict
     if type(obj) is list and len(obj) > 0 and type(obj[0]) is dict:
@@ -66,36 +75,8 @@ def modify_dict(obj):
                 obj[k] = modify_dict(obj[k])
     return obj
 
+# Prepare the JSON file to export. This must be a valid format for the conscious game engine.
 def prepare_json(l):
-    # General stuff to change in the GCT
-    # [x] Types: use following pattern - "conscious.[Objectname], conscious"
-    # [x] [Room] Combine "Items" and "Characters" List into "Things" List
-    # [x] [Room] remove "__v"
-    # [x] [Room] Add fields SoundFilePath, LightMapPath
-    # [x] [Thing] add DrawOrder field
-    # [x] [Door] add fields InitPlayerPosX, InitPlayerPosY, CloseTexturePath, RoomId
-    # [x] [ThoughtNode] rename _id to Id, add field LinkageId
-    # [x] [ThoughtLink] ValidMoods must have value 0 as default (no empty list)
-    # [x] [ThoughtNode/ThoughtLink] Add type info (DataHolderX)
-    # [x] [Thought] default thought data structure must have unique IDs (currently its just hard coded as 1, 2, ...)
-    # [x] [ThoughtNode/Link] UI: Clicking different nodes/edges leads to "too much recursion" error 
-    #   -> This has happened because of the changed data model, leading to Ids being undefined
-    # [x] [TreeStructure] node/link: remove x, y
-    # [x] [TreeStructure] link: remove _id, Id (removed in post processing script)
-    # [x] [sequence] remove field _currentIndex and SequenceFinished; 
-    # [x] [sequence] rename _commands -> Commands
-    # [x] [sequence] debug for room views
-    # [x] [Command] only use valid fields for the respective command type
-    # [x] [Command] Add missing commands with types
-    # [x] [Defaults] If on submit a default data structure is still the same, then do not submit it to the backend or submit it as null
-    # [x] [Changes] things that needed to be changed to be similar to Game Data Structure:
-        # /- texturePath: "textures/..." -> "Backgrounds/..."
-        # /- Thought: null stead of default thought data structure
-        # /- Add correct song file name: Red_Curtains
-        # /- Most important: $type always needs to be on first position of keys in an object
-        # /- Defaults: also remove defautSequence, defaultCommand, defaultNode, defaultLink, defaultCombineItem, defaultCombineThought
-    # [x] [ThoughtLink] Add IsSuccessEdge and UnlockId (edge to be unlocked - can be any thoughtlink)
-    # [x] [ThoughtGraph] Quickfix: Can't remove nodes and edges... needs to be fixed
     l_dict = {}
     for i, d in enumerate(l):
         # remove invalid properties from room
@@ -114,6 +95,8 @@ def prepare_json(l):
         l_dict[str(i+2)] = d
     return l_dict
 
+# The main method checks the given parameter and prints or exports the data from the mongodb 
+# given a valid parameter ('print' or 'export')
 if __name__ == "__main__":
     l = get_collection_content(sys.argv[1])
     if sys.argv[2] == 'print':
