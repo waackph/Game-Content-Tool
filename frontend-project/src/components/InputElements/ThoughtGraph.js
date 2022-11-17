@@ -3,10 +3,16 @@ import * as d3 from "d3";
 import NodeInput from "./NodeInput";
 import LinkInput from "./LinkInput";
 import '../../App.css';
-import { link } from "d3";
 // Using this post as a guideline: https://ncoughlin.com/posts/d3-react/
 // This post is better: https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
 
+// ***
+// The Thought Graph contains the rendering and input logic of the graph 
+// that represents a Thought tree (which is more precisely a graph).
+// ***
+
+// Given the thought data structure, create nodes as circles and edges as lines to render the thought graph.
+// The graph is build recursively from the data structure.
 function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections, depth) {
   Array.prototype.forEach.call(links, link => {
     // Store connection
@@ -30,6 +36,7 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
   });
 }
 
+// The code sets up the events and inputs to render the given thought graph data and add new nodes and edges.
 const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   const defaultNode = {'IsRoot': false, 'LinkageId': 0, 'thoughtType': 'conscious.DataHolderThoughtNode, conscious'};
   const defaultLink = {'IsLocked': false, 'ValidMoods': [0], 'linkType': 'conscious.DataHolderThoughtLink, conscious'};

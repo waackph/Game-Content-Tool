@@ -3,6 +3,11 @@ import CheckboxField from "./CheckboxField";
 import Select from 'react-select';
 import SequenceCard from "../InputElements/SequenceCard";
 
+// ***
+// The Link Input component is shown when clicked on a link in the Thought Graph. 
+// It is used to store data in a link.
+// ***
+
 const moodOptions = [
   { label: "None", value: 0 },
   { label: "Depressed", value: 1 },
@@ -25,7 +30,6 @@ const verbOptions = [
 
 const defaultSequence = {'Commands': []};
 
-// TODO: Add fields linkType, Verb, MoodChange, UnlockId, Animation
 function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink, addCmd, deleteCmd}) {
     if (Object.keys(data).length === 0) {
         return(<></>);

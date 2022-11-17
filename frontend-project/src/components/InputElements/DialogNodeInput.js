@@ -1,3 +1,7 @@
+// ***
+// The Node Input component is shown when clicked on a Node in the Dialog Graph. 
+// It is used to store data in a Node.
+// ***
 
 function NodeInput({data, onChange, assignDataToNode, deleteNode}) {
     if (Object.keys(data).length === 0) {

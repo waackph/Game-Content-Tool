@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const DialogNodeSchema = require('./DialogTree');
 const ThoughtNodeSchema = require('./Thought');
 
+// ***
+// The data base schema of a the Character and PuzzleCharacter objects
+// ***
+
 const CharacterSchema = new mongoose.Schema({
     // Required Fields for all characters
     characterType: {

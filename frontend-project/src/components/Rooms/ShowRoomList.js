@@ -4,6 +4,10 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RoomCard from './RoomCard';
 
+// ***
+// A view that shows all defined Rooms as Card elements.
+// ***
+
 function ShowRoomList (props) {
 
     const [Rooms, setRooms] = useState([]);

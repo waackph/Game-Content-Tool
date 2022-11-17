@@ -3,6 +3,10 @@ const ItemSchema = require('./Item')
 const CharacterSchema = require('./Character')
 const SequenceSchema = require('./Sequence')
 
+// ***
+// The data base schema of a Room object
+// ***
+
 const RoomSchema = new mongoose.Schema({
     Name: {
         type: String,

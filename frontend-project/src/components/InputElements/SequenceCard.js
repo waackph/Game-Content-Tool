@@ -1,6 +1,11 @@
 import React from "react";
 import '../../App.css';
 
+// ***
+// The Sequence Card is an input component to create a sequence of commands 
+// the player protagonist must follow in a sequence state.
+// ***
+
 const SequenceCard = (props) => {
     const sequence = props.sequence;
 

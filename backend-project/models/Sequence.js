@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+// ***
+// The data base schema of a Sequence object. It contains the Sequence and its Command schemas.
+// ***
+
 const CommandSchema = new mongoose.Schema({
     CommandType: {
         type: String,

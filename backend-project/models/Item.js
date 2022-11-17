@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const CombineItemSchema = require('./CombineItem');
 const ThoughtNodeSchema = require('./Thought');
 
+// ***
+// The data base schema of an Item object. It represents all possible Item subclasses.
+// ***
+
 const ItemSchema = new mongoose.Schema({
     // Required Fields for all items
     ItemType: { // is actually "$type"

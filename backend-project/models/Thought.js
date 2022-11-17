@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const AnimationSchema = require('./Animation');
 const SequenceSchema = require('./Sequence')
 
+// ***
+// The data base schema of a Thought Tree. It contains a schema for the Link and the Node of the Tree.
+// ***
+
 const ThoughtLinkSchema = new mongoose.Schema({
     linkType: {
         type: String,

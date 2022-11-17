@@ -4,6 +4,10 @@ import '../../App.css';
 import SequenceCard from '../InputElements/SequenceCard';
 import axios from 'axios';
 
+// ***
+// The input view to create a new Room object.
+// ***
+
 function CreateRoom (props) {
 
   const [Name, setName] = useState('');

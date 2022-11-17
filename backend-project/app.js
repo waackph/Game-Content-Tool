@@ -1,11 +1,14 @@
-// app.js
-
 const express = require('express');
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 // routes
 const routes = require('./routes/api/views');
+
+// ***
+// The script starts the backend application. It instatiates the express.js backend engine, 
+// connects to MongoDB and initializes the Routes.
+// ***
 
 const app = express();
 

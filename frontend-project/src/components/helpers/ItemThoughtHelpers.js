@@ -1,4 +1,9 @@
+// ***
+// A script with functions that help to manage the tree data structures for Thought Trees and Dialog Trees
+// ***
 
+// Given a SVG element with a Thought Graph and the stored connections
+// the function builds the data structure to be stored from the graph.
 export function addLinksToThoughtData(svg, connections, parentNodeId) {
   let links = [];
 
@@ -43,6 +48,8 @@ export function addLinksToThoughtData(svg, connections, parentNodeId) {
   return links;
 }
 
+// A recursive function that simply adds the ThingId 
+// as a field to each Node data structure of the Thought Tree. 
 export function addItemIdToThoughtNodes(nestedThought, itemId) {
   nestedThought['ThingId'] = itemId;
   nestedThought.Links.forEach(elem => {
@@ -51,6 +58,8 @@ export function addItemIdToThoughtNodes(nestedThought, itemId) {
   return nestedThought;
 }
 
+// Given a SVG element with a Dialog Graph and the stored connections
+// the function builds the data structure to be stored from the graph.
 export function createDialogTreeStructure(svg, connections) {
   let treeStructure = [];
 

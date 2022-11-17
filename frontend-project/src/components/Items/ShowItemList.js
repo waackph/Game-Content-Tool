@@ -6,6 +6,11 @@ import ItemCard from './ItemCard'
 import CharacterCard from '../Characters/CharacterCard'
 import SequenceCard from '../InputElements/SequenceCard';
 
+// ***
+// A view that has a given Rooms data and input mask to update Room data
+// as well as cards that show the Items and Characters as Card elements, that are stored in the Room.
+// ***
+
 function ShowItemList(props) {
 
     const [room, setRoom] = useState([]);

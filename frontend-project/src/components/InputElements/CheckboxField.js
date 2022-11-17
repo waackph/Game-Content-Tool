@@ -1,3 +1,7 @@
+// ***
+// A checkbox component with a label and the checkbox itself.
+// ***
+
 function CheckboxField({checkLabel, value, name, onChange}) {
     return (
       <div className='form-group'>

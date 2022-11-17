@@ -2,6 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import '../../App.css';
 
+// ***
+// A card element used for the ShowItemList view to list all characters defined.
+// ***
+
 const CharacterCard = (props) => {
     const character = props.character;
     const room_id = props.room_id; 

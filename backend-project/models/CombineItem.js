@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const ThoughtNodeSchema = require('./Thought');
 
+// ***
+// The data base schema of a CombineItem object. It is used for the Item schema to contain another Item
+// if the modelled Item is a CombinedItem.
+// ***
+
 const CombineItemSchema = new mongoose.Schema({
     // Required Fields for all items
     ItemType: { // is actually "$type"

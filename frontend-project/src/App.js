@@ -13,6 +13,12 @@ import UpdateItemInfo from './components/Items/UpdateItemInfo';
 import CreateUpdateCharacter from "./components/Characters/CreateUpdateCharacter";
 import ShowCharacter from "./components/Characters/ShowCharacter";
 
+// ***
+// The class App is the basic application definition 
+// and contains all definitions to the different Routes 
+// and the components to be called for each Route (can be found in the components folder).
+// ***
+
 class App extends Component {
     render () {
         return(

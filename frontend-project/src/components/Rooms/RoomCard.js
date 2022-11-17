@@ -2,6 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import '../../App.css';
 
+// ***
+// A card element used for the ShowRoomList view to list each Room defined as a card element.
+// ***
+
 const RoomCard = (props) => {
     const room = props.room;
 

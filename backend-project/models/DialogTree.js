@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+// ***
+// The data base schema of a Dialog Tree. It contains a schema for the Edge and the Node of the Tree.
+// ***
+
 const DialogEdgeSchema = new mongoose.Schema({
     Id: {
         type: Number,

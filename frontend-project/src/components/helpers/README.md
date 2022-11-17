@@ -1,0 +1,1 @@
+The folder contains helper scripts. The scripts are mostly relevant to the Graph data that is generated as SVG graphs and need to be transformed into a defined data structure for the conscious game engine.

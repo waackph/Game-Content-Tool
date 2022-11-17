@@ -1,3 +1,9 @@
+// ***
+// The script defines all Routes and the backend operations for each Route
+// It returns a JSON data structure with the of the processed query.
+// This is in a next step sent to the frontend application to be displayed accordingly. 
+// ***
+
 const express = require('express');
 const router = express.Router();
 
@@ -8,7 +14,7 @@ const Room = require('../../models/Room');
 // @route GET api/test
 // @description tests views route
 // @access Public
-router.get('/test', (req, res) => res.send('book route testing!'));
+router.get('/test', (req, res) => res.send('Route testing!'));
 
 // @route GET api/items
 // @description Get all items
@@ -148,7 +154,7 @@ router.put('/items/:room_id/:item_id', (req, res) => {
     .catch(err => res.status(400).json({ error: 'Unable to update item' }));
 });
 
-// @route GET api/books/:id
+// @route GET api/items/:id
 // @description Delete item by id
 // @access Public
 router.delete('/items/:item_id', (req, res) => {
@@ -219,7 +225,7 @@ router.put('/characters/:room_id/:character_id', (req, res) => {
     .catch(err => res.status(400).json({ error: 'Unable to update character' }));
 });
 
-// @route GET api/books/:id
+// @route GET api/characters/:id
 // @description Delete character by id
 // @access Public
 router.delete('/characters/:character_id', (req, res) => {

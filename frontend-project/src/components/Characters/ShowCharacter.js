@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
+// ***
+// The view to display data of a given Character object.
+// ***
+
 function ShowCharacter(props) {
   const [character, setCharacter] = useState({});
   let { room_id, character_id } = useParams();

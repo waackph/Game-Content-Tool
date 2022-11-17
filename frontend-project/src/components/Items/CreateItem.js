@@ -8,6 +8,10 @@ import ThoughtGraph from '../InputElements/ThoughtGraph';
 import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../helpers/ItemThoughtHelpers';
 import { createRandomId } from '../helpers/GeneralHelpers';
 
+// ***
+// The input view to create an Item object.
+// ***
+
 function CreateItem (props) {
 
   const [Name, setName] = useState('');

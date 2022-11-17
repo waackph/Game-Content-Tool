@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const config = require('config');
 const db = config.get('mongoURI');
 
+// ***
+// Script to connect with the MongoDB with default credentials
+// ***
+
 const connectDB = async () => {
     try {
         await mongoose.connect(

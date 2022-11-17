@@ -8,6 +8,10 @@ import { addLinksToThoughtData, addItemIdToThoughtNodes, createDialogTreeStructu
 import DialogGraph from '../InputElements/DialogGraph';
 import { createRandomId } from '../helpers/GeneralHelpers';
 
+// ***
+// The input view to create or update a Character object.
+// ***
+
 function CreateUpdateCharacter(props) {
   const [Id, setId] = useState(0);
   const [Name, setName] = useState('');
@@ -58,16 +62,7 @@ function CreateUpdateCharacter(props) {
 
   let thoughtConnections = [];
   let exportedThoughts = {};
-
-  // TODO: Add Dialog Graph
-  // Structure:
-    // TreeStructure: [
-    //     nodes: {
-    //         node: { edges: [ edge: {nextNodeId} ] }
-    //         # -> Last node has an edge with nextNodeId=0
-    //     }
-    // ]
-  // => A list of nodes, where a node contains the following edges. Each edge references the next node by its ID
+  
   const [TreeStructure, setTreeStructure] = useState([]);
   let dialogConnections = [];
   let exportedDialog = {};

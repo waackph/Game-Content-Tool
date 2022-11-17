@@ -8,6 +8,10 @@ import ThoughtGraph from '../InputElements/ThoughtGraph';
 import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../helpers/ItemThoughtHelpers';
 import { createRandomId } from '../helpers/GeneralHelpers';
 
+// ***
+// The input view to update a given Item object.
+// ***
+
 function UpdateItemInfo(props) {
 
   const [Id, setId] = useState(0);

@@ -4,6 +4,9 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import '../../App.css';
 import axios from "axios";
 
+// ***
+// The view to display data of a given Item object.
+// ***
 
 function ShowItemDetails(props) {
 

@@ -3,9 +3,13 @@ import * as d3 from "d3";
 import NodeInput from "./DialogNodeInput";
 import LinkInput from "./DialogLinkInput";
 import '../../App.css';
-// Using this post as a guideline: https://ncoughlin.com/posts/d3-react/
-// This post is better: https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
 
+// ***
+// The Dialog Graph contains the rendering and input logic of the graph 
+// that represents a Dialog tree (which is more precisely a graph).
+// ***
+
+// Get a node from the graph by the given nodeId
 function getNodeById(nodeId, nodes) {
   const thisNode = nodes.filter(node => node.Id === nodeId);
   if (thisNode) {
@@ -16,6 +20,8 @@ function getNodeById(nodeId, nodes) {
   }
 }
 
+// Given the dialog data structure, create nodes as circles and edges as lines to render the dialog graph.
+// The graph is build by reference using node Ids from the data structure.
 function createGraphFromLinkedObject(canvas, nodes, connections) {
   Array.prototype.forEach.call(nodes, node => {
     // if not already processed - create circle for node
@@ -47,6 +53,7 @@ function createGraphFromLinkedObject(canvas, nodes, connections) {
   });
 }
 
+// The code sets up the events and inputs to render the given dialog graph data and add new nodes and edges.
 const DialogGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
   const defaultNode = {'_dialogLine': '', '_edges': []};
   const defaultLink = {'_dialogLine': '', 'MoodDependence': 0, 'isFinalDialogOption': false};

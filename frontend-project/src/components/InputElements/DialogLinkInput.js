@@ -8,6 +8,11 @@ const moodOptions = [
   { label: "Manic", value: 3 },
 ];
 
+// ***
+// The Link Input component is shown when clicked on a link in the Dialog Graph. 
+// It is used to store data in a link.
+// ***
+
 function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink}) {
     if (Object.keys(data).length === 0) {
         return(<></>);
