@@ -9,6 +9,7 @@ import json
 # (parameter 'export').
 ###
 
+
 # Method to get a given collection from the mongodb
 def get_collection_content(collection):
     CONNECTION_STRING = "mongodb://root:rootpw@127.0.0.1:5012"
@@ -20,11 +21,13 @@ def get_collection_content(collection):
     #     print(x)
     #     print()
 
+
 # Helper method to check if a Thought-Object is a default input and therefore can be removed.
 def is_default_thought(thought):
-    return (len(thought['Links']) > 0 
+    return (len(thought['Links']) > 0
             and thought['Links'][0]['Option'] == "First link"
             and len(thought['Links'][0]['NextNode']['Links']) == 0)
+
 
 # Modify a given object to fit the data structure definition of the conscious game engine.
 def modify_dict(obj):
@@ -75,10 +78,11 @@ def modify_dict(obj):
                 obj[k] = modify_dict(obj[k])
     return obj
 
+
 # Prepare the JSON file to export. This must be a valid format for the conscious game engine.
-def prepare_json(l):
+def prepare_json(li):
     l_dict = {}
-    for i, d in enumerate(l):
+    for i, d in enumerate(li):
         # remove invalid properties from room
         del d['Name']
         del d['texturePath']
@@ -95,14 +99,15 @@ def prepare_json(l):
         l_dict[str(i+2)] = d
     return l_dict
 
-# The main method checks the given parameter and prints or exports the data from the mongodb 
+
+# The main method checks the given parameter and prints or exports the data from the mongodb
 # given a valid parameter ('print' or 'export')
 if __name__ == "__main__":
-    l = get_collection_content(sys.argv[1])
+    li = get_collection_content(sys.argv[1])
     if sys.argv[2] == 'print':
-        print(json.loads(json_util.dumps(l)))
+        print(json.loads(json_util.dumps(li)))
     elif sys.argv[2] == 'export':
-        with open('conscious_content_data_mod.json', 'w') as file:
-            l_dict = prepare_json(l)
+        with open('conscious_content_data_mod_extended.json', 'w') as file:
+            l_dict = prepare_json(li)
             json_data = json.loads(json_util.dumps(l_dict))
             json.dump(json_data, file, indent=2)

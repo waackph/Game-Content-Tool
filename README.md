@@ -10,7 +10,8 @@ Start backend (folder backend-project): `npm run app`
 
 Start frontend (folder frontend-project): `npm start`
 
-Print/export mongodb (in python): `python3 check_mongodb_collection.py <collection_name> <print||export>`
+Print/export mongodb (in python): `python3 check_mongodb_collection.py <collection_name> <print||export>`<br>
+Example: `python3 check_mongodb_collection.py rooms export`
 
 ## General explanation of conscious game engine objects
 
