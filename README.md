@@ -13,6 +13,27 @@ Start frontend (folder frontend-project): `npm start`
 Print/export mongodb (in python): `python3 check_mongodb_collection.py <collection_name> <print||export>`<br>
 Example: `python3 check_mongodb_collection.py rooms export`
 
+### Assumed folder structure for a game
+
+The assets are in `frontend-project/public/static/`. In that folder the tree may be as follows:
+
+```
+clear_out/
+    rooms/
+        dining_room/
+            backgrounds/
+            objects/
+            characters
+        living_room/
+            backgrounds/
+            objects/
+            characters
+        corridor/
+            backgrounds/
+            objects/
+            characters
+```
+
 ## General explanation of conscious game engine objects
 
 The conscious game engine has 3 different types of general objects in the world:
