@@ -121,7 +121,6 @@ function ShowItemList(props) {
         else{
             data['EntrySequence'] = null;
         }
-        console.log(data);
 
         axios
           .put('http://localhost:8082/api/' + room_id, data)

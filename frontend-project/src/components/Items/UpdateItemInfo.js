@@ -351,8 +351,6 @@ function UpdateItemInfo(props) {
           data = {...data, CombineItem: CombineItem};
         }
       }
-
-      console.log(data)
   
       axios
         .put('http://localhost:8082/api/items/' + room_id + '/' + item_id, data)
