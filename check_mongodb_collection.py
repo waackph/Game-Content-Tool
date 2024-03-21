@@ -96,7 +96,7 @@ def prepare_json(li):
         d['Things'] = modify_dict(d['Things'])
         if 'EntrySequence' in d.keys():
             d['EntrySequence'] = modify_dict(d['EntrySequence'])
-        l_dict[str(i+2)] = d
+        l_dict[str(i+1)] = d
     return l_dict
 
 

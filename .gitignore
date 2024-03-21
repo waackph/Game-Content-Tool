@@ -24,3 +24,5 @@ yarn-error.log*
 
 # project specific
 conscious_db_data
+
+frontend-project/public/static/clear_out
