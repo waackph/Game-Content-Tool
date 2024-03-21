@@ -70,7 +70,7 @@ const ThoughtLinkSchema = new mongoose.Schema({
         type: SequenceSchema,
         required: false,
     }
-});
+}, { strict: false });
 
 const ThoughtNodeSchema = new mongoose.Schema({
     thoughtType: {
@@ -109,6 +109,6 @@ const ThoughtNodeSchema = new mongoose.Schema({
         type: Number,
         required: false,
     },
-});
+}, { strict: false });
 
 module.exports = ThoughtNodeSchema;

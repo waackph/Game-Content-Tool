@@ -73,6 +73,6 @@ const CharacterSchema = new mongoose.Schema({
     //     type: AnimationSchema,
     //     required: false,
     // },
-});
+}, { strict: false });
 
 module.exports = CharacterSchema;

@@ -148,9 +148,12 @@ router.put('/items/:room_id/:item_id', (req, res) => {
       '$set': {
         'Items.$': req.body
       }
+    },
+    { 
+      strict: false
     }
   )
-    .then(item => res.json({ msg: 'Item updated' }))
+    .then(item => {console.log(item);res.json({ msg: 'Item updated' })})
     .catch(err => res.status(400).json({ error: 'Unable to update item' }));
 });
 

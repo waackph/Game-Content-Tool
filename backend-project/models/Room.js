@@ -40,6 +40,6 @@ const RoomSchema = new mongoose.Schema({
         type: [CharacterSchema],
         required: false,
     },
-});
+}, { strict: false });
 
 module.exports = Room = mongoose.model('room', RoomSchema);

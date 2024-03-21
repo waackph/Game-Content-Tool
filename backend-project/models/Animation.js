@@ -9,6 +9,6 @@ const AnimationSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-});
+}, { strict: false });
 
 module.exports = AnimationSchema;

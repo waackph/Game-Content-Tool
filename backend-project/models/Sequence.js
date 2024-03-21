@@ -32,13 +32,13 @@ const CommandSchema = new mongoose.Schema({
         type: Number,
         required: false,
     }
-});
+}, { strict: false });
 
 const SequenceSchema = new mongoose.Schema({
     Commands: {
         type: [CommandSchema],
         required: true,
     },
-});
+}, { strict: false });
 
 module.exports = SequenceSchema;

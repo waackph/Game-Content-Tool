@@ -74,6 +74,6 @@ const CombineItemSchema = new mongoose.Schema({
         type: ThoughtNodeSchema,
         required: false,
     },
-});
+}, { strict: false });
 
 module.exports = CombineItemSchema;

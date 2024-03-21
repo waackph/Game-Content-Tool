@@ -104,12 +104,16 @@ const ItemSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    IsRoomChangeDoor: {
+        type: Boolean,
+        required: false,
+    },
 
     // Thought data structure
     Thought: {
         type: ThoughtNodeSchema,
         required: false,
     },
-});
+}, { strict: false });
 
 module.exports = ItemSchema;

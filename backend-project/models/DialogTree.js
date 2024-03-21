@@ -33,7 +33,7 @@ const DialogEdgeSchema = new mongoose.Schema({
         type: Number,
         required: false,
     },
-});
+}, { strict: false });
 
 const DialogNodeSchema = new mongoose.Schema({
     Id: {
@@ -56,6 +56,6 @@ const DialogNodeSchema = new mongoose.Schema({
         type: Number,
         required: false,
     },
-});
+}, { strict: false });
 
 module.exports = DialogNodeSchema;
