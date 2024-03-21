@@ -39,6 +39,7 @@ function UpdateItemInfo(props) {
   const [InitPlayerPosX, setInitPlayerPosX] = useState(-1);
   const [InitPlayerPosY, setInitPlayerPosY] = useState(-1);
   const [CloseTexturePath, setCloseTexturePath] = useState('');
+  const [IsRoomChangeDoor, setIsRoomChangeDoor] = useState(true);
 
   const firstId = createRandomId();
   const secondId = createRandomId();
@@ -148,6 +149,7 @@ function UpdateItemInfo(props) {
           setInitPlayerPosX(res.data.InitPlayerPosX);
           setInitPlayerPosY(res.data.InitPlayerPosY);
           setCloseTexturePath(res.data.CloseTexturePath);
+          setIsRoomChangeDoor(res.data.IsRoomChangeDoor);
           setThought(res.data.Thought);
         })
         .catch(err => { 
@@ -242,7 +244,10 @@ function UpdateItemInfo(props) {
         }
         else if(e.target.name === 'CloseTexturePath') {
           setCloseTexturePath(e.target.value);
-        }    
+        }
+        else if(e.target.name === 'IsRoomChangeDoor') {
+          setIsRoomChangeDoor(!IsRoomChangeDoor);
+        }
         else {
           console.log('No matching variable to fieldname')
       }
@@ -332,6 +337,7 @@ function UpdateItemInfo(props) {
           InitPlayerPosX: InitPlayerPosX,
           InitPlayerPosY: InitPlayerPosY,
           CloseTexturePath: CloseTexturePath,
+          IsRoomChangeDoor: IsRoomChangeDoor,
           Thought: Thought
       };
       if(ItemType === 'conscious.DataHolderCombineItem, conscious') {
@@ -345,6 +351,8 @@ function UpdateItemInfo(props) {
           data = {...data, CombineItem: CombineItem};
         }
       }
+
+      console.log(data)
   
       axios
         .put('http://localhost:8082/api/items/' + room_id + '/' + item_id, data)
@@ -368,7 +376,8 @@ function UpdateItemInfo(props) {
           // setIsUnlocked(false);
           // setInitPlayerPosX(0);
           // setInitPlayerPosY(0);
-          // setCloseTexturePath('');  
+          // setCloseTexturePath('');
+          // setIsRoomChangeDoor(true); 
           // setThought('');
           navigate('/show-item/' + room_id + '/' + item_id);
         })
@@ -577,6 +586,15 @@ function UpdateItemInfo(props) {
             name='IsUnlocked'
             onChange={onChange} 
             />
+        </div>
+
+        <div className="col-md-4 m-auto">
+          <CheckboxField
+          checkLabel='IsRoomChangeDoor'
+          value={IsRoomChangeDoor}
+          name='IsRoomChangeDoor'
+          onChange={onChange} 
+          />
         </div>
       </div>
     </>

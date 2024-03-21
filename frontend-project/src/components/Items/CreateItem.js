@@ -38,7 +38,8 @@ function CreateItem (props) {
   const [InitPlayerPosX, setInitPlayerPosX] = useState(-1);
   const [InitPlayerPosY, setInitPlayerPosY] = useState(-1);
   const [CloseTexturePath, setCloseTexturePath] = useState('');
-  
+  const [IsRoomChangeDoor, setIsRoomChangeDoor] = useState(true);
+
   const firstId = createRandomId();
   const secondId = createRandomId();
   const thirdId = createRandomId();
@@ -209,6 +210,9 @@ function CreateItem (props) {
     else if(e.target.name === 'CloseTexturePath') {
       setCloseTexturePath(e.target.value);
     }
+    else if(e.target.name === 'IsRoomChangeDoor') {
+      setIsRoomChangeDoor(!IsRoomChangeDoor);
+    }
     else {
         console.log('No matching variable to fieldname')
     }
@@ -302,6 +306,7 @@ function CreateItem (props) {
       InitPlayerPosX: InitPlayerPosX,
       InitPlayerPosY: InitPlayerPosY,
       CloseTexturePath: CloseTexturePath,
+      IsRoomChangeDoor: IsRoomChangeDoor,
       Thought: Thought
     };
     if(ItemType === 'conscious.DataHolderCombineItem, conscious') {
@@ -333,6 +338,7 @@ function CreateItem (props) {
         setInitPlayerPosX(0);
         setInitPlayerPosY(0);
         setCloseTexturePath('');
+        setIsRoomChangeDoor(true); 
         setThought(defaultThought);
         navigate(`/item-list/${room_id}`);
       })
@@ -543,6 +549,15 @@ function CreateItem (props) {
             name='IsUnlocked'
             onChange={onChange} 
             />
+        </div>
+
+        <div className="col-md-4 m-auto">
+          <CheckboxField
+          checkLabel='IsRoomChangeDoor'
+          value={IsRoomChangeDoor}
+          name='IsRoomChangeDoor'
+          onChange={onChange} 
+          />
         </div>
       </div>
     </>
