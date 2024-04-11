@@ -3,6 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css';
 import SequenceCard from '../InputElements/SequenceCard';
 import axios from 'axios';
+import * as d3 from "d3";
+import ThoughtGraph from '../InputElements/ThoughtGraph';
+import { addLinksToThoughtData } from '../helpers/ItemThoughtHelpers';
+import { defaultThought } from "../helpers/ThoughTreeDisplay";
 
 // ***
 // The input view to create a new Room object.
@@ -16,6 +20,10 @@ function CreateRoom (props) {
   const [SoundFilePath, setSoundFilePath] = useState('');
   const [LightMapPath, setLightMapPath] = useState('');
   const [EntrySequence, setEntrySequence] = useState({'Commands': []});
+  const [Thought, setThought] = useState(defaultThought);
+
+  let thoughtConnections = [];
+  let exportedThoughts = {};
 
   let navigate = useNavigate();
 
@@ -66,6 +74,24 @@ function CreateRoom (props) {
     });
   }
 
+  function retrieveThoughtDataFromGraph(e) {
+    e.preventDefault();
+    const svg = d3.select('#ThoughtGraphInput');
+    let tempConnections = [...thoughtConnections];
+
+    const rootConnection = thoughtConnections[0];
+    const rootNodeId = rootConnection.parentNode;
+    let root = svg.select('#n'+rootNodeId).data()[0];
+    root['Links'] = addLinksToThoughtData(svg, tempConnections, rootNodeId);
+    exportedThoughts = root;
+    console.log(exportedThoughts);
+    setThought(exportedThoughts);
+  }
+
+  // Functions to manage Thought Graph
+  const getGraphConnections = connections => {
+    thoughtConnections = connections;
+  }
 
   const onSubmit = e => {
     e.preventDefault();
@@ -76,6 +102,7 @@ function CreateRoom (props) {
       texturePath: texturePath,
       SoundFilePath: SoundFilePath,
       LightMapPath: LightMapPath,
+      Thought: Thought
     };
   
     if(EntrySequence.Commands.length !== 0) {
@@ -94,6 +121,7 @@ function CreateRoom (props) {
         setSoundFilePath('');
         setLightMapPath('');
         setEntrySequence({'Commands': []});
+        setThought(defaultThought);
         navigate(`/item-list/${res.data._id}`); //"/item-list/" + res._id);
       })
       .catch(err => {
@@ -175,6 +203,18 @@ function CreateRoom (props) {
               </div>
 
               <SequenceCard sequence={EntrySequence} add={addSequenceCommand} delete={deleteRow} onChange={onChange} />
+
+
+              <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#itemThoughtInputs" 
+                  role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Thought
+              </a>
+              <div className="collapse mt-2 mb-2" id="itemThoughtInputs">
+                  <ThoughtGraph svgId={'ThoughtGraphInput'} data={Thought} getConnections={getGraphConnections} exportGraphToParent={retrieveThoughtDataFromGraph} />
+                  <button onClick={retrieveThoughtDataFromGraph} className="m-2">Export!</button>
+              </div>
+              <br></br>
+
 
               <input
                   type="submit"

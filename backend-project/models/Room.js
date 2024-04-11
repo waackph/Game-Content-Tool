@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
-const ItemSchema = require('./Item')
-const CharacterSchema = require('./Character')
-const SequenceSchema = require('./Sequence')
+const ItemSchema = require('./Item');
+const CharacterSchema = require('./Character');
+const SequenceSchema = require('./Sequence');
+const ThoughtNodeSchema = require('./Thought');
 
 // ***
 // The data base schema of a Room object
@@ -38,6 +39,11 @@ const RoomSchema = new mongoose.Schema({
     },
     Characters: {
         type: [CharacterSchema],
+        required: false,
+    },
+    // Thought data structure
+    Thought: {
+        type: ThoughtNodeSchema,
         required: false,
     },
 }, { strict: false });

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import '../../App.css';
+import * as d3 from "d3";
 import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import ItemCard from './ItemCard'
 import CharacterCard from '../Characters/CharacterCard'
 import SequenceCard from '../InputElements/SequenceCard';
+import ThoughtGraph from '../InputElements/ThoughtGraph';
+import { addLinksToThoughtData } from '../helpers/ItemThoughtHelpers';
+import { defaultThought } from "../helpers/ThoughTreeDisplay";
 
 // ***
 // A view that has a given Rooms data and input mask to update Room data
@@ -20,6 +24,10 @@ function ShowItemList(props) {
     const [SoundFilePath, setSoundFilePath] = useState('');
     const [LightMapPath, setLightMapPath] = useState('');
     const [EntrySequence, setEntrySequence] = useState({'Commands': []});
+    const [Thought, setThought] = useState(defaultThought);
+
+    let thoughtConnections = [];
+    let exportedThoughts = {};  
 
     let { room_id } = useParams();
     let navigate = useNavigate();
@@ -34,6 +42,13 @@ function ShowItemList(props) {
             setRoomWidth(res.data.RoomWidth);
             setSoundFilePath(res.data.SoundFilePath);
             setLightMapPath(res.data.LightMapPath);
+            const tmpThought = res.data.Thought;
+            if(tmpThought == null){
+                setThought(defaultThought);
+            }
+            else{
+                setThought(tmpThought);
+            }
             if(res.data.EntrySequence){
                 setEntrySequence(res.data.EntrySequence);
             }
@@ -104,8 +119,30 @@ function ShowItemList(props) {
         });
     }
 
+    function retrieveThoughtDataFromGraph(e) {
+        e.preventDefault();
+        const svg = d3.select('#ThoughtGraphInput');
+        let tempConnections = [...thoughtConnections];
+    
+        const rootConnection = thoughtConnections[0];
+        const rootNodeId = rootConnection.parentNode;
+        let root = svg.select('#n'+rootNodeId).data()[0];
+        root['Links'] = addLinksToThoughtData(svg, tempConnections, rootNodeId);
+        exportedThoughts = root;
+        console.log(exportedThoughts);
+        setThought(exportedThoughts);
+      }
+
+      // Functions to manage Thought Graph
+      const getGraphConnections = connections => {
+        thoughtConnections = connections;
+      }
+
     const onSubmit = e => {
         e.preventDefault();
+
+        // We do not need a thought id because it is not owned by a thought
+        // setThought(addItemIdToThoughtNodes(Thought, Id));
 
         let data = {
             Name: Name,
@@ -113,6 +150,7 @@ function ShowItemList(props) {
             texturePath: texturePath,
             SoundFilePath: SoundFilePath,
             LightMapPath: LightMapPath,
+            Thought: Thought
         };
 
         if(EntrySequence.Commands.length !== 0) {
@@ -227,6 +265,18 @@ function ShowItemList(props) {
                         </div>
 
                         <SequenceCard sequence={EntrySequence} add={addSequenceCommand} delete={deleteRow} onChange={onChange} />
+
+
+                        <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#itemThoughtInputs" 
+                            role="button" aria-expanded="false" aria-controls="collapseExample">
+                            Thought
+                        </a>
+                        <div className="collapse mt-2 mb-2" id="itemThoughtInputs">
+                            <ThoughtGraph svgId={'ThoughtGraphInput'} data={Thought} getConnections={getGraphConnections} exportGraphToParent={retrieveThoughtDataFromGraph} />
+                            <button onClick={retrieveThoughtDataFromGraph} className="m-2">Export!</button>
+                        </div>
+                        <br></br>
+
 
                         <button type="submit" className="btn btn-outline-info btn-lg btn-block">
                             Update Room
