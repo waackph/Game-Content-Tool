@@ -56,7 +56,9 @@ def modify_dict(obj):
             obj['CombineItem'] = None
         # Remove file ending of texturePath
         if obj.get('texturePath'):
-            obj['texturePath'] = obj['texturePath'].split('.png')[0]
+            obj['texturePath'] = remove_file_ext(obj['texturePath'])
+        if obj.get('CloseTexturePath'):
+            obj['CloseTexturePath'] = remove_file_ext(obj['CloseTexturePath'])
         # Remove node if no further thought exists ('lastnode')
         if obj.get('IsFinal') and obj.get('NextNode').get('Thought') == 'lastnode':
             obj['NextNode'] = None
@@ -106,6 +108,8 @@ def prepare_json(li):
         l_dict[str(room_idx)] = d
     return l_dict
 
+def remove_file_ext(name: str, ext: str = ".png"):
+    return name.split(ext)[0]
 
 # The main method checks the given parameter and prints or exports the data from the mongodb
 # given a valid parameter ('print' or 'export')
