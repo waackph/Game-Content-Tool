@@ -82,12 +82,17 @@ def modify_dict(obj):
 # Prepare the JSON file to export. This must be a valid format for the conscious game engine.
 def prepare_json(li):
     l_dict = {}
+    room_idx = 0
     for i, d in enumerate(li):
+        room_idx += 1
+        if i < 2:
+            # skip prototype rooms
+            continue
         # remove invalid properties from room
         del d['Name']
         del d['texturePath']
         del d['__v']
-        # Merge Items and Characters in to a Things List
+        # Merge Items and Characters into a Things List
         d['Things'] = d['Items']
         d['Things'].extend(d['Characters'])
         del d['Characters']
@@ -96,7 +101,9 @@ def prepare_json(li):
         d['Things'] = modify_dict(d['Things'])
         if 'EntrySequence' in d.keys():
             d['EntrySequence'] = modify_dict(d['EntrySequence'])
-        l_dict[str(i+1)] = d
+        if 'Thought' in d.keys():
+            d['Thought'] = modify_dict(d['Thought'])
+        l_dict[str(room_idx)] = d
     return l_dict
 
 
