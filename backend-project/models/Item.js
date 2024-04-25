@@ -42,6 +42,14 @@ const ItemSchema = new mongoose.Schema({
     },
 
     // Not required for all items
+    Collidable: {
+        type: Boolean,
+        required: false,
+    },
+    CollisionBoxHeight: {
+        type: Number,
+        required: false,
+    },
     ExamineText: {
         type: String,
         required: false,

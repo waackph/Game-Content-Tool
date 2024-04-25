@@ -222,6 +222,9 @@ router.put('/characters/:room_id/:character_id', (req, res) => {
       '$set': {
         'Characters.$': req.body
       }
+    },
+    { 
+      strict: false
     }
   )
     .then(character => res.json({ msg: 'character updated' }))

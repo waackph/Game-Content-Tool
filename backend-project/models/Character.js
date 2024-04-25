@@ -37,6 +37,19 @@ const CharacterSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    DrawOrder: {
+        type: Number,
+        required: true,
+    },
+
+    Collidable: {
+        type: Boolean,
+        required: false,
+    },
+    CollisionBoxHeight: {
+        type: Number,
+        required: false,
+    },
     ItemDependency: {
         type: String,  // Is Object ID
         required: false,
