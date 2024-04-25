@@ -21,6 +21,9 @@ function CreateUpdateCharacter(props) {
   const [PositionX, setPositionX] = useState(0);
   const [PositionY, setPositionY] = useState(0);
   const [DrawOrder, setDrawOrder] = useState(4);
+  const [Collidable, setCollidable] = useState(true);
+  const [CollisionBoxHeight, setCollisionBoxHeight] = useState(20);
+
   const [ItemDependency, setItemDependency] = useState(-1);
   const [DialogUnlocked, setDialogUnlocked] = useState(false);
   const [Pronoun, setPronoun] = useState('');
@@ -86,6 +89,8 @@ function CreateUpdateCharacter(props) {
           setPositionX(res.data.PositionX);
           setPositionY(res.data.PositionY);
           setDrawOrder(res.data.DrawOrder);
+          setCollidable(res.data.Collidable);
+          setCollisionBoxHeight(res.data.CollisionBoxHeight);
           setItemDependency(res.data.ItemDependency);
           setDialogUnlocked(res.data.DialogUnlocked);
           setPronoun(res.data.Pronoun);
@@ -131,6 +136,12 @@ function CreateUpdateCharacter(props) {
     }
     else if(e.target.name === 'DrawOrder') {
       setDrawOrder(e.target.value);
+    }
+    else if(e.target.name === 'Collidable') {
+      setCollidable(!Collidable);
+    }
+    else if(e.target.name === 'CollisionBoxHeight') {
+      setCollisionBoxHeight(e.target.value);
     }
     else if(e.target.name === 'ItemDependency') {
       setItemDependency(e.target.value);
@@ -206,6 +217,8 @@ function CreateUpdateCharacter(props) {
         PositionX: PositionX,
         PositionY: PositionY,
         DrawOrder: DrawOrder,
+        Collidable: Collidable,
+        CollisionBoxHeight: CollisionBoxHeight,
         ItemDependency: ItemDependency,
         DialogUnlocked: DialogUnlocked,
         Pronoun: Pronoun,
@@ -227,6 +240,8 @@ function CreateUpdateCharacter(props) {
         PositionX: PositionX,
         PositionY: PositionY,
         DrawOrder: DrawOrder,
+        Collidable: Collidable,
+        CollisionBoxHeight: CollisionBoxHeight,
         ItemDependency: ItemDependency,
         DialogUnlocked: DialogUnlocked,
         Pronoun: Pronoun,
@@ -268,6 +283,7 @@ function CreateUpdateCharacter(props) {
         setMoodChange(0);
         setThought(defaultThought);
         setTreeStructure([]);
+
         navigate(`/item-list/${room_id}`);
       })
       .catch(err => {
@@ -430,6 +446,32 @@ function CreateUpdateCharacter(props) {
                   />
               </div>
             </div>
+          </div>
+
+          <div className="row">
+
+            <div className="col-md-6 m-auto">
+              <div className='form-group'>
+                <input
+                type='number'
+                placeholder='Collision Box Height'
+                name='CollisionBoxHeight'
+                className='form-control'
+                value={CollisionBoxHeight}
+                onChange={onChange}
+                />
+              </div>
+            </div>
+
+            <div className="col-md-4 m-auto">
+              <CheckboxField
+              checkLabel='Collidable'
+              value={Collidable}
+              name='Collidable'
+              onChange={onChange} 
+              />
+            </div>
+
           </div>
 
           <div className="row">

@@ -5,10 +5,10 @@ import './App.css';
 import ShowRoomList from './components/Rooms/ShowRoomList';
 import CreateRoom from './components/Rooms/CreateRoom';
 
-import CreateItem from './components/Items/CreateItem';
+// import CreateItem from './components/Items/deprecated/CreateItem';
 import ShowItemList from './components/Items/ShowItemList';
 import ShowItemDetails from './components/Items/ShowItemDetails';
-import UpdateItemInfo from './components/Items/UpdateItemInfo';
+import CreateUpdateItemInfo from './components/Items/CreateUpdateItemInfo';
 
 import CreateUpdateCharacter from "./components/Characters/CreateUpdateCharacter";
 import ShowCharacter from "./components/Characters/ShowCharacter";
@@ -30,8 +30,8 @@ class App extends Component {
                         <Route path='/create-room' element={<CreateRoom />} />
                         <Route exact path='/item-list/:room_id' element={<ShowItemList />} />
                         
-                        <Route path='/create-item/:room_id' element={<CreateItem />} />
-                        <Route path='/edit-item/:room_id/:item_id' element={<UpdateItemInfo />} />
+                        <Route path='/create-item/:room_id' element={<CreateUpdateItemInfo />} />
+                        <Route path='/edit-item/:room_id/:item_id' element={<CreateUpdateItemInfo />} />
                         <Route path='/show-item/:room_id/:item_id' element={<ShowItemDetails />} />
 
                         <Route path='/create-character/:room_id' element={<CreateUpdateCharacter />} />

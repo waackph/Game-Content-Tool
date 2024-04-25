@@ -24,6 +24,8 @@ function UpdateItemInfo(props) {
   // Thing variables
   const [DrawOrder, setDrawOrder] = useState(3);
   const [ExamineText, setExamineText] = useState('');
+  const [Collidable, setCollidable] = useState(false);
+  const [CollisionBoxHeight, setCollisionBoxHeight] = useState(20);
   // Item variables
   const [IsInInventory, setIsInInventory] = useState(false);
   const [UseAble, setUseAble] = useState(false);
@@ -58,7 +60,8 @@ function UpdateItemInfo(props) {
   let navigate = useNavigate();
 
   useEffect(() => {
-    // get item info
+    if(item_id) {
+      // get item info
       axios
         .get('http://localhost:8082/api/items/' + room_id + '/' + item_id)  //this.props.match.params.room_id)
         .then(res => {
@@ -70,6 +73,8 @@ function UpdateItemInfo(props) {
           setPositionX(res.data.PositionX);
           setPositionY(res.data.PositionY);
           setDrawOrder(res.data.DrawOrder);
+          setCollidable(res.data.Collidable);
+          setCollisionBoxHeight(res.data.CollisionBoxHeight);
           setExamineText(res.data.ExamineText);
           setIsInInventory(res.data.IsInInventory);
           setUseAble(res.data.UseAble);
@@ -101,6 +106,7 @@ function UpdateItemInfo(props) {
         .catch(err => { 
           console.log('Error from getAllItems'); 
       });
+    }
 
     // get all rooms for roomId in case of door type as select input
     axios
@@ -138,6 +144,12 @@ function UpdateItemInfo(props) {
         }
         else if(e.target.name === 'DrawOrder') {
           setDrawOrder(e.target.value);
+        }
+        else if(e.target.name === 'Collidable') {
+          setCollidable(!Collidable);
+        }
+        else if(e.target.name === 'CollisionBoxHeight') {
+          setCollisionBoxHeight(e.target.value);
         }
         else if(e.target.name === 'ExamineText') {
           setExamineText(e.target.value);
@@ -247,78 +259,130 @@ function UpdateItemInfo(props) {
   }
 
   const onSubmit = e => {
-      e.preventDefault();
-      // add item ID to all nodes of the Thought as field "ThingId" (we do this for potentially new nodes)
-      setThought(addItemIdToThoughtNodes(Thought, Id));
-      let data = {
-          Id: Id,
-          Name: Name,
-          texturePath: texturePath,
-          ItemType: ItemType,
-          Rotation: Rotation,
-          PositionX: PositionX,
-          PositionY: PositionY,
-          DrawOrder: DrawOrder,
-          ExamineText: ExamineText,
-          IsInInventory: IsInInventory,
-          UseAble: UseAble,
-          PickUpAble: PickUpAble,
-          CombineAble: CombineAble,
-          GiveAble: GiveAble,
-          UseWith: UseWith,
-          ItemDependency: ItemDependency,
-          RoomId: RoomId,
-          DoorId: DoorId,
-          IsUnlocked: IsUnlocked,
-          InitPlayerPosX: InitPlayerPosX,
-          InitPlayerPosY: InitPlayerPosY,
-          CloseTexturePath: CloseTexturePath,
-          IsRoomChangeDoor: IsRoomChangeDoor,
-          Thought: Thought
+    e.preventDefault();
+    // add item ID to all nodes of the Thought as field "ThingId" (we do this for potentially new nodes)
+    let data;
+    if(Id === 0) {
+      const tempId = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
+      setThought(addItemIdToThoughtNodes(Thought, tempId));
+      data = {
+        Id: tempId,
+        Name: Name,
+        texturePath: texturePath,
+        ItemType: ItemType,
+        Rotation: Rotation,
+        PositionX: PositionX,
+        PositionY: PositionY,
+        DrawOrder: DrawOrder,
+        Collidable: Collidable,
+        CollisionBoxHeight: CollisionBoxHeight,
+        ExamineText: ExamineText,
+        IsInInventory: IsInInventory,
+        UseAble: UseAble,
+        PickUpAble: PickUpAble,
+        CombineAble: CombineAble,
+        GiveAble: GiveAble,
+        UseWith: UseWith,
+        ItemDependency: ItemDependency,
+        RoomId: RoomId,
+        DoorId: DoorId,
+        IsUnlocked: IsUnlocked,
+        InitPlayerPosX: InitPlayerPosX,
+        InitPlayerPosY: InitPlayerPosY,
+        CloseTexturePath: CloseTexturePath,
+        IsRoomChangeDoor: IsRoomChangeDoor,
+        Thought: Thought
       };
-      if(ItemType === 'conscious.DataHolderCombineItem, conscious') {
-        if(!CombineItem.hasOwnProperty('Id')) {
-          const IdCombine = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
-          CombineItem.Thought = addItemIdToThoughtNodes(CombineItem.Thought, IdCombine);
-          data = {...data, CombineItem: {...CombineItem, Id: IdCombine}};
-        }
-        else {
-          CombineItem.Thought = addItemIdToThoughtNodes(CombineItem.Thought, CombineItem.Id);
-          data = {...data, CombineItem: CombineItem};
-        }
+    }
+    else{
+      setThought(addItemIdToThoughtNodes(Thought, Id));
+      data = {
+        Id: Id,
+        Name: Name,
+        texturePath: texturePath,
+        ItemType: ItemType,
+        Rotation: Rotation,
+        PositionX: PositionX,
+        PositionY: PositionY,
+        DrawOrder: DrawOrder,
+        Collidable: Collidable,
+        CollisionBoxHeight: CollisionBoxHeight,
+        ExamineText: ExamineText,
+        IsInInventory: IsInInventory,
+        UseAble: UseAble,
+        PickUpAble: PickUpAble,
+        CombineAble: CombineAble,
+        GiveAble: GiveAble,
+        UseWith: UseWith,
+        ItemDependency: ItemDependency,
+        RoomId: RoomId,
+        DoorId: DoorId,
+        IsUnlocked: IsUnlocked,
+        InitPlayerPosX: InitPlayerPosX,
+        InitPlayerPosY: InitPlayerPosY,
+        CloseTexturePath: CloseTexturePath,
+        IsRoomChangeDoor: IsRoomChangeDoor,
+        Thought: Thought
+      };
+    }
+    if(ItemType === 'conscious.DataHolderCombineItem, conscious') {
+      if(!CombineItem.hasOwnProperty('Id')) {
+        const IdCombine = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
+        CombineItem.Thought = addItemIdToThoughtNodes(CombineItem.Thought, IdCombine);
+        data = {...data, CombineItem: {...CombineItem, Id: IdCombine}};
       }
-  
+      else {
+        CombineItem.Thought = addItemIdToThoughtNodes(CombineItem.Thought, CombineItem.Id);
+        data = {...data, CombineItem: CombineItem};
+      }
+    }
+    
+    if(item_id) {
       axios
         .put('http://localhost:8082/api/items/' + room_id + '/' + item_id, data)
         .then(res => {
-          // setName('');
-          // setTexturePath('');
-          // setItemType('');
-          // setRotation(0);
-          // setPositionX(0);
-          // setPositionY(0);
-          // setExamineText('');
-          // setIsInInventory(false);
-          // setUseAble(false);
-          // setPickUpAble(false);
-          // setCombineAble(false);
-          // setGiveAble(false);
-          // setUseWith(false);
-          // setItemDependency('');
-          // setCombineItem('');
-          // setRoomId(0);
-          // setIsUnlocked(false);
-          // setInitPlayerPosX(0);
-          // setInitPlayerPosY(0);
-          // setCloseTexturePath('');
-          // setIsRoomChangeDoor(true); 
-          // setThought('');
           navigate('/show-item/' + room_id + '/' + item_id);
         })
         .catch(err => {
-            console.log('Error in UpdateItemInfo');
+            console.log('Error in CreateUpdateItemInfo');
             console.log(err);
         });
+      }
+      else {
+        axios
+        .put('http://localhost:8082/api/items/' + room_id, data)
+        .then(res => {
+          setId(0);
+          setName('');
+          setTexturePath('');
+          setItemType('');
+          setRotation(0);
+          setPositionX(0);
+          setPositionY(0);
+          setExamineText('');
+          setIsInInventory(false);
+          setUseAble(false);
+          setPickUpAble(false);
+          setCombineAble(false);
+          setGiveAble(false);
+          setUseWith(false);
+          setItemDependency('');
+          setCombineItem('');
+          setRoomId(0);
+          setIsUnlocked(false);
+          setInitPlayerPosX(0);
+          setInitPlayerPosY(0);
+          setCloseTexturePath('');
+          setIsRoomChangeDoor(true); 
+          setThought('');
+
+          navigate(`/item-list/${room_id}`);
+        })
+        .catch(err => {
+            console.log('Error in CreateUpdateItemInfo');
+            console.log(err);
+        });
+      }
   };
 
   let selectItemOptions = allItems.map((item, idx) => {
@@ -645,6 +709,31 @@ function UpdateItemInfo(props) {
               </div>
             </div>
 
+            <div className="row">
+
+              <div className="col-md-6 m-auto">
+                <div className='form-group'>
+                  <input
+                  type='number'
+                  placeholder='Collision Box Height'
+                  name='CollisionBoxHeight'
+                  className='form-control'
+                  value={CombineItem.CollisionBoxHeight}
+                  onChange={onChangeCombineItem}
+                  />
+                </div>
+              </div>
+
+              <div className="col-md-4 m-auto">
+                <CheckboxField
+                checkLabel='Collidable'
+                value={CombineItem.Collidable}
+                name='Collidable'
+                onChange={onChangeCombineItem} 
+                />
+              </div>
+
+            </div>
 
           <div className="row">
             <div className="col-md-6 m-auto">
@@ -863,6 +952,32 @@ function UpdateItemInfo(props) {
                       />
                   </div>
                 </div>
+              </div>
+
+              <div className="row">
+
+                <div className="col-md-6 m-auto">
+                  <div className='form-group'>
+                    <input
+                    type='number'
+                    placeholder='Collision Box Height'
+                    name='CollisionBoxHeight'
+                    className='form-control'
+                    value={CollisionBoxHeight}
+                    onChange={onChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="col-md-4 m-auto">
+                  <CheckboxField
+                  checkLabel='Collidable'
+                  value={Collidable}
+                  name='Collidable'
+                  onChange={onChange} 
+                  />
+                </div>
+
               </div>
 
               { extendedInputs }

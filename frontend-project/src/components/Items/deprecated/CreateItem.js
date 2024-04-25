@@ -3,10 +3,10 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import * as d3 from "d3";
 import '../../App.css';
-import CheckboxField from '../InputElements/CheckboxField';
-import ThoughtGraph from '../InputElements/ThoughtGraph';
-import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../helpers/ItemThoughtHelpers';
-import { createRandomId } from '../helpers/GeneralHelpers';
+import CheckboxField from '../../InputElements/CheckboxField';
+import ThoughtGraph from '../../InputElements/ThoughtGraph';
+import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../../helpers/ItemThoughtHelpers';
+import { createRandomId } from '../../helpers/GeneralHelpers';
 
 // ***
 // The input view to create an Item object.
@@ -23,6 +23,8 @@ function CreateItem (props) {
   // Thing variables
   const [DrawOrder, setDrawOrder] = useState(3);
   const [ExamineText, setExamineText] = useState('');
+  const [Collidable, setCollidable] = useState(false);
+  const [CollisionBoxHeight, setCollisionBoxHeight] = useState(20);
   // Item variables
   const [IsInInventory, setIsInInventory] = useState(false);
   const [UseAble, setUseAble] = useState(false);
@@ -105,7 +107,7 @@ function CreateItem (props) {
       }
     ]}
   const defaultCombineItem = {'Name': '', 'texturePath': '', 'ItemType': 'conscious.DataHolderItem, conscious',
-  'Rotation': 0, 'PositionX': 0, 'PositionY': 0, 'DrawOrder': 3,
+  'Rotation': 0, 'PositionX': 0, 'PositionY': 0, 'DrawOrder': 3, 'Collidable': false, 'CollisionBoxHeight': 20,
   'ExamineText': '', 'IsInInventory': false, 'UseAble': false, 'PickUpAble': false, 
   'CombineAble': false, 'GiveAble': false, 'UseWith': false, 'ItemDependency': -1,
   'Thought': defaultCombineThought}
@@ -167,6 +169,12 @@ function CreateItem (props) {
     }
     else if(e.target.name === 'DrawOrder') {
       setDrawOrder(e.target.value);
+    }
+    else if(e.target.name === 'Collidable') {
+      setCollidable(!Collidable);
+    }
+    else if(e.target.name === 'CollisionBoxHeight') {
+      setCollisionBoxHeight(e.target.value);
     }
     else if(e.target.name === 'ExamineText') {
       setExamineText(e.target.value);
@@ -292,6 +300,8 @@ function CreateItem (props) {
       PositionX: PositionX,
       PositionY: PositionY,
       DrawOrder: DrawOrder,
+      Collidable: Collidable,
+      CollisionBoxHeight: CollisionBoxHeight,
       ExamineText: ExamineText,
       IsInInventory: IsInInventory,
       UseAble: UseAble,
@@ -675,6 +685,33 @@ function CreateItem (props) {
           </div>
 
           <div className="row">
+
+            <div className="col-md-6 m-auto">
+              <div className='form-group'>
+                <input
+                type='number'
+                placeholder='Collision Box Height'
+                name='CollisionBoxHeight'
+                className='form-control'
+                value={CombineItem.CollisionBoxHeight}
+                onChange={onChangeCombineItem}
+                />
+              </div>
+            </div>
+
+            <div className="col-md-4 m-auto">
+              <CheckboxField
+              checkLabel='Collidable'
+              value={CombineItem.Collidable}
+              name='Collidable'
+              onChange={onChangeCombineItem} 
+              />
+            </div>
+
+          </div>
+
+
+          <div className="row">
             <div className="col-md-6 m-auto">
               <div className='form-group'>
                 <input
@@ -891,6 +928,32 @@ function CreateItem (props) {
                       />
                     </div>
                   </div>
+                </div>
+
+                <div className="row">
+
+                  <div className="col-md-6 m-auto">
+                    <div className='form-group'>
+                      <input
+                      type='number'
+                      placeholder='Collision Box Height'
+                      name='CollisionBoxHeight'
+                      className='form-control'
+                      value={CollisionBoxHeight}
+                      onChange={onChange}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-md-4 m-auto">
+                    <CheckboxField
+                    checkLabel='Collidable'
+                    value={Collidable}
+                    name='Collidable'
+                    onChange={onChange} 
+                    />
+                  </div>
+
                 </div>
 
               { extendedInputs }
