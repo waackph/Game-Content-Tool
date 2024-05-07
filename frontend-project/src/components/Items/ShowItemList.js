@@ -21,6 +21,10 @@ function ShowItemList(props) {
     const [Name, setName] = useState('');
     const [texturePath, setTexturePath] = useState('');
     const [RoomWidth, setRoomWidth] = useState(0);
+    const [xLimStart, setXLimStart] = useState();
+    const [xLimEnd, setXLimEnd] = useState();
+    const [yLimStart, setYLimStart] = useState();
+    const [yLimEnd, setYLimEnd] = useState();
     const [SoundFilePath, setSoundFilePath] = useState('');
     const [LightMapPath, setLightMapPath] = useState('');
     const [EntrySequence, setEntrySequence] = useState({'Commands': []});
@@ -40,6 +44,10 @@ function ShowItemList(props) {
             setName(res.data.Name);
             setTexturePath(res.data.texturePath);
             setRoomWidth(res.data.RoomWidth);
+            setXLimStart(res.data.xLimStart);
+            setXLimEnd(res.data.xLimEnd);
+            setYLimStart(res.data.yLimStart);
+            setYLimEnd(res.data.yLimEnd);
             setSoundFilePath(res.data.SoundFilePath);
             setLightMapPath(res.data.LightMapPath);
             const tmpThought = res.data.Thought;
@@ -81,6 +89,18 @@ function ShowItemList(props) {
         }
         else if(e.target.name === 'RoomWidth') {
             setRoomWidth(e.target.value);
+        }
+        else if(e.target.name === 'xLimStart') {
+            setXLimStart(e.target.value);
+        }
+        else if(e.target.name === 'xLimEnd') {
+            setXLimEnd(e.target.value);
+        }
+        else if(e.target.name === 'yLimStart') {
+            setYLimStart(e.target.value);
+        }
+        else if(e.target.name === 'yLimEnd') {
+            setYLimEnd(e.target.value);
         }
         else if(e.target.name === 'SoundFilePath') {
             setSoundFilePath(e.target.value);
@@ -148,6 +168,10 @@ function ShowItemList(props) {
             Name: Name,
             RoomWidth: RoomWidth,
             texturePath: texturePath,
+            xLimStart: xLimStart,
+            xLimEnd: xLimEnd,
+            yLimStart: yLimStart,
+            yLimEnd: yLimEnd,
             SoundFilePath: SoundFilePath,
             LightMapPath: LightMapPath,
             Thought: Thought
@@ -260,6 +284,47 @@ function ShowItemList(props) {
                             name='LightMapPath'
                             className='form-control'
                             value={LightMapPath}
+                            onChange={onChange}
+                            />
+                        </div>
+
+                        <div className='form-group'>
+                            <input
+                            type='number'
+                            placeholder='X Limitation Start'
+                            name='xLimStart'
+                            className='form-control'
+                            value={xLimStart}
+                            onChange={onChange}
+                            />
+                        </div>
+                        <div className='form-group'>
+                            <input
+                            type='number'
+                            placeholder='X Limitation End'
+                            name='xLimEnd'
+                            className='form-control'
+                            value={xLimEnd}
+                            onChange={onChange}
+                            />
+                        </div>
+                        <div className='form-group'>
+                            <input
+                            type='number'
+                            placeholder='Y Limitation Start'
+                            name='yLimStart'
+                            className='form-control'
+                            value={yLimStart}
+                            onChange={onChange}
+                            />
+                        </div>
+                        <div className='form-group'>
+                            <input
+                            type='number'
+                            placeholder='Y Limitation End'
+                            name='yLimEnd'
+                            className='form-control'
+                            value={yLimEnd}
                             onChange={onChange}
                             />
                         </div>

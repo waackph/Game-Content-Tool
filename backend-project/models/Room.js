@@ -21,6 +21,22 @@ const RoomSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    xLimStart: {
+        type: Number,
+        required: false,
+    },
+    xLimEnd: {
+        type: Number,
+        required: false,
+    },
+    yLimStart: {
+        type: Number,
+        required: false,
+    },
+    yLimEnd: {
+        type: Number,
+        required: false,
+    },
     SoundFilePath: {
         type: String,
         required: false,
