@@ -131,6 +131,10 @@
         }
       ]
     },
+    "xLimEnd": 5526,
+    "xLimStart": 142,
+    "yLimEnd": 1080,
+    "yLimStart": 710,
     "Things": [
       {
         "$type": "conscious.DataHolderDoor, conscious",
@@ -1162,6 +1166,10 @@
         }
       ]
     },
+    "xLimEnd": 1920,
+    "xLimStart": 125,
+    "yLimEnd": 1080,
+    "yLimStart": 700,
     "Things": [
       {
         "$type": "conscious.DataHolderDoor, conscious",
@@ -1529,7 +1537,7 @@
         "PositionY": 502,
         "DrawOrder": 2,
         "Collidable": true,
-        "CollisionBoxHeight": 30,
+        "CollisionBoxHeight": 200,
         "ExamineText": "Ein gem\u00fctliches Sofa",
         "IsInInventory": false,
         "UseAble": true,
@@ -1677,7 +1685,7 @@
         "PositionY": 804,
         "DrawOrder": 6,
         "Collidable": true,
-        "CollisionBoxHeight": 50,
+        "CollisionBoxHeight": 60,
         "ExamineText": "",
         "IsInInventory": false,
         "UseAble": false,
@@ -1703,6 +1711,8 @@
         "PositionX": 526,
         "PositionY": 919,
         "DrawOrder": 12,
+        "Collidable": true,
+        "CollisionBoxHeight": 200,
         "ExamineText": "Der alte Fernseher im DDR Stil",
         "IsInInventory": false,
         "UseAble": false,
@@ -2790,6 +2800,10 @@
         }
       ]
     },
+    "xLimEnd": 1708,
+    "xLimStart": 0,
+    "yLimEnd": 1080,
+    "yLimStart": 680,
     "Things": [
       {
         "$type": "conscious.DataHolderThing, conscious",
@@ -2825,7 +2839,7 @@
         "Rotation": 0,
         "PositionX": 1107,
         "PositionY": 867,
-        "DrawOrder": 10,
+        "DrawOrder": 12,
         "Collidable": true,
         "ExamineText": "",
         "IsInInventory": false,
@@ -2851,8 +2865,9 @@
         "Rotation": 0,
         "PositionX": 476,
         "PositionY": 782,
-        "DrawOrder": 10,
+        "DrawOrder": 12,
         "Collidable": true,
+        "CollisionBoxHeight": 80,
         "ExamineText": "",
         "IsInInventory": false,
         "UseAble": false,
