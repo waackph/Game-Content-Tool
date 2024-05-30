@@ -1,3 +1,5 @@
+import CheckboxField from "./CheckboxField";
+
 // ***
 // The Node Input component is shown when clicked on a Node in the Thought Graph. 
 // It is used to store data in a Node.
@@ -30,6 +32,25 @@ function NodeInput({data, onChange, assignDataToNode, deleteNode}) {
                 name='LinkageId'
                 id='LinkageId'
                 value={data.Thought}
+                onChange={onChange}
+              />
+            </div>
+            <div className="col-md-6 m-auto">
+              <input 
+                type='text'
+                placeholder='Sound Path'
+                className='form-control'
+                name='SoundPath'
+                id='SoundPath'
+                value={data.SoundPath}
+                onChange={onChange}
+              />
+            </div>
+            <div className="col-md-6 m-auto">
+              <CheckboxField
+                checkLabel='Sound Repeated'
+                name='RepeatedSound'
+                value={data.RepeatedSound}
                 onChange={onChange}
               />
             </div>
