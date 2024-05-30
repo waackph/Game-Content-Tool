@@ -93,6 +93,18 @@ function LinkInput({data, onChange, onSelectChange, assignDataToLink, deleteLink
               />
             </div>
 
+            <div className="col-md-4 m-auto">
+              <input 
+                type="number"
+                id='EventThoughtId'
+                placeholder='EventThoughtId'
+                className='form-control'
+                name='EventThoughtId'
+                value={data.EventThoughtId}
+                onChange={onChange}
+              />
+            </div>
+
             <div className="col-md-12 m-auto">
               <SequenceCard sequence={data.sequence} add={addCmd} delete={deleteCmd} onChange={onChange} />
             </div>

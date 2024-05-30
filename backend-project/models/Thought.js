@@ -69,7 +69,11 @@ const ThoughtLinkSchema = new mongoose.Schema({
     sequence: {
         type: SequenceSchema,
         required: false,
-    }
+    },
+    EventThoughtId: {
+        type: Number,
+        required: false,
+    },
 }, { strict: false });
 
 const ThoughtNodeSchema = new mongoose.Schema({
@@ -99,6 +103,14 @@ const ThoughtNodeSchema = new mongoose.Schema({
     },
     Links: {
         type: [ThoughtLinkSchema],
+        required: false,
+    },
+    SoundPath: {
+        type: String,
+        required: false,
+    },
+    RepeatedSound: {
+        type: Boolean,
         required: false,
     },
     x: {

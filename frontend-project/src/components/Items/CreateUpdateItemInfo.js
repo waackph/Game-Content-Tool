@@ -6,7 +6,7 @@ import * as d3 from "d3";
 import '../../App.css';
 import ThoughtGraph from '../InputElements/ThoughtGraph';
 import { addLinksToThoughtData, addItemIdToThoughtNodes } from '../helpers/ItemThoughtHelpers';
-import { defaultThought, defaultCombineItem } from "../helpers/ThoughTreeDisplay";
+import { defaultThought, defaultCombineItem, defaultEventThought } from "../helpers/ThoughTreeDisplay";
 
 // ***
 // The input view to update a given Item object.
@@ -44,8 +44,8 @@ function UpdateItemInfo(props) {
   const [IsRoomChangeDoor, setIsRoomChangeDoor] = useState(true);
 
   const [Thought, setThought] = useState(defaultThought);
-
   const [CombineItem, setCombineItem] = useState(defaultCombineItem);
+  const [EventThought, setEventThought] = useState(defaultEventThought);
 
   const [allItems, setAllItems] = useState([]);
   const [allRooms, setAllRooms] = useState([]);
@@ -55,6 +55,9 @@ function UpdateItemInfo(props) {
 
   let combineThoughtConnections = [];
   let combineExportedThoughts = {};
+
+  let eventThoughtConnections = [];
+  let exportedEventThoughts = {};
 
   let { room_id, item_id } = useParams();
   let navigate = useNavigate();
@@ -92,6 +95,9 @@ function UpdateItemInfo(props) {
           setCloseTexturePath(res.data.CloseTexturePath);
           setIsRoomChangeDoor(res.data.IsRoomChangeDoor);
           setThought(res.data.Thought);
+          if(res.data.EventThought) {
+            setEventThought(res.data.EventThought);
+          }
         })
         .catch(err => { 
           console.log('Error from UpdateItemInfo'); 
@@ -225,6 +231,10 @@ function UpdateItemInfo(props) {
     combineThoughtConnections = connections;
   }
 
+  const getEventGraphConnections = connections => {
+    eventThoughtConnections = connections;
+  }
+
   function retrieveThoughtDataFromGraph(e) {
     e.preventDefault();
     const svg = d3.select('#ThoughtGraphInput');
@@ -235,7 +245,6 @@ function UpdateItemInfo(props) {
     let root = svg.select('#n'+rootNodeId).data()[0];
     root['Links'] = addLinksToThoughtData(svg, tempConnections, rootNodeId);
     exportedThoughts = root;
-    console.log(exportedThoughts);
     setThought(exportedThoughts);
   }
 
@@ -258,6 +267,19 @@ function UpdateItemInfo(props) {
     })
   }
 
+  function retrieveEventThoughtDataFromGraph(e) {
+    e.preventDefault();
+    const svg = d3.select('#EventThoughtGraphInput');
+    let tempConnections = [...eventThoughtConnections];
+
+    const rootConnection = eventThoughtConnections[0];
+    const rootNodeId = rootConnection.parentNode;
+    let root = svg.select('#n'+rootNodeId).data()[0];
+    root['Links'] = addLinksToThoughtData(svg, tempConnections, rootNodeId);
+    exportedEventThoughts = root;
+    setEventThought(exportedEventThoughts);
+  }
+
   const onSubmit = e => {
     e.preventDefault();
     // add item ID to all nodes of the Thought as field "ThingId" (we do this for potentially new nodes)
@@ -265,6 +287,7 @@ function UpdateItemInfo(props) {
     if(Id === 0) {
       const tempId = Math.floor(Math.random() * 10000 + Math.random() * 100 + 1);
       setThought(addItemIdToThoughtNodes(Thought, tempId));
+      setEventThought(addItemIdToThoughtNodes(EventThought, tempId));
       data = {
         Id: tempId,
         Name: Name,
@@ -291,11 +314,13 @@ function UpdateItemInfo(props) {
         InitPlayerPosY: InitPlayerPosY,
         CloseTexturePath: CloseTexturePath,
         IsRoomChangeDoor: IsRoomChangeDoor,
-        Thought: Thought
+        Thought: Thought,
+        EventThought: EventThought,
       };
     }
     else{
       setThought(addItemIdToThoughtNodes(Thought, Id));
+      setEventThought(addItemIdToThoughtNodes(EventThought, Id));
       data = {
         Id: Id,
         Name: Name,
@@ -322,7 +347,8 @@ function UpdateItemInfo(props) {
         InitPlayerPosY: InitPlayerPosY,
         CloseTexturePath: CloseTexturePath,
         IsRoomChangeDoor: IsRoomChangeDoor,
-        Thought: Thought
+        Thought: Thought,
+        EventThought: EventThought,
       };
     }
     if(ItemType === 'conscious.DataHolderCombineItem, conscious') {
@@ -375,6 +401,7 @@ function UpdateItemInfo(props) {
           setCloseTexturePath('');
           setIsRoomChangeDoor(true); 
           setThought('');
+          setEventThought('');
 
           navigate(`/item-list/${room_id}`);
         })
@@ -402,7 +429,7 @@ function UpdateItemInfo(props) {
   });
 
   // Decide what extended fields should be added
-  let extendedInputs = (<></>)
+  let extendedInputs = (<></>);
   if(ItemType !== 'conscious.DataHolderThing, conscious') {
     // append different sets of components using inputs = [input1, input2]
     extendedInputs = (
@@ -491,6 +518,7 @@ function UpdateItemInfo(props) {
           />
         </div>
       </div>
+      {/* Item Thought */}
       <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#itemThoughtInputs" 
         role="button" aria-expanded="false" aria-controls="collapseExample">
           Thought
@@ -500,6 +528,18 @@ function UpdateItemInfo(props) {
         <button onClick={retrieveThoughtDataFromGraph} className="m-2">Export!</button>
       </div>
       <br></br>
+
+      {/* Event Thought */}
+      <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#itemEventThoughtInputs" 
+        role="button" aria-expanded="false" aria-controls="collapseExample">
+          Event Thought
+      </a>
+      <div className="collapse mt-2 mb-2" id="itemEventThoughtInputs">
+        <ThoughtGraph svgId={'EventThoughtGraphInput'} data={EventThought} getConnections={getEventGraphConnections} exportGraphToParent={retrieveEventThoughtDataFromGraph} />
+        <button onClick={retrieveEventThoughtDataFromGraph} className="m-2">Export!</button>
+      </div>
+      <br></br>
+
     </>
     )
   }

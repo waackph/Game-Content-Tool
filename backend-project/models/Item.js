@@ -122,6 +122,10 @@ const ItemSchema = new mongoose.Schema({
         type: ThoughtNodeSchema,
         required: false,
     },
+    EventThought: {
+        type: ThoughtNodeSchema,
+        required: false,
+    },
 }, { strict: false });
 
 module.exports = ItemSchema;
