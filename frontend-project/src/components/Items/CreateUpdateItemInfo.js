@@ -376,7 +376,7 @@ function UpdateItemInfo(props) {
       }
       else {
         axios
-        .put('http://localhost:8082/api/items/' + room_id, data)
+        .post('http://localhost:8082/api/items/' + room_id, data)
         .then(res => {
           setId(0);
           setName('');
