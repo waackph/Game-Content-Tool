@@ -113,6 +113,10 @@ const ThoughtNodeSchema = new mongoose.Schema({
         type: Boolean,
         required: false,
     },
+    ThoughtPortrait: {
+        type: String,
+        required: false,
+    },
     x: {
         type: Number,
         required: false,

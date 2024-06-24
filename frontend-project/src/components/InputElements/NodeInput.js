@@ -35,25 +35,41 @@ function NodeInput({data, onChange, assignDataToNode, deleteNode}) {
                 onChange={onChange}
               />
             </div>
-            <div className="col-md-6 m-auto">
-              <input 
-                type='text'
-                placeholder='Sound Path'
-                className='form-control'
-                name='SoundPath'
-                id='SoundPath'
-                value={data.SoundPath}
-                onChange={onChange}
-              />
-            </div>
-            <div className="col-md-6 m-auto">
-              <CheckboxField
-                checkLabel='Sound Repeated'
-                name='RepeatedSound'
-                value={data.RepeatedSound}
-                onChange={onChange}
-              />
-            </div>
+            { data.IsRoot ? 
+            <>
+              <div className="col-md-6 m-auto">
+                <input 
+                  type='text'
+                  placeholder='Sound Path'
+                  className='form-control'
+                  name='SoundPath'
+                  id='SoundPath'
+                  value={data.SoundPath}
+                  onChange={onChange}
+                />
+              </div>
+              <div className="col-md-6 m-auto">
+                <CheckboxField
+                  checkLabel='Sound Repeated'
+                  name='RepeatedSound'
+                  value={data.RepeatedSound}
+                  onChange={onChange}
+                />
+              </div>
+              <div className="col-md-6 m-auto">
+                <input 
+                  type='text'
+                  placeholder='Thought Portrait'
+                  className='form-control'
+                  name='ThoughtPortrait'
+                  id='ThoughtPortrait'
+                  value={data.ThoughtPortrait}
+                  onChange={onChange}
+                />
+              </div>
+            </>
+            : 
+            <></>}
             {/* IsRoot and ThingId are going to be set automatically by context */}
           </div>
 
