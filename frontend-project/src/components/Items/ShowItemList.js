@@ -26,6 +26,8 @@ function ShowItemList(props) {
     const [yLimStart, setYLimStart] = useState();
     const [yLimEnd, setYLimEnd] = useState();
     const [SoundFilePath, setSoundFilePath] = useState('');
+    const [WalkingSoundFilePath, setWalkingSoundFilePath] = useState('');
+    const [AtmoSoundFilePath, setAtmoSoundFilePath] = useState('');
     const [LightMapPath, setLightMapPath] = useState('');
     const [EntrySequence, setEntrySequence] = useState({'Commands': []});
     const [Thought, setThought] = useState(defaultThought);
@@ -49,6 +51,8 @@ function ShowItemList(props) {
             setYLimStart(res.data.yLimStart);
             setYLimEnd(res.data.yLimEnd);
             setSoundFilePath(res.data.SoundFilePath);
+            setWalkingSoundFilePath(res.data.WalkingSoundFilePath);
+            setAtmoSoundFilePath(res.data.AtmoSoundFilePath);
             setLightMapPath(res.data.LightMapPath);
             const tmpThought = res.data.Thought;
             if(tmpThought == null){
@@ -107,6 +111,12 @@ function ShowItemList(props) {
         }
         else if(e.target.name === 'LightMapPath') {
             setLightMapPath(e.target.value);
+        }
+        else if(e.target.name === 'WalkingSoundFilePath') {
+            setWalkingSoundFilePath(e.target.value);
+        }
+        else if(e.target.name === 'AtmoSoundFilePath') {
+            setAtmoSoundFilePath(e.target.value);
         }
         else if(['CommandType',
         'DestinationX', 'DestinationY', 
@@ -174,6 +184,8 @@ function ShowItemList(props) {
             yLimEnd: yLimEnd,
             SoundFilePath: SoundFilePath,
             LightMapPath: LightMapPath,
+            WalkingSoundFilePath: WalkingSoundFilePath,
+            AtmoSoundFilePath: AtmoSoundFilePath,
             Thought: Thought
         };
 
@@ -187,6 +199,7 @@ function ShowItemList(props) {
         axios
           .put('http://localhost:8082/api/' + room_id, data)
           .then(res => {
+            console.log(res.data.WalkingSoundFilePath);
             navigate('/item-list/' + room_id);
           })
           .catch(err => {
@@ -273,6 +286,28 @@ function ShowItemList(props) {
                             name='SoundFilePath'
                             className='form-control'
                             value={SoundFilePath}
+                            onChange={onChange}
+                            />
+                        </div>
+
+                        <div className='form-group'>
+                            <input
+                            type='text'
+                            placeholder='Walking Sound File Path'
+                            name='WalkingSoundFilePath'
+                            className='form-control'
+                            value={WalkingSoundFilePath}
+                            onChange={onChange}
+                            />
+                        </div>
+
+                        <div className='form-group'>
+                            <input
+                            type='text'
+                            placeholder='Atmo Sound File Path'
+                            name='Atmo SoundFilePath'
+                            className='form-control'
+                            value={AtmoSoundFilePath}
                             onChange={onChange}
                             />
                         </div>

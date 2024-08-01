@@ -86,6 +86,14 @@ const ItemSchema = new mongoose.Schema({
         type: CombineItemSchema,
         required: false,
     },
+    UseSoundFilePath: {
+        type: String,
+        required: false,
+    },
+    LightMaskFilePath: {
+        type: String,
+        required: false,
+    },
 
     // Door properties
     RoomId: { // is an Object ID
@@ -114,6 +122,10 @@ const ItemSchema = new mongoose.Schema({
     },
     IsRoomChangeDoor: {
         type: Boolean,
+        required: false,
+    },
+    CloseSoundFilePath: {
+        type: String,
         required: false,
     },
 

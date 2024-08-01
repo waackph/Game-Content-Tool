@@ -34,6 +34,9 @@ function UpdateItemInfo(props) {
   const [GiveAble, setGiveAble] = useState(false);
   const [UseWith, setUseWith] = useState(false);
   const [ItemDependency, setItemDependency] = useState(-1);
+  const [UseSoundFilePath, setUseSoundFilePath] = useState('');
+  const [CloseSoundFilePath, setCloseSoundFilePath] = useState('');
+  const [LightMaskFilePath, setLightMaskFilePath] = useState('');
   // Door variables
   const [RoomId, setRoomId] = useState(0);
   const [DoorId, setDoorId] = useState(0);
@@ -85,6 +88,9 @@ function UpdateItemInfo(props) {
           setCombineAble(res.data.CombineAble);
           setGiveAble(res.data.GiveAble);
           setUseWith(res.data.UseWith);
+          setUseSoundFilePath(res.data.UseSoundFilePath);
+          setCloseSoundFilePath(res.data.CloseSoundFilePath);
+          setLightMaskFilePath(res.data.LightMaskFilePath);
           setItemDependency(res.data.ItemDependency);
           setCombineItem(res.data.CombineItem);
           setRoomId(res.data.RoomId);
@@ -177,6 +183,15 @@ function UpdateItemInfo(props) {
         }
         else if(e.target.name === 'UseWith') {
           setUseWith(!UseWith);
+        }
+        else if(e.target.name === 'UseSoundFilePath') {
+          setUseSoundFilePath(e.target.value);
+        }
+        else if(e.target.name === 'CloseSoundFilePath') {
+          setCloseSoundFilePath(e.target.value);
+        }
+        else if(e.target.name === 'LightMaskFilePath') {
+          setLightMaskFilePath(e.target.value);
         }
         else if(e.target.name === 'ItemDependency') {
           setItemDependency(e.target.value);
@@ -306,6 +321,9 @@ function UpdateItemInfo(props) {
         CombineAble: CombineAble,
         GiveAble: GiveAble,
         UseWith: UseWith,
+        UseSoundFilePath: UseSoundFilePath,
+        CloseSoundFilePath: CloseSoundFilePath,
+        LightMaskFilePath: LightMaskFilePath,
         ItemDependency: ItemDependency,
         RoomId: RoomId,
         DoorId: DoorId,
@@ -339,6 +357,9 @@ function UpdateItemInfo(props) {
         CombineAble: CombineAble,
         GiveAble: GiveAble,
         UseWith: UseWith,
+        UseSoundFilePath: UseSoundFilePath,
+        CloseSoundFilePath: CloseSoundFilePath,
+        LightMaskFilePath: LightMaskFilePath,
         ItemDependency: ItemDependency,
         RoomId: RoomId,
         DoorId: DoorId,
@@ -518,6 +539,34 @@ function UpdateItemInfo(props) {
           />
         </div>
       </div>
+
+      <div className="row">
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+              <input
+              type='text'
+              placeholder='Use Sound File Path'
+              name='UseSoundFilePath'
+              className='form-control'
+              value={UseSoundFilePath}
+              onChange={onChange}
+              />
+          </div>
+        </div>
+        <div className="col-md-6 m-auto">
+          <div className='form-group'>
+              <input
+              type='text'
+              placeholder='Light Mask File Path'
+              name='LightMaskFilePath'
+              className='form-control'
+              value={LightMaskFilePath}
+              onChange={onChange}
+              />
+          </div>
+        </div>
+      </div>
+
       {/* Item Thought */}
       <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#itemThoughtInputs" 
         role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -625,7 +674,9 @@ function UpdateItemInfo(props) {
             onChange={onChange} 
             />
         </div>
+      </div>
 
+      <div className="row">
         <div className="col-md-4 m-auto">
           <CheckboxField
           checkLabel='IsRoomChangeDoor'
@@ -633,6 +684,18 @@ function UpdateItemInfo(props) {
           name='IsRoomChangeDoor'
           onChange={onChange} 
           />
+        </div>
+        <div className="col-md-8 m-auto">
+          <div className='form-group'>
+              <input
+              type='text'
+              placeholder='Close Sound File Path'
+              name='CloseSoundFilePath'
+              className='form-control'
+              value={CloseSoundFilePath}
+              onChange={onChange}
+              />
+          </div>
         </div>
       </div>
     </>
@@ -858,6 +921,45 @@ function UpdateItemInfo(props) {
               onChange={onChangeCombineItem} 
               />
             </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-4 m-auto">
+                <div className='form-group'>
+                    <input
+                    type='text'
+                    placeholder='Use Sound File Path'
+                    name='UseSoundFilePath'
+                    className='form-control'
+                    value={CombineItem.UseSoundFilePath}
+                    onChange={onChangeCombineItem}
+                    />
+                </div>
+              </div>
+              <div className="col-md-4 m-auto">
+                <div className='form-group'>
+                    <input
+                    type='text'
+                    placeholder='Close Sound File Path'
+                    name='CloseSoundFilePath'
+                    className='form-control'
+                    value={CombineItem.CloseSoundFilePath}
+                    onChange={onChangeCombineItem}
+                    />
+                </div>
+              </div>
+              <div className="col-md-4 m-auto">
+                <div className='form-group'>
+                    <input
+                    type='text'
+                    placeholder='Light Mask File Path'
+                    name='LightMaskFilePath'
+                    className='form-control'
+                    value={CombineItem.LightMaskFilePath}
+                    onChange={onChangeCombineItem}
+                    />
+                </div>
+              </div>
           </div>
 
           <a className="btn btn-outline-primary btn-lg btn-block mt-2 mb-2" data-toggle="collapse" href="#combineItemThoughtInputs" 

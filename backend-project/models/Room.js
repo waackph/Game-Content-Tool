@@ -45,6 +45,14 @@ const RoomSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    WalkingSoundFilePath: {
+        type: String,
+        required: false,
+    },
+    AtmoSoundFilePath: {
+        type: String,
+        required: false,
+    },
     EntrySequence: {
         type: SequenceSchema,
         required: false,

@@ -86,7 +86,7 @@ router.put('/:room_id', (req, res) => {
   //       '$set': {'name': req.body.name, 'room_width': req.body.room_width, 'texture_path': req.body.texture_path}
   //   })
   Room.findByIdAndUpdate(req.params.room_id, req.body, {strict: false})
-    .then(room => res.json(room))
+    .then(room => {res.json(room);})
     .catch(err => res.status(400).json({ error: 'Unable to add room' }));
 });
 
