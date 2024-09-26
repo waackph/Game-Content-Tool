@@ -2,7 +2,7 @@
   "3": {
     "RoomWidth": 5760,
     "SoundFilePath": "Red_Curtains",
-    "LightMapPath": "light/light_gimp_v2",
+    "LightMapPath": "light/light_mask_corridor",
     "EntrySequence": null,
     "Thought": {
       "$type": "conscious.DataHolderThoughtNode, conscious",
@@ -135,6 +135,8 @@
     "xLimStart": 142,
     "yLimEnd": 1080,
     "yLimStart": 710,
+    "AtmoSoundFilePath": "",
+    "WalkingSoundFilePath": "default_walking_sound",
     "Things": [
       {
         "$type": "conscious.DataHolderDoor, conscious",
@@ -1114,7 +1116,7 @@
   "4": {
     "RoomWidth": 1920,
     "SoundFilePath": "Red_Curtains",
-    "LightMapPath": "light/light_gimp_v2",
+    "LightMapPath": "light/living_room_light_mask",
     "EntrySequence": null,
     "Thought": {
       "$type": "conscious.DataHolderThoughtNode, conscious",
@@ -2715,7 +2717,8 @@
             }
           ],
           "SoundPath": "clear_out/rooms/living_room/sounds/ring",
-          "RepeatedSound": true
+          "RepeatedSound": true,
+          "ThoughtPortrait": "clear_out/thought_portraits/boss_portrait_cut"
         }
       }
     ]
@@ -2723,7 +2726,7 @@
   "5": {
     "RoomWidth": 1920,
     "SoundFilePath": "Red_Curtains",
-    "LightMapPath": "light/light_gimp_v2",
+    "LightMapPath": "light/room_kitchen_dining_light_mask",
     "EntrySequence": null,
     "Thought": {
       "$type": "conscious.DataHolderThoughtNode, conscious",
@@ -3090,7 +3093,7 @@
         "Name": "K\u00fchlschrank",
         "texturePath": "clear_out/rooms/dining_room/objects/fridge_open_scaled_outline_442x532_pos_1575x427",
         "Rotation": 0,
-        "PositionX": 1413,
+        "PositionX": 1570,
         "PositionY": 372,
         "DrawOrder": 2,
         "Collidable": true,
