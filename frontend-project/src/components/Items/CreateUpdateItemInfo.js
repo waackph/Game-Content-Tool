@@ -17,6 +17,8 @@ function UpdateItemInfo(props) {
   const [Id, setId] = useState(0);
   const [Name, setName] = useState('');
   const [texturePath, setTexturePath] = useState('');
+  const [DepressedTexture, setDepressedTexture] = useState('');
+  const [ManicTexture, setManicTexture] = useState('');
   const [ItemType, setItemType] = useState('');
   const [Rotation, setRotation] = useState(0);
   const [PositionX, setPositionX] = useState(0);
@@ -74,6 +76,8 @@ function UpdateItemInfo(props) {
           setId(res.data.Id);
           setName(res.data.Name);
           setTexturePath(res.data.texturePath);
+          setDepressedTexture(res.data.DepressedTexture);
+          setManicTexture(res.data.ManicTexture);
           setItemType(res.data.ItemType);
           setRotation(res.data.Rotation);
           setPositionX(res.data.PositionX);
@@ -138,6 +142,12 @@ function UpdateItemInfo(props) {
         }
         else if(e.target.name === 'texturePath') {
           setTexturePath(e.target.value);
+        }
+        else if(e.target.name === 'DepressedTexture') {
+          setDepressedTexture(e.target.value);
+        }
+        else if(e.target.name === 'ManicTexture') {
+          setManicTexture(e.target.value);
         }
         else if(e.target.name === 'ItemType') {
           setItemType(e.target.value);
@@ -307,6 +317,8 @@ function UpdateItemInfo(props) {
         Id: tempId,
         Name: Name,
         texturePath: texturePath,
+        DepressedTexture: DepressedTexture,
+        ManicTexture: ManicTexture,
         ItemType: ItemType,
         Rotation: Rotation,
         PositionX: PositionX,
@@ -343,6 +355,8 @@ function UpdateItemInfo(props) {
         Id: Id,
         Name: Name,
         texturePath: texturePath,
+        DepressedTexture: DepressedTexture,
+        ManicTexture: ManicTexture,
         ItemType: ItemType,
         Rotation: Rotation,
         PositionX: PositionX,
@@ -402,6 +416,8 @@ function UpdateItemInfo(props) {
           setId(0);
           setName('');
           setTexturePath('');
+          setDepressedTexture('');
+          setManicTexture('');
           setItemType('');
           setRotation(0);
           setPositionX(0);
@@ -1018,6 +1034,32 @@ function UpdateItemInfo(props) {
                       name='texturePath'
                       className='form-control'
                       value={texturePath}
+                      onChange={onChange}
+                      />
+                  </div>
+                </div>
+
+                <div className="col-md-6 m-auto">
+                  <div className='form-group'>
+                      <input
+                      type='text'
+                      placeholder='Depressed Texture Path'
+                      name='DepressedTexture'
+                      className='form-control'
+                      value={DepressedTexture}
+                      onChange={onChange}
+                      />
+                  </div>
+                </div>
+
+                <div className="col-md-6 m-auto">
+                  <div className='form-group'>
+                      <input
+                      type='text'
+                      placeholder='Manic Texture Path'
+                      name='ManicTexture'
+                      className='form-control'
+                      value={ManicTexture}
                       onChange={onChange}
                       />
                   </div>
