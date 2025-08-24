@@ -24,7 +24,11 @@ def get_collection_content(collection):
 
 # Helper method to check if a Thought-Object is a default input and therefore can be removed.
 def is_default_thought(thought):
-    return (len(thought['Links']) > 0
+    return (thought['Thought'] == "Descriptive Thought" and len(thought['Links']) > 0
+            and thought['Links'][0]['Option'] == "First link"
+            and len(thought['Links'][0]['NextNode']['Links']) == 0)
+def is_one_node_thought(thought):
+    return (thought['Thought'] != "Descriptive Thought" and len(thought['Links']) > 0
             and thought['Links'][0]['Option'] == "First link"
             and len(thought['Links'][0]['NextNode']['Links']) == 0)
 
@@ -48,6 +52,8 @@ def modify_dict(obj):
         # Remove default data structures
         if 'Thought' in obj.keys() and type(obj['Thought']) == dict and is_default_thought(obj['Thought']):
             obj['Thought'] = None
+        if 'Thought' in obj.keys() and type(obj['Thought']) == dict and is_one_node_thought(obj['Thought']):
+            obj['Thought']['Links'] = []
         if 'EventThought' in obj.keys() and type(obj['EventThought']) == dict and is_default_thought(obj['EventThought']):
             obj['EventThought'] = None
         if 'sequence' in obj.keys() and not obj['sequence'].get('Commands'):
@@ -61,6 +67,10 @@ def modify_dict(obj):
             obj['texturePath'] = remove_file_ext(obj['texturePath'])
         if obj.get('CloseTexturePath'):
             obj['CloseTexturePath'] = remove_file_ext(obj['CloseTexturePath'])
+        if obj.get('DepressedTexture'):
+            obj['DepressedTexture'] = remove_file_ext(obj['DepressedTexture'])
+        if obj.get('ManicTexture'):
+            obj['ManicTexture'] = remove_file_ext(obj['ManicTexture'])
         # Remove node if no further thought exists ('lastnode')
         if obj.get('IsFinal') and obj.get('NextNode').get('Thought') == 'lastnode':
             obj['NextNode'] = None
@@ -106,7 +116,12 @@ def prepare_json(li):
         if 'EntrySequence' in d.keys():
             d['EntrySequence'] = modify_dict(d['EntrySequence'])
         if 'Thought' in d.keys():
-            d['Thought'] = modify_dict(d['Thought'])
+            if is_default_thought(d['Thought']):
+                d['Thought'] = None
+            elif is_one_node_thought(d['Thought']):
+                    d['Thought']['Links'] = []
+            else:
+                d['Thought'] = modify_dict(d['Thought'])
         l_dict[str(room_idx)] = d
     return l_dict
 
