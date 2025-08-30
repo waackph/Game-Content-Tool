@@ -31,7 +31,30 @@ const CommandSchema = new mongoose.Schema({
     DoorId: {
         type: Number,
         required: false,
-    }
+    },
+    // Animation & ChangeRoom
+    StartPositionX: {
+        type: Number,
+        required: false,
+    },
+    StartPositionY: {
+        type: Number,
+        required: false,
+    },
+    AnimState: {
+        type: String,
+        required: false,
+    },
+    // Animation
+    ScaleSize: {
+        type: Number,
+        required: false,
+    },
+    // ChangeRoom
+    NextRoomId: {
+        type: Number,
+        required: false,
+    },
 }, { strict: false });
 
 const SequenceSchema = new mongoose.Schema({

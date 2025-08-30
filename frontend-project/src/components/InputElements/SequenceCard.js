@@ -13,6 +13,11 @@ const SequenceCard = (props) => {
     let commands = sequence.Commands.map((val, idx) => {
         let DestinationX = `DestinationX-${val.index}`;
         let DestinationY = `DestinationY-${val.index}`;
+        let StartPositionX = `StartPositionX-${val.index}`;
+        let StartPositionY = `StartPositionY-${val.index}`;
+        let ScaleSize = `ScaleSize-${val.index}`;
+        let AnimState = `AnimState-${val.index}`;
+        let NextRoomId = `NextRoomId-${val.index}`;
         let MillisecondsToWait = `MillisecondsToWait-${val.index}`;
         let CmdSoundFilePath = `CmdSoundFilePath-${val.index}`;
         let DoorId = `DoorId-${val.index}`;
@@ -21,6 +26,9 @@ const SequenceCard = (props) => {
         let waitCmdVars = (<></>);
         let walkCmdVars = (<></>);
         let doorActionCmdVars = (<></>);
+        let animChangeRoomCmdVars = (<></>);
+        let animCmdVars = (<></>);
+        let changeRoomCmdVars = (<></>);
         if(val.CommandType === 'conscious.DataHolderWaitCommand, conscious'){
             waitCmdVars = (
                 <>
@@ -59,6 +67,46 @@ const SequenceCard = (props) => {
                 </>
             );
         }
+        else if(val.CommandType === 'conscious.DataHolderAnimateCommand, conscious' || val.CommandType === 'conscious.DataHolderChangeRoomCommand, conscious'){
+            animChangeRoomCmdVars = (
+                <>
+                    <div className="col-2">
+                        <label>StartPositionX</label> <br />
+                        <input className="seqInput" type="number" placeholder="StartPositionX" name="StartPositionX" value={val.StartPositionX} data-id={idx} id={StartPositionX} onChange={(e) => props.onChange(e)} />
+                    </div>
+                    <div className="col-2">
+                        <label>StartPositionY</label> <br />
+                        <input className="seqInput" type="number" placeholder="StartPositionY" name="StartPositionY" value={val.StartPositionY} data-id={idx} id={StartPositionY} onChange={(e) => props.onChange(e)} />
+                    </div>
+                    <div className="col-2">
+                        <label>AnimState</label> <br />
+                        <input className="seqInput" type="text" placeholder="AnimState" name="AnimState" value={val.AnimState} data-id={idx} id={AnimState} onChange={(e) => props.onChange(e)} />
+                    </div>
+                </>
+            );
+            if(val.CommandType === 'conscious.DataHolderAnimateCommand, conscious'){
+                animCmdVars = (
+                    <>
+                        <div className="col-2">
+                            <label>ScaleSize</label> <br />
+                            <input className="seqInput" type="number" placeholder="ScaleSize" name="ScaleSize" value={val.ScaleSize} data-id={idx} id={ScaleSize} onChange={(e) => props.onChange(e)} />
+                        </div>
+                    </>
+                );
+            }
+            else if(val.CommandType === 'conscious.DataHolderChangeRoomCommand, conscious'){
+                changeRoomCmdVars = (
+                    <>
+                        <div className="col-2">
+                            <label>NextRoomId</label> <br />
+                            <input className="seqInput" type="number" placeholder="NextRoomId" name="NextRoomId" value={val.NextRoomId} data-id={idx} id={NextRoomId} onChange={(e) => props.onChange(e)} />
+                        </div>
+                    </>
+                );
+            }
+        }
+
+
 
         return (
         <div className='row' key={idx}>
@@ -75,6 +123,7 @@ const SequenceCard = (props) => {
                     <option value="conscious.DataHolderWaitCommand, conscious">Wait</option>
                     <option value="conscious.DataHolderDoorActionCommand, conscious">DoorAction</option>
                     <option value="conscious.DataHolderAnimateCommand, conscious">Animate</option>
+                    <option value="conscious.DataHolderChangeRoomCommand, conscious">ChangeRoom</option>
                     <option value="conscious.DataHolderVanishCommand, conscious">Vanish</option>
                     <option value="conscious.DataHolderSayCommand, conscious">Say</option>
                 </select>
@@ -83,6 +132,9 @@ const SequenceCard = (props) => {
             { waitCmdVars }
             { walkCmdVars }
             { doorActionCmdVars }
+            { animChangeRoomCmdVars }
+            { animCmdVars }
+            { changeRoomCmdVars }
 
             <div className="col-2 p-2">
                 {idx === 0 ? (
