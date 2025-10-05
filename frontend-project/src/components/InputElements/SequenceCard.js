@@ -12,6 +12,7 @@ const SequenceCard = (props) => {
     // Create Commands list
     let commands = sequence.Commands.map((val, idx) => {
         let ThingId = `ThingId-${val.index}`;
+        let ThoughtText = `ThoughtText-${val.index}`;
         let DestinationX = `DestinationX-${val.index}`;
         let DestinationY = `DestinationY-${val.index}`;
         let StartPositionX = `StartPositionX-${val.index}`;
@@ -30,6 +31,7 @@ const SequenceCard = (props) => {
         let animChangeRoomCmdVars = (<></>);
         let animCmdVars = (<></>);
         let changeRoomCmdVars = (<></>);
+        let sayCmdVars = (<></>);
 
         if(val.CommandType === 'conscious.DataHolderWaitCommand, conscious'){
             waitCmdVars = (
@@ -65,6 +67,16 @@ const SequenceCard = (props) => {
                     <div className="col-2">
                         <label>DoorId</label> <br />
                         <input className="seqInput" type="number" placeholder="DoorId" name="DoorId" value={val.DoorId} data-id={idx} id={DoorId} onChange={(e) => props.onChange(e)} />
+                    </div>
+                </>
+            );
+        }
+        else if(val.CommandType === 'conscious.DataHolderSayCommand, conscious'){
+            sayCmdVars = (
+                <>
+                    <div className="col-2">
+                        <label>ThoughtText</label> <br />
+                        <input className="seqInput" type="text" placeholder="ThoughtText" name="ThoughtText" value={val.ThoughtText} data-id={idx} id={ThoughtText} onChange={(e) => props.onChange(e)} />
                     </div>
                 </>
             );
@@ -142,6 +154,7 @@ const SequenceCard = (props) => {
             { animChangeRoomCmdVars }
             { animCmdVars }
             { changeRoomCmdVars }
+            { sayCmdVars }
 
             <div className="col-2 p-2">
                 {idx === 0 ? (

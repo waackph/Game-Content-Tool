@@ -59,6 +59,10 @@ const CommandSchema = new mongoose.Schema({
         type: Number,
         required: false,
     },
+    ThoughtText: {
+        type: String,
+        required: false,
+    }
 }, { strict: false });
 
 const SequenceSchema = new mongoose.Schema({
