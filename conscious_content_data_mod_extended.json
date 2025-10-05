@@ -2728,10 +2728,10 @@
         "$type": "conscious.DataHolderItem, conscious",
         "Id": 9392,
         "Name": "Telefon und Adressbuch",
-        "texturePath": "clear_out/rooms/living_room/objects/telephone",
+        "texturePath": "clear_out/rooms/living_room/objects/telephone_outlined",
         "Rotation": 0,
-        "PositionX": 388,
-        "PositionY": 135,
+        "PositionX": 1145,
+        "PositionY": 747,
         "DrawOrder": 2,
         "Collidable": false,
         "CollisionBoxHeight": 20,
@@ -2790,6 +2790,7 @@
                       "LinkageId": 0,
                       "Id": 9869,
                       "Thought": "Hier stehen eine Menge Namen, zusammen mit Telefonnummern und Adressen.",
+                      "ThingId": 9392,
                       "Links": [
                         {
                           "$type": "conscious.DataHolderFinalThoughtLink, conscious",
@@ -2804,8 +2805,8 @@
                             "LinkageId": 0,
                             "Id": 569,
                             "Thought": "Keine Ahnung wer das ist.",
-                            "Links": [],
-                            "ThingId": 9392
+                            "ThingId": 9392,
+                            "Links": []
                           },
                           "Option": "Anne",
                           "IsFinal": true,
@@ -2826,6 +2827,7 @@
                             "LinkageId": 0,
                             "Id": 1822,
                             "Thought": "Ich erinnere mich! Karim war wohl meine erste gro\u00dfe Liebe.",
+                            "ThingId": 9392,
                             "Links": [
                               {
                                 "$type": "conscious.DataHolderThoughtLink, conscious",
@@ -2840,6 +2842,7 @@
                                   "LinkageId": 0,
                                   "Id": 8929,
                                   "Thought": "Wir haben uns h\u00e4ufig nach der Schule getroffen. Und ein Mal war ich bei ihm.",
+                                  "ThingId": 9392,
                                   "Links": [
                                     {
                                       "$type": "conscious.DataHolderThoughtLink, conscious",
@@ -2854,6 +2857,7 @@
                                         "LinkageId": 0,
                                         "Id": 165,
                                         "Thought": "Meine Mutter wollte nicht das ich dort hinfahre und bei ihm \u00fcbernachte. Bei einem Jungen \u00fcbernachten? Wer wei\u00df auf was f\u00fcr Ideen die kommen. Sowas war bestimmt die Bef\u00fcrchtung meiner Mutter. Ich bin dann trotzdem zu ihm und habe meiner Mutter gesagt, ich sei bei einer Freundin.",
+                                        "ThingId": 9392,
                                         "Links": [
                                           {
                                             "$type": "conscious.DataHolderThoughtLink, conscious",
@@ -2868,6 +2872,7 @@
                                               "LinkageId": 0,
                                               "Id": 4260,
                                               "Thought": "Aber irgendwie muss sie es herausgefunden haben. Als ich zur\u00fcckkam hat sie mich einfach ignoriert. Kein Wort mit mir gesprochen. Als das den ganzen Tag so ging habe ich angefangen zu weinen, aber sie hat mich weiter ignoriert. Jeder Backpfeife f\u00fcr meine L\u00fcge w\u00e4re weniger schlimm gewesen.",
+                                              "ThingId": 9392,
                                               "Links": [
                                                 {
                                                   "$type": "conscious.DataHolderThoughtLink, conscious",
@@ -2882,6 +2887,7 @@
                                                     "LinkageId": 0,
                                                     "Id": 9916,
                                                     "Thought": "Ich konnte es nur erahnen, dass meine L\u00fcge aufgeflogen war und sie sauer auf mich war. Ich lag das restliche Wochenende in meinem Zimmer und hab mir nur gew\u00fcnscht dass meine Mutter mich wieder wahrnimmt. Und irgendwann hatte ich die Angst Unsichtbar geworden zu sein.",
+                                                    "ThingId": 9392,
                                                     "Links": [
                                                       {
                                                         "$type": "conscious.DataHolderThoughtLink, conscious",
@@ -2896,6 +2902,7 @@
                                                           "LinkageId": 0,
                                                           "Id": 280,
                                                           "Thought": "Am Montag Morgen als ich zur Schule musste, war pl\u00f6tzlich der Tisch gedeckt und es gab Fr\u00fchst\u00fcck. Meine Mutter fragte mich ganz routiniert, ob ich Orangensaft wolle. Ich war verwirrt aber zugleich so \u00fcbergl\u00fccklich, dass ich wieder f\u00fcr sie sichtbar war, dass ich es nicht weiter hinterfragt hatte.",
+                                                          "ThingId": 9392,
                                                           "Links": [
                                                             {
                                                               "$type": "conscious.DataHolderThoughtLink, conscious",
@@ -2910,6 +2917,7 @@
                                                                 "LinkageId": 0,
                                                                 "Id": 6239,
                                                                 "Thought": "Aber damals war es meine gerechtfertigte Strafe, daf\u00fcr dass ich gemacht habe, was ich wollte. Ich hatte so viel Angst dass ich wieder unsichtbar werde, dass ich versucht habe, alle Bed\u00fcrfnisse meiner Mutter zu erf\u00fcllen und nichts mehr aus ihrer Sicht \"falsch\" zu machen.",
+                                                                "ThingId": 9392,
                                                                 "Links": [
                                                                   {
                                                                     "$type": "conscious.DataHolderFinalThoughtLink, conscious",
@@ -2924,8 +2932,8 @@
                                                                       "LinkageId": 0,
                                                                       "Id": 4115,
                                                                       "Thought": "Jetzt ist es zu sp\u00e4t. Sie wird mich f\u00fcr immer ignorieren.",
-                                                                      "Links": [],
-                                                                      "ThingId": 9392
+                                                                      "ThingId": 9392,
+                                                                      "Links": []
                                                                     },
                                                                     "Option": "Auch jetzt f\u00fchle ich vor allem Schuld. Ich bereue es dass ich Lydia nie mehr besucht habe.",
                                                                     "IsFinal": true,
@@ -2934,38 +2942,31 @@
                                                                     "MoodChange": 1,
                                                                     "IsSuccessEdge": true
                                                                   }
-                                                                ],
-                                                                "ThingId": 9392
+                                                                ]
                                                               },
                                                               "Option": "Ich war verliebt und wollte mit Karim zusammen sein. Das meine Mutter mich tagelang als Reaktion ignoriert kommt mir aus heutiger Sicht komplett \u00fcbertrieben vor."
                                                             }
-                                                          ],
-                                                          "ThingId": 9392
+                                                          ]
                                                         },
                                                         "Option": "Vielleicht konnte sie mich nicht mehr sehen."
                                                       }
-                                                    ],
-                                                    "ThingId": 9392
+                                                    ]
                                                   },
                                                   "Option": "Ich wusste nicht Mal wirklich warum sie mich ignorierte."
                                                 }
-                                              ],
-                                              "ThingId": 9392
+                                              ]
                                             },
                                             "Option": "Und wie ging es weiter?"
                                           }
-                                        ],
-                                        "ThingId": 9392
+                                        ]
                                       },
                                       "Option": "Jetzt erinnere ich mich."
                                     }
-                                  ],
-                                  "ThingId": 9392
+                                  ]
                                 },
                                 "Option": "Wie konnte ich ihn so vollst\u00e4ndig vergessen?"
                               }
-                            ],
-                            "ThingId": 9392
+                            ]
                           },
                           "Option": "Karim"
                         },
@@ -2997,8 +2998,7 @@
                           "MoodChange": 0,
                           "NextNode": null
                         }
-                      ],
-                      "ThingId": 9392
+                      ]
                     },
                     "Option": "Schauen wir mal in das Adressbuch neben dem Telefon."
                   }
@@ -3876,13 +3876,47 @@
         "IsRoomChangeDoor": true,
         "Thought": null,
         "EventThought": null
+      },
+      {
+        "$type": "conscious.DataHolderItem, conscious",
+        "Id": 6951,
+        "Name": "Scherben",
+        "texturePath": "clear_out/rooms/dining_room/objects/sheds_outlined",
+        "Rotation": 0,
+        "PositionX": 1450,
+        "PositionY": 820,
+        "DrawOrder": 3,
+        "Collidable": false,
+        "CollisionBoxHeight": 20,
+        "ExamineText": "Die Scherben der geliebten Teekanne meiner Mutter.",
+        "IsInInventory": false,
+        "UseAble": false,
+        "PickUpAble": false,
+        "CombineAble": false,
+        "GiveAble": false,
+        "UseWith": false,
+        "ItemDependency": "-1",
+        "UseSoundFilePath": "",
+        "LightMaskFilePath": "",
+        "RoomId": 0,
+        "DoorId": 0,
+        "IsUnlocked": false,
+        "InitPlayerPosX": -1,
+        "InitPlayerPosY": -1,
+        "CloseTexturePath": "",
+        "IsRoomChangeDoor": true,
+        "CloseSoundFilePath": "",
+        "Thought": null,
+        "EventThought": null,
+        "DepressedTexture": "",
+        "ManicTexture": ""
       }
     ]
   },
   "6": {
     "RoomWidth": 1920,
     "xLimStart": 560,
-    "xLimEnd": 1620,
+    "xLimEnd": 1670,
     "yLimStart": 770,
     "yLimEnd": 1080,
     "SoundFilePath": "Red_Curtains",
@@ -3910,7 +3944,7 @@
         "Name": "T\u00fcr zu Abstellraum",
         "texturePath": "clear_out/rooms/basement/objects/basement_door",
         "Rotation": 0,
-        "PositionX": 1565,
+        "PositionX": 1775,
         "PositionY": 414,
         "DrawOrder": 3,
         "Collidable": true,
@@ -4614,10 +4648,10 @@
         "$type": "conscious.DataHolderItem, conscious",
         "Id": 4830,
         "Name": "Bild einer Sonnenblume",
-        "texturePath": "clear_out/rooms/bedroom/objects/bedroom_picture",
+        "texturePath": "clear_out/rooms/bedroom/objects/flower_on_canvas",
         "Rotation": 0,
-        "PositionX": 1215,
-        "PositionY": 148,
+        "PositionX": 1344,
+        "PositionY": 157,
         "DrawOrder": 2,
         "Collidable": false,
         "CollisionBoxHeight": 20,
@@ -6857,7 +6891,7 @@
               "NextNode": {
                 "$type": "conscious.DataHolderThoughtNode, conscious",
                 "Id": 9777,
-                "Thought": "First node",
+                "Thought": "Brauche ich hier noch was?",
                 "IsRoot": false,
                 "LinkageId": 0,
                 "ThingId": 7398,
@@ -6869,7 +6903,7 @@
                       0
                     ],
                     "Id": 8198,
-                    "Option": "Weiter gehts.",
+                    "Option": "Nope. Weiter gehts.",
                     "IsFinal": true,
                     "sequence": null,
                     "Verb": 4,
@@ -7454,6 +7488,142 @@
         "PositionX": 960,
         "PositionY": 540,
         "DrawOrder": 0,
+        "Collidable": false,
+        "CollisionBoxHeight": 20,
+        "ExamineText": "",
+        "IsInInventory": false,
+        "UseAble": false,
+        "PickUpAble": false,
+        "CombineAble": false,
+        "GiveAble": false,
+        "UseWith": false,
+        "ItemDependency": "-1",
+        "UseSoundFilePath": "",
+        "LightMaskFilePath": "",
+        "RoomId": 0,
+        "DoorId": 0,
+        "IsUnlocked": false,
+        "InitPlayerPosX": -1,
+        "InitPlayerPosY": -1,
+        "CloseTexturePath": "",
+        "IsRoomChangeDoor": true,
+        "CloseSoundFilePath": "",
+        "Thought": null,
+        "EventThought": null,
+        "DepressedTexture": "",
+        "ManicTexture": ""
+      },
+      {
+        "$type": "conscious.DataHolderThing, conscious",
+        "Id": 243,
+        "Name": "Tumor 1",
+        "texturePath": "clear_out/rooms/childroom/objects/tumor1_outlined",
+        "Rotation": 0,
+        "PositionX": 1876,
+        "PositionY": 712,
+        "DrawOrder": 3,
+        "Collidable": false,
+        "CollisionBoxHeight": 20,
+        "ExamineText": "",
+        "IsInInventory": false,
+        "UseAble": false,
+        "PickUpAble": false,
+        "CombineAble": false,
+        "GiveAble": false,
+        "UseWith": false,
+        "ItemDependency": "-1",
+        "UseSoundFilePath": "",
+        "LightMaskFilePath": "",
+        "RoomId": 0,
+        "DoorId": 0,
+        "IsUnlocked": false,
+        "InitPlayerPosX": -1,
+        "InitPlayerPosY": -1,
+        "CloseTexturePath": "",
+        "IsRoomChangeDoor": true,
+        "CloseSoundFilePath": "",
+        "Thought": null,
+        "EventThought": null,
+        "DepressedTexture": "",
+        "ManicTexture": ""
+      },
+      {
+        "$type": "conscious.DataHolderThing, conscious",
+        "Id": 6658,
+        "Name": "Tumor 2",
+        "texturePath": "clear_out/rooms/childroom/objects/tumor2_outlined",
+        "Rotation": 0,
+        "PositionX": 1044,
+        "PositionY": 908,
+        "DrawOrder": 3,
+        "Collidable": false,
+        "CollisionBoxHeight": 20,
+        "ExamineText": "",
+        "IsInInventory": false,
+        "UseAble": false,
+        "PickUpAble": false,
+        "CombineAble": false,
+        "GiveAble": false,
+        "UseWith": false,
+        "ItemDependency": "-1",
+        "UseSoundFilePath": "",
+        "LightMaskFilePath": "",
+        "RoomId": 0,
+        "DoorId": 0,
+        "IsUnlocked": false,
+        "InitPlayerPosX": -1,
+        "InitPlayerPosY": -1,
+        "CloseTexturePath": "",
+        "IsRoomChangeDoor": true,
+        "CloseSoundFilePath": "",
+        "Thought": null,
+        "EventThought": null,
+        "DepressedTexture": "",
+        "ManicTexture": ""
+      },
+      {
+        "$type": "conscious.DataHolderThing, conscious",
+        "Id": 8823,
+        "Name": "Tumor 3",
+        "texturePath": "clear_out/rooms/childroom/objects/tumor3_outlined",
+        "Rotation": 0,
+        "PositionX": 1203,
+        "PositionY": 759,
+        "DrawOrder": 3,
+        "Collidable": false,
+        "CollisionBoxHeight": 20,
+        "ExamineText": "",
+        "IsInInventory": false,
+        "UseAble": false,
+        "PickUpAble": false,
+        "CombineAble": true,
+        "GiveAble": false,
+        "UseWith": false,
+        "ItemDependency": "-1",
+        "UseSoundFilePath": "",
+        "LightMaskFilePath": "",
+        "RoomId": 0,
+        "DoorId": 0,
+        "IsUnlocked": false,
+        "InitPlayerPosX": -1,
+        "InitPlayerPosY": -1,
+        "CloseTexturePath": "",
+        "IsRoomChangeDoor": true,
+        "CloseSoundFilePath": "",
+        "Thought": null,
+        "EventThought": null,
+        "DepressedTexture": "",
+        "ManicTexture": ""
+      },
+      {
+        "$type": "conscious.DataHolderThing, conscious",
+        "Id": 3924,
+        "Name": "Tumor 4",
+        "texturePath": "clear_out/rooms/childroom/objects/tumor4_outlined",
+        "Rotation": 0,
+        "PositionX": 1565,
+        "PositionY": 768,
+        "DrawOrder": 3,
         "Collidable": false,
         "CollisionBoxHeight": 20,
         "ExamineText": "",
