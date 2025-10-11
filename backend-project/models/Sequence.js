@@ -9,6 +9,10 @@ const CommandSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    ThingId: {
+        type: Number,
+        required: false,
+    },
     // Walk
     DestinationX: {
         type: Number,
@@ -55,6 +59,10 @@ const CommandSchema = new mongoose.Schema({
         type: Number,
         required: false,
     },
+    ThoughtText: {
+        type: String,
+        required: false,
+    }
 }, { strict: false });
 
 const SequenceSchema = new mongoose.Schema({

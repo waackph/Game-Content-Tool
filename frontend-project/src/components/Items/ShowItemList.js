@@ -121,6 +121,8 @@ function ShowItemList(props) {
         else if(['CommandType',
         'DestinationX', 'DestinationY', 
         'MillisecondsToWait', 'CmdSoundFilePath',
+        'ThingId', 'StartPositionX', 'StartPositionY', 
+        'ScaleSize', 'AnimState', 'NextRoomId', 'ThoughtText',
         'DoorId'].includes(e.target.name)) {
             let cmds = [...EntrySequence.Commands];
             cmds[e.target.dataset.id][e.target.name] = e.target.value;

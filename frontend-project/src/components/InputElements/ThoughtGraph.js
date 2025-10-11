@@ -116,9 +116,11 @@ const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
       }
     }
     if(['CommandType',
-             'DestinationX', 'DestinationY', 
-             'MillisecondsToWait', 'CmdSoundFilePath',
-             'DoorId'].includes(e.target.name)) {
+        'DestinationX', 'DestinationY', 
+        'MillisecondsToWait', 'CmdSoundFilePath',
+        'ThingId', 'StartPositionX', 'StartPositionY',
+        'ScaleSize', 'AnimState', 'NextRoomId', 'ThoughtText',
+        'DoorId'].includes(e.target.name)) {
       let cmds = [...linkInputData.sequence.Commands];
       cmds[e.target.dataset.id][e.target.name] = e.target.value;
       setLinkInputData({

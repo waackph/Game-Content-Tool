@@ -27,6 +27,7 @@ function UpdateItemInfo(props) {
   const [DrawOrder, setDrawOrder] = useState(3);
   const [ExamineText, setExamineText] = useState('');
   const [Collidable, setCollidable] = useState(false);
+  const [IsActive, setIsActive] = useState(true);
   const [CollisionBoxHeight, setCollisionBoxHeight] = useState(20);
   // Item variables
   const [IsInInventory, setIsInInventory] = useState(false);
@@ -84,6 +85,7 @@ function UpdateItemInfo(props) {
           setPositionY(res.data.PositionY);
           setDrawOrder(res.data.DrawOrder);
           setCollidable(res.data.Collidable);
+          setIsActive(res.data.IsActive);
           setCollisionBoxHeight(res.data.CollisionBoxHeight);
           setExamineText(res.data.ExamineText);
           setIsInInventory(res.data.IsInInventory);
@@ -169,6 +171,9 @@ function UpdateItemInfo(props) {
         }
         else if(e.target.name === 'Collidable') {
           setCollidable(!Collidable);
+        }
+        else if(e.target.name === 'IsActive') {
+          setIsActive(!IsActive);
         }
         else if(e.target.name === 'CollisionBoxHeight') {
           setCollisionBoxHeight(e.target.value);
@@ -325,6 +330,7 @@ function UpdateItemInfo(props) {
         PositionY: PositionY,
         DrawOrder: DrawOrder,
         Collidable: Collidable,
+        IsActive: IsActive,
         CollisionBoxHeight: CollisionBoxHeight,
         ExamineText: ExamineText,
         IsInInventory: IsInInventory,
@@ -363,6 +369,7 @@ function UpdateItemInfo(props) {
         PositionY: PositionY,
         DrawOrder: DrawOrder,
         Collidable: Collidable,
+        IsActive: IsActive,
         CollisionBoxHeight: CollisionBoxHeight,
         ExamineText: ExamineText,
         IsInInventory: IsInInventory,
@@ -852,6 +859,15 @@ function UpdateItemInfo(props) {
                 />
               </div>
 
+              <div className="col-md-4 m-auto">
+                <CheckboxField
+                checkLabel='IsActive'
+                value={CombineItem.IsActive}
+                name='IsActive'
+                onChange={onChangeCombineItem} 
+                />
+              </div>
+
             </div>
 
           <div className="row">
@@ -1158,6 +1174,15 @@ function UpdateItemInfo(props) {
                   checkLabel='Collidable'
                   value={Collidable}
                   name='Collidable'
+                  onChange={onChange} 
+                  />
+                </div>
+                
+                <div className="col-md-4 m-auto">
+                  <CheckboxField
+                  checkLabel='IsActive'
+                  value={IsActive}
+                  name='IsActive'
                   onChange={onChange} 
                   />
                 </div>

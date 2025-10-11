@@ -42,6 +42,10 @@ const ItemSchema = new mongoose.Schema({
     },
 
     // Not required for all items
+    IsActive: {
+        type: Boolean,
+        required: false,
+    },
     Collidable: {
         type: Boolean,
         required: false,
