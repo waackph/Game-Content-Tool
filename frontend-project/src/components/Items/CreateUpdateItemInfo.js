@@ -27,7 +27,7 @@ function UpdateItemInfo(props) {
   const [DrawOrder, setDrawOrder] = useState(3);
   const [ExamineText, setExamineText] = useState('');
   const [Collidable, setCollidable] = useState(false);
-  const [IsActive, setIsActive] = useState(false);
+  const [IsActive, setIsActive] = useState(true);
   const [CollisionBoxHeight, setCollisionBoxHeight] = useState(20);
   // Item variables
   const [IsInInventory, setIsInInventory] = useState(false);
@@ -85,6 +85,7 @@ function UpdateItemInfo(props) {
           setPositionY(res.data.PositionY);
           setDrawOrder(res.data.DrawOrder);
           setCollidable(res.data.Collidable);
+          setIsActive(res.data.IsActive);
           setCollisionBoxHeight(res.data.CollisionBoxHeight);
           setExamineText(res.data.ExamineText);
           setIsInInventory(res.data.IsInInventory);
