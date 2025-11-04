@@ -70,6 +70,10 @@ const RoomSchema = new mongoose.Schema({
         type: ThoughtNodeSchema,
         required: false,
     },
+    PlayerScale: {
+        type: Number,
+        required: false,
+    },
 }, { strict: false });
 
 module.exports = Room = mongoose.model('room', RoomSchema);

@@ -46,7 +46,7 @@ def modify_dict(obj):
         for field in fields_to_remove:
             if field in obj.keys():
                 del obj[field]
-        if 'texturePath' in obj.keys() and  'IsActive' not in obj.keys():
+        if 'texturePath' in obj.keys() and 'IsActive' not in obj.keys():
             obj['IsActive'] = True
         # if dialog link: remove Id field as well (used for graphinput)
         if '_nextNodeId' in obj.keys() and 'Id' in obj.keys():

@@ -27,6 +27,7 @@ function CreateRoom (props) {
   const [LightMapPath, setLightMapPath] = useState('');
   const [EntrySequence, setEntrySequence] = useState({'Commands': []});
   const [Thought, setThought] = useState(defaultThought);
+  const [PlayerScale, setPlayerScale] = useState(1);
 
   let thoughtConnections = [];
   let exportedThoughts = {};
@@ -76,6 +77,9 @@ function CreateRoom (props) {
       let cmds = [...EntrySequence.Commands];
       cmds[e.target.dataset.id][e.target.name] = e.target.value;
       setEntrySequence({...EntrySequence, Commands: cmds});
+    }
+    else if(e.target.name === 'PlayerScale') {
+      setPlayerScale(e.target.value);
     }
     else {
       console.log('No matching variable to fieldname' + e.target.value)
@@ -134,7 +138,8 @@ function CreateRoom (props) {
       LightMapPath: LightMapPath,
       WalkingSoundFilePath: WalkingSoundFilePath,
       AtmoSoundFilePath: AtmoSoundFilePath,
-      Thought: Thought
+      Thought: Thought,
+      PlayerScale: PlayerScale
     };
   
     if(EntrySequence.Commands.length !== 0) {
@@ -158,6 +163,7 @@ function CreateRoom (props) {
         setLightMapPath('');
         setEntrySequence({'Commands': []});
         setThought(defaultThought);
+        setPlayerScale(1);
         navigate(`/item-list/${res.data._id}`); //"/item-list/" + res._id);
       })
       .catch(err => {
@@ -297,6 +303,16 @@ function CreateRoom (props) {
                   name='yLimEnd'
                   className='form-control'
                   value={yLimEnd}
+                  onChange={onChange}
+                />
+              </div>
+              <div className='form-group'>
+                <input
+                  type='number'
+                  placeholder='Player Scale'
+                  name='PlayerScale'
+                  className='form-control'
+                  value={PlayerScale}
                   onChange={onChange}
                 />
               </div>

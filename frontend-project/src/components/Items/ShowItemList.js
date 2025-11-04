@@ -31,6 +31,7 @@ function ShowItemList(props) {
     const [LightMapPath, setLightMapPath] = useState('');
     const [EntrySequence, setEntrySequence] = useState({'Commands': []});
     const [Thought, setThought] = useState(defaultThought);
+    const [PlayerScale, setPlayerScale] = useState(1);
 
     let thoughtConnections = [];
     let exportedThoughts = {};  
@@ -54,6 +55,7 @@ function ShowItemList(props) {
             setWalkingSoundFilePath(res.data.WalkingSoundFilePath);
             setAtmoSoundFilePath(res.data.AtmoSoundFilePath);
             setLightMapPath(res.data.LightMapPath);
+            setPlayerScale(res.data.PlayerScale);
             const tmpThought = res.data.Thought;
             if(tmpThought == null){
                 setThought(defaultThought);
@@ -128,6 +130,9 @@ function ShowItemList(props) {
             cmds[e.target.dataset.id][e.target.name] = e.target.value;
             setEntrySequence({...EntrySequence, Commands: cmds});
         }
+        else if(e.target.name === 'PlayerScale') {
+            setPlayerScale(e.target.value);
+        }
         else {
             console.log('No matching variable to fieldname')
         }
@@ -188,7 +193,8 @@ function ShowItemList(props) {
             LightMapPath: LightMapPath,
             WalkingSoundFilePath: WalkingSoundFilePath,
             AtmoSoundFilePath: AtmoSoundFilePath,
-            Thought: Thought
+            Thought: Thought,
+            PlayerScale: PlayerScale,
         };
 
         if(EntrySequence.Commands.length !== 0) {
@@ -365,6 +371,19 @@ function ShowItemList(props) {
                             onChange={onChange}
                             />
                         </div>
+                        <div className='form-group'>
+                            <input
+                            type='number'
+                            placeholder='Player Scale'
+                            name='PlayerScale'
+                            className='form-control'
+                            value={PlayerScale}
+                            onChange={onChange}
+                            step={0.01}
+                            min={0}
+                            />
+                        </div>
+
 
                         <SequenceCard sequence={EntrySequence} add={addSequenceCommand} delete={deleteRow} onChange={onChange} />
 
