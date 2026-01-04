@@ -239,7 +239,7 @@
                           "index": 0.9969328175477751,
                           "DestinationX": 0,
                           "DestinationY": 0,
-                          "CmdSoundFilePath": "Audio/ShowerSound",
+                          "CmdSoundFilePath": "ShowerSound",
                           "MillisecondsToWait": "10500"
                         },
                         {
@@ -261,13 +261,20 @@
                           "DestinationX": 0,
                           "DestinationY": 0,
                           "MillisecondsToWait": "600",
-                          "CmdSoundFilePath": "Audio/close-door"
+                          "CmdSoundFilePath": "close-door"
                         },
                         {
                           "$type": "conscious.DataHolderWalkCommand, conscious",
                           "index": 0.21068733118567107,
                           "DestinationX": "5074",
                           "DestinationY": "500"
+                        },
+                        {
+                          "$type": "conscious.DataHolderSayCommand, conscious",
+                          "index": 0.2945354483590361,
+                          "DestinationX": 0,
+                          "DestinationY": 0,
+                          "ThoughtText": "Ich f\u00fchle mich schon besser. Im Traum war ich in meinem Kinderzimmer. Vielleicht war das ein Zeichen und ich finde dort etwas, das meinen Erinnerungen auf die Spr\u00fcnge hilft."
                         }
                       ]
                     },
@@ -306,7 +313,7 @@
         "RoomId": 5,
         "DoorId": 9055,
         "IsUnlocked": true,
-        "InitPlayerPosX": 1788,
+        "InitPlayerPosX": 1550,
         "InitPlayerPosY": 475,
         "CloseTexturePath": "clear_out/rooms/corridor/objects/Door_Dining_Room_closed_306x511_pos_2843x288",
         "IsRoomChangeDoor": true,
@@ -465,7 +472,7 @@
         "RoomId": 4,
         "DoorId": 1584,
         "IsUnlocked": true,
-        "InitPlayerPosX": 86,
+        "InitPlayerPosX": 200,
         "InitPlayerPosY": 501,
         "CloseTexturePath": "clear_out/rooms/corridor/objects/Door_Living_Room_closed_306x511_pos_1606x287",
         "IsRoomChangeDoor": true,
@@ -1024,11 +1031,12 @@
         "$type": "conscious.DataHolderItem, conscious",
         "Id": 2981,
         "Name": "Umzugskartons",
-        "texturePath": "clear_out/rooms/corridor/objects/shoes_jackets_779x482_pos_863x385",
+        "texturePath": "clear_out/rooms/storage_room/objects/storage_boxes-3_outlined",
         "Rotation": 0,
-        "PositionX": 640,
-        "PositionY": 510,
-        "DrawOrder": 2,
+        "PositionX": 900,
+        "PositionY": 450,
+        "DrawOrder": 3,
+        "Collidable": true,
         "ExamineText": "Die Umzugskartons f\u00fcr Lydias Sachen.",
         "IsInInventory": false,
         "UseAble": false,
@@ -1217,6 +1225,7 @@
             }
           ]
         },
+        "EventThought": null,
         "IsActive": true
       }
     ]
@@ -1310,7 +1319,7 @@
         "DoorId": 2203,
         "IsUnlocked": true,
         "InitPlayerPosX": 1606,
-        "InitPlayerPosY": 287,
+        "InitPlayerPosY": 400,
         "CloseTexturePath": "clear_out/rooms/living_room/objects/living_room_door_closed_scaled_outline_150x795_pos_85x504",
         "IsRoomChangeDoor": true,
         "CloseSoundFilePath": "close-door",
@@ -1746,22 +1755,18 @@
                       "ThingId": 4492,
                       "Links": [
                         {
-                          "$type": "conscious.DataHolderThoughtLink, conscious",
+                          "$type": "conscious.DataHolderFinalThoughtLink, conscious",
                           "IsLocked": false,
                           "ValidMoods": [
                             0
                           ],
                           "Id": 7130,
                           "Option": "Manchmal ist Einsamkeit auch was sch\u00f6nes.",
-                          "NextNode": {
-                            "$type": "conscious.DataHolderThoughtNode, conscious",
-                            "IsRoot": false,
-                            "LinkageId": 0,
-                            "Id": 1188,
-                            "Thought": "lastnode",
-                            "ThingId": 4492,
-                            "Links": []
-                          }
+                          "NextNode": null,
+                          "IsFinal": true,
+                          "sequence": null,
+                          "Verb": 0,
+                          "MoodChange": 0
                         },
                         {
                           "$type": "conscious.DataHolderFinalThoughtLink, conscious",
@@ -1782,7 +1787,7 @@
                   },
                   {
                     "$type": "conscious.DataHolderFinalThoughtLink, conscious",
-                    "IsLocked": false,
+                    "IsLocked": true,
                     "ValidMoods": [
                       0
                     ],
@@ -2829,6 +2834,20 @@
                       ]
                     },
                     "Option": "Schauen wir mal in das Adressbuch neben dem Telefon."
+                  },
+                  {
+                    "$type": "conscious.DataHolderFinalThoughtLink, conscious",
+                    "IsLocked": false,
+                    "ValidMoods": [
+                      0
+                    ],
+                    "Id": 7141,
+                    "NextNode": null,
+                    "IsFinal": true,
+                    "sequence": null,
+                    "Option": "Ich muss gerade niemanden anrufen.",
+                    "Verb": 0,
+                    "MoodChange": 0
                   }
                 ]
               }
@@ -2998,7 +3017,7 @@
                                                   "Verb": 0,
                                                   "MoodChange": 0,
                                                   "IsSuccessEdge": true,
-                                                  "EventThoughtId": "1750"
+                                                  "EventThoughtId": 1750
                                                 }
                                               ]
                                             },
@@ -3061,6 +3080,7 @@
                       "LinkageId": 0,
                       "Id": 2155,
                       "Thought": "Ich wei\u00df du hast dir frei genommen. Ich habe aber gerade festgestellt, dass deine Arbeit an der Statue noch gar nicht fertig ist. Die muss doch aber in drei Wochen bereit zur R\u00fcckgabe sein.",
+                      "ThingId": 1291,
                       "Links": [
                         {
                           "$type": "conscious.DataHolderThoughtLink, conscious",
@@ -3075,6 +3095,7 @@
                             "LinkageId": 0,
                             "Id": 9315,
                             "Thought": "Nein! Ich bin davon ausgegangen dass du die Arbeit vorher beendest. Das geht nat\u00fcrlich nicht so. Ist doch klar.",
+                            "ThingId": 1291,
                             "Links": [
                               {
                                 "$type": "conscious.DataHolderThoughtLink, conscious",
@@ -3089,6 +3110,7 @@
                                   "LinkageId": 0,
                                   "Id": 2886,
                                   "Thought": "Also so war das nicht abgemacht. Du bekommst zwei Wochen Zeit. Danach musst du wieder hier sein und die Arbeit beenden. Schaffst du das in einer Woche.",
+                                  "ThingId": 1291,
                                   "Links": [
                                     {
                                       "$type": "conscious.DataHolderThoughtLink, conscious",
@@ -3103,6 +3125,7 @@
                                         "LinkageId": 0,
                                         "Id": 7486,
                                         "Thought": "Marla?",
+                                        "ThingId": 1291,
                                         "Links": [
                                           {
                                             "$type": "conscious.DataHolderThoughtLink, conscious",
@@ -3118,6 +3141,7 @@
                                               "LinkageId": 0,
                                               "Id": 2304,
                                               "Thought": "Gut. Sonst musst du dir danach nochmal frei nehmen, falls du noch etwas Zeit brauchst. Nur so geht es nicht. Dann sehen wir uns in zwei Wochen. Ok?",
+                                              "ThingId": 1291,
                                               "Links": [
                                                 {
                                                   "$type": "conscious.DataHolderFinalThoughtLink, conscious",
@@ -3129,32 +3153,38 @@
                                                   "NextNode": null,
                                                   "Option": "Ja, bis dann.",
                                                   "IsFinal": true,
-                                                  "sequence": null,
+                                                  "sequence": {
+                                                    "Commands": [
+                                                      {
+                                                        "$type": "conscious.DataHolderSayCommand, conscious",
+                                                        "index": 0.9479813400531538,
+                                                        "DestinationX": 0,
+                                                        "DestinationY": 0,
+                                                        "ThoughtText": "Ich mache einfach nichts richtig. Warum bin ich so? Ich will mich nur hinlegen und schlafen."
+                                                      }
+                                                    ]
+                                                  },
                                                   "IsSuccessEdge": true,
                                                   "MoodChange": 1,
-                                                  "Verb": 0
+                                                  "Verb": 0,
+                                                  "UnlockId": "5166"
                                                 }
-                                              ],
-                                              "ThingId": 1291
+                                              ]
                                             }
                                           }
-                                        ],
-                                        "ThingId": 1291
+                                        ]
                                       },
                                       "Option": "..."
                                     }
-                                  ],
-                                  "ThingId": 1291
+                                  ]
                                 },
                                 "Option": "Ok"
                               }
-                            ],
-                            "ThingId": 1291
+                            ]
                           },
                           "Option": "Ich dachte, das \u00fcbernimmt jemand f\u00fcr mich. Da hatten wir doch dr\u00fcber gesprochen oder?"
                         }
-                      ],
-                      "ThingId": 1291
+                      ]
                     },
                     "Option": "Oh. Hallo."
                   }
@@ -3396,7 +3426,7 @@
         "DoorId": 4142,
         "IsUnlocked": true,
         "InitPlayerPosX": 2843,
-        "InitPlayerPosY": 288,
+        "InitPlayerPosY": 400,
         "CloseTexturePath": "clear_out/rooms/dining_room/objects/dining_room_door_closed_scaled_outline_170x742_pos_1755x482",
         "IsRoomChangeDoor": true,
         "CloseSoundFilePath": "close-door",
@@ -3828,12 +3858,12 @@
                   },
                   {
                     "$type": "conscious.DataHolderFinalThoughtLink, conscious",
-                    "IsLocked": false,
+                    "IsLocked": true,
                     "ValidMoods": [
                       0
                     ],
                     "Id": 337,
-                    "Option": "Hier k\u00f6nnen wir mit dem Ausr\u00e4umen beginnen. Lydia wird nichts mehr dagegen haben, wenn ich an den Schrank gehe.",
+                    "Option": "Vielleicht ist hier eine Gie\u00dfkanne oder etwas in der Art drinnen.",
                     "IsFinal": true,
                     "sequence": {
                       "Commands": [
@@ -3861,7 +3891,7 @@
                   },
                   {
                     "$type": "conscious.DataHolderThoughtLink, conscious",
-                    "IsLocked": false,
+                    "IsLocked": true,
                     "ValidMoods": [
                       0
                     ],
@@ -4542,7 +4572,7 @@
                                                   "MoodChange": 0,
                                                   "Option": "Sie hatte Angst vor diesem Raum. Oder davor auch so zu werden wie ihre Mutter und mich einzusperren.",
                                                   "IsSuccessEdge": true,
-                                                  "EventThoughtId": "5862"
+                                                  "EventThoughtId": 5862
                                                 }
                                               ]
                                             },
@@ -4967,7 +4997,7 @@
               }
             }
           ],
-          "SoundPath": "Audio/heartbeat_sound",
+          "SoundPath": "Audio/heartbeat_sound_effect",
           "RepeatedSound": true,
           "ThoughtPortrait": "clear_out/thought_portraits/lydia_portrait_cut"
         },
@@ -7642,8 +7672,7 @@
                     },
                     "Verb": 0,
                     "MoodChange": 2,
-                    "IsSuccessEdge": true,
-                    "UnlockId": ""
+                    "IsSuccessEdge": true
                   }
                 ]
               }
@@ -8536,7 +8565,7 @@
           "$type": "conscious.DataHolderSayCommand, conscious",
           "DestinationX": 0,
           "DestinationY": 0,
-          "ThoughtText": "Das war ein wirklich merkw\u00fcrdiger Traum. Ich zittere noch immer. Aber ich muss jetzt aufstehen.",
+          "ThoughtText": "Das war ein wirklich merkw\u00fcrdiger Traum. Ich zittere noch immer. Ich will einfach weiter schlafen. Aber ich muss jetzt aufstehen. Vielleicht hilft mir eine Dusche oder sowas.",
           "index": 0.37714378913118285
         },
         {
@@ -8813,7 +8842,7 @@
           "NextNode": {
             "$type": "conscious.DataHolderThoughtNode, conscious",
             "Id": 276,
-            "Thought": "Habe ich geschlafen? Ich kann mit L die Taschenlampe anmachen.",
+            "Thought": "Habe ich geschlafen? Ich kann mit der f-Taste die Taschenlampe anmachen.",
             "IsRoot": false,
             "LinkageId": 0,
             "Links": [
@@ -8829,7 +8858,8 @@
                 "sequence": null,
                 "Verb": 9,
                 "MoodChange": 0,
-                "NextNode": null
+                "NextNode": null,
+                "IsSuccessEdge": true
               }
             ]
           }

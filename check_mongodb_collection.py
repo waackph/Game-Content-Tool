@@ -64,6 +64,10 @@ def modify_dict(obj):
             obj['EntrySequence'] = None
         if 'CombineItem' in obj.keys() and not obj['CombineItem'].get('Name'):
             obj['CombineItem'] = None
+        if 'UnlockId' in obj.keys() and not obj['UnlockId']:
+            del obj['UnlockId']
+        if 'EventThoughtId' in obj.keys() and type(obj['EventThoughtId']) == str and obj['EventThoughtId'].isnumeric():
+            obj['EventThoughtId'] = int(obj['EventThoughtId'])
         # Remove file ending of texturePath
         if obj.get('texturePath'):
             obj['texturePath'] = remove_file_ext(obj['texturePath'])
