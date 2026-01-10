@@ -313,7 +313,7 @@ function ShowItemList(props) {
                             <input
                             type='text'
                             placeholder='Atmo Sound File Path'
-                            name='Atmo SoundFilePath'
+                            name='AtmoSoundFilePath'
                             className='form-control'
                             value={AtmoSoundFilePath}
                             onChange={onChange}
