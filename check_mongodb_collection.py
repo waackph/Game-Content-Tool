@@ -68,6 +68,8 @@ def modify_dict(obj):
             del obj['UnlockId']
         if 'EventThoughtId' in obj.keys() and type(obj['EventThoughtId']) == str and obj['EventThoughtId'].isnumeric():
             obj['EventThoughtId'] = int(obj['EventThoughtId'])
+        if 'IsRoot' in obj.keys() and obj['IsRoot'] == True and not 'IsInnerDialog' in obj.keys():
+            obj['IsInnerDialog'] = True
         # Remove file ending of texturePath
         if obj.get('texturePath'):
             obj['texturePath'] = remove_file_ext(obj['texturePath'])

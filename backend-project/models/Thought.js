@@ -93,6 +93,11 @@ const ThoughtNodeSchema = new mongoose.Schema({
         type: Boolean,
         required: false,
     },
+    IsInnerDialog: {
+        type: Boolean,
+        default: true,
+        required: false,
+    },
     ThingId: { // is an Object ID
         type: Number,
         required: false,

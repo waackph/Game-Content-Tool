@@ -38,7 +38,7 @@ function createGraphFromNestedObject(canvas, links, id, xPos, yPos, connections,
 
 // The code sets up the events and inputs to render the given thought graph data and add new nodes and edges.
 const ThoughtGraph = ({ svgId, data, getConnections, exportGraphToParent }) => {
-  const defaultNode = {'IsRoot': false, 'LinkageId': 0, 'thoughtType': 'conscious.DataHolderThoughtNode, conscious'};
+  const defaultNode = {'IsRoot': false, 'IsInnerDialog': true, 'LinkageId': 0, 'thoughtType': 'conscious.DataHolderThoughtNode, conscious'};
   const defaultLink = {'IsLocked': false, 'ValidMoods': [0], 'linkType': 'conscious.DataHolderThoughtLink, conscious'};
 
   const [nodeInputData, setNodeInputData] = useState({});

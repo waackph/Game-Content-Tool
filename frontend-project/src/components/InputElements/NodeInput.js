@@ -67,6 +67,14 @@ function NodeInput({data, onChange, assignDataToNode, deleteNode}) {
                   onChange={onChange}
                 />
               </div>
+              <div className="col-md-6 m-auto">
+                <CheckboxField
+                  checkLabel='Is Inner Dialog'
+                  name='IsInnerDialog'
+                  value={data.IsInnerDialog}
+                  onChange={onChange}
+                />
+              </div>
             </>
             : 
             <></>}
