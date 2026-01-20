@@ -175,6 +175,7 @@
           "Id": 3820,
           "Thought": "Das Badezimmer.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 3087,
           "LinkageId": 0,
           "Links": [
@@ -292,8 +293,7 @@
               }
             }
           ],
-          "ThoughtPortrait": "",
-          "IsInnerDialog": true
+          "ThoughtPortrait": ""
         },
         "EventThought": null,
         "IsActive": true
@@ -1347,6 +1347,7 @@
           "Id": 3125,
           "Thought": "Der Weg zum Flur",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 1584,
           "LinkageId": 0,
           "Links": [
@@ -1397,8 +1398,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "IsActive": true
@@ -3489,6 +3489,7 @@
           "Id": 4404,
           "Thought": "Die T\u00fcr zum Flur",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 9055,
           "LinkageId": 0,
           "Links": [
@@ -3539,8 +3540,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "IsActive": true
@@ -4401,6 +4401,7 @@
           "Id": 2429,
           "Thought": "Die Treppe zur Abstellkammer",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 2321,
           "LinkageId": 0,
           "Links": [
@@ -4451,8 +4452,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -5343,6 +5343,7 @@
           "Id": 9235,
           "Thought": "Die T\u00fcr zum Flur.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 4792,
           "LinkageId": 0,
           "Links": [
@@ -5393,8 +5394,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -5953,6 +5953,7 @@
           "Id": 8620,
           "Thought": "Die T\u00fcr zum Flur.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 3318,
           "LinkageId": 0,
           "Links": [
@@ -6003,8 +6004,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -6554,6 +6554,7 @@
           "Id": 9444,
           "Thought": "Die T\u00fcr zur Treppe.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 8625,
           "LinkageId": 0,
           "Links": [
@@ -6604,8 +6605,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -6646,6 +6646,7 @@
           "Id": 7090,
           "Thought": "Hier m\u00fcsste Lydias Schlafzimmer sein.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 5672,
           "LinkageId": 0,
           "Links": [
@@ -6696,8 +6697,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -6738,6 +6738,7 @@
           "Id": 4162,
           "Thought": "Mein altes Kinderzimmer.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 2348,
           "LinkageId": 0,
           "Links": [
@@ -6788,8 +6789,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -6927,6 +6927,7 @@
           "Id": 843,
           "Thought": "Hier geht es zum Abstellraum.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 5183,
           "LinkageId": 0,
           "Links": [
@@ -6977,8 +6978,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -7019,6 +7019,7 @@
           "Id": 5752,
           "Thought": "Die T\u00fcr zum Flur.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 4156,
           "LinkageId": 0,
           "Links": [
@@ -7069,8 +7070,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -7111,6 +7111,7 @@
           "Id": 9624,
           "Thought": "Die Wendeltreppe zum ersten Stockwerk.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 2189,
           "LinkageId": 0,
           "Links": [
@@ -7161,8 +7162,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -7253,6 +7253,7 @@
           "Id": 4008,
           "Thought": "Hier geht es wieder herunter zum Erdgeschoss",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 5739,
           "LinkageId": 0,
           "Links": [
@@ -7303,8 +7304,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -7389,6 +7389,7 @@
           "Id": 4350,
           "Thought": "Die T\u00fcr zum Flur.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 3508,
           "LinkageId": 0,
           "Links": [
@@ -7440,8 +7441,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -7732,6 +7732,7 @@
           "Id": 2563,
           "Thought": "Hier ist viel Deko drinnen. Weihnachtsdeko, Osterdeko, Deko. Der Karton ist aber schon ziemlich zugestaubt. Festlich war es bei meiner Mutter wohl schon lange nicht mehr gewesen.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 1617,
           "LinkageId": 0,
           "Links": [
@@ -7816,8 +7817,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -8076,6 +8076,7 @@
           "Id": 898,
           "Thought": "Die T\u00fcr zum Treppenhaus.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 7398,
           "LinkageId": 0,
           "Links": [
@@ -8126,8 +8127,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -8472,6 +8472,7 @@
           "Id": 8731,
           "Thought": "Die Wendeltreppe zum ersten Stockwerk.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 5323,
           "LinkageId": 0,
           "Links": [
@@ -8522,8 +8523,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -8649,6 +8649,7 @@
           "Id": 9579,
           "Thought": "Das m\u00fcsste die T\u00fcr zum Flur sein.",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 2646,
           "LinkageId": 0,
           "Links": [
@@ -8701,8 +8702,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
@@ -9264,6 +9264,7 @@
           "Id": 3121,
           "Thought": "Der Weg zum Flur",
           "IsRoot": true,
+          "IsInnerDialog": true,
           "ThingId": 9489,
           "LinkageId": 0,
           "Links": [
@@ -9314,8 +9315,7 @@
                 ]
               }
             }
-          ],
-          "IsInnerDialog": true
+          ]
         },
         "EventThought": null,
         "DepressedTexture": "",
